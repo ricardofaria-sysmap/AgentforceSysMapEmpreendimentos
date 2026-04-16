@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <assignments>
+        <name>Definir_Sucesso</name>
+        <label>Marcar retorno como sucesso</label>
+        <locationX>176</locationX>
+        <locationY>422</locationY>
+        <assignmentItems>
+            <assignToReference>sucesso</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>mensagemRetorno</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Qualificação financeira registrada com sucesso no Lead.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Erro_Sem_Lead_Id</name>
+        <label>Definir mensagem de erro — sem Lead ID</label>
+        <locationX>396</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>sucesso</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>mensagemRetorno</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Não foi possível registrar a qualificação: o Lead não foi identificado. Certifique-se de que o cadastro do lead foi criado antes de invocar esta ação.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Validar_Lead_Id</name>
+        <label>Lead ID foi fornecido?</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Erro_Sem_Lead_Id</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Não — Sem ID</defaultConnectorLabel>
+        <rules>
+            <name>Lead_Id_Preenchido</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>leadId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Atualizar_Lead</targetReference>
+            </connector>
+            <label>Sim — Tem ID</label>
+        </rules>
+    </decisions>
+    <description>Agentforce RF06 — Registra a qualificação financeira do lead: status de financiamento/contemplação e valor disponível para entrada.</description>
+    <interviewLabel>Qualificar Lead Financeiramente {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Qualificar Lead Financeiramente</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Atualizar_Lead</name>
+        <label>Atualizar qualificação financeira no Lead</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <connector>
+            <targetReference>Definir_Sucesso</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>leadId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Financiamento_Aprovado__c</field>
+            <value>
+                <elementReference>financiamentoAprovado</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Valor_Entrada__c</field>
+            <value>
+                <elementReference>valorEntrada</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Validar_Lead_Id</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Status de financiamento: &quot;Financiamento Aprovado&quot;, &quot;Carta de Contemplação&quot;, &quot;Não possui&quot; ou &quot;Não informado&quot;.</description>
+        <name>financiamentoAprovado</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>ID do registro Lead a ser qualificado.</description>
+        <name>leadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Mensagem de confirmação ou erro para o agente exibir ao lead.</description>
+        <name>mensagemRetorno</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Indica se o Lead foi atualizado com sucesso.</description>
+        <name>sucesso</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Valor disponível para dar de entrada, em reais.</description>
+        <name>valorEntrada</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+</Flow>

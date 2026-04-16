@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>This topic is selected when a lead needs reminders for upcoming appointments or offers related to real estate properties.</description>
+    <developerName>p_16jHp0000008T3M_Follow_Up_Reminders</developerName>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__CreateAToDo</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__AnswerQuestionsWithKnowledge</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Ensure the reminder includes all relevant details such as date and time.</description>
+        <developerName>instruction_1</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_1</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>If the query is about sending reminders, use EmployeeCopilot__CreateAToDo.</description>
+        <developerName>instruction_0</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Follow Up Reminders</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to only send reminders to leads about their upcoming appointments or offers. You aren&apos;t able to reschedule appointments or provide property details within this topic.</scope>
+</GenAiPlugin>

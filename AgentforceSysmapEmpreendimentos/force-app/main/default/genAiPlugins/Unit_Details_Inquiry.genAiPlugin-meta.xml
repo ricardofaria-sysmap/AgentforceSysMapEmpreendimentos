@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Lead quer detalhes de unidades (tipologia, metragem, andar)</description>
+    <developerName>Unit_Details_Inquiry</developerName>
+    <genAiFunctions>
+        <functionName>Consultar_Disponibilidade_179Hp000000c5dz</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Apresente as unidades disponiveis do empreendimento escolhido pelo lead.
+Informe tipologia (quartos, suites), metragem, andar e vagas de garagem.
+NUNCA informe valores ou precos. Se perguntarem, diga que um corretor entrara em contato.</description>
+        <developerName>instruction_0_1775075540282</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1775075540282</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Informacoes sobre Unidades</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>I can provide information about unit typology, measurements, and floor levels. I cannot assist with other unrelated inquiries or actions outside these details.</scope>
+</GenAiPlugin>

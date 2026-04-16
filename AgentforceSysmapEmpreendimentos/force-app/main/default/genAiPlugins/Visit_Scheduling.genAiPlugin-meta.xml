@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Lead deseja agendar visita</description>
+    <developerName>Visit_Scheduling</developerName>
+    <genAiFunctions>
+        <functionName>Agendar_Visita_179Hp000000c5e4</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Colete a data e horario de preferencia. Confirme o empreendimento de interesse.</description>
+        <developerName>instruction_0_1775075836999</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1775075836999</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Apos o agendamento, informe o endereco do stand de vendas.</description>
+        <developerName>instruction_1_1775075836999</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_1_1775075836999</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Agendamento de Visita</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Conduza o lead para agendar uma visita presencial ao stand de vendas.
+Colete a data e horario de preferencia. Confirme o empreendimento de interesse.
+Apos o agendamento, informe o endereco do stand de vendas.</scope>
+</GenAiPlugin>

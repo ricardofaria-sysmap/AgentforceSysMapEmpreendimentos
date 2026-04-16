@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Lead precisa ser qualificado financeiramente antes do agendamento de visita</description>
+    <developerName>Qualificacao_Financeira</developerName>
+    <genAiPluginInstructions>
+        <description>Pergunte ao lead se possui financiamento aprovado ou carta de contemplacao.
+Opcoes: &quot;Financiamento Aprovado&quot;, &quot;Carta de Contemplacão&quot;, &quot;Nao possui&quot;.
+Se o lead nao souber ou nao quiser informar, registre como &quot;Nao informado&quot;.</description>
+        <developerName>instruction_0_qualificacao</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_qualificacao</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Somente apos coletar as duas informacoes (status de financiamento e valor de entrada), invoque a acao de qualificacao financeira passando o leadId, financiamentoAprovado e valorEntrada.
+IMPORTANTE: Nao invoque esta acao sem ter o leadId — o lead deve estar cadastrado primeiro.</description>
+        <developerName>instruction_2_qualificacao</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_2_qualificacao</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Pergunte qual o valor disponivel para dar de entrada. Se o lead nao souber, registre como 0.
+IMPORTANTE: Nunca mencione ou discuta o valor das unidades — apenas o valor de entrada disponivel pelo lead.</description>
+        <developerName>instruction_1_qualificacao</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_1_qualificacao</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Qualificação Financeira</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Qualificar financeiramente o lead antes do agendamento de visita.
+Coletar se o lead possui financiamento aprovado ou carta de contemplacão, e qual o valor disponivel para entrada.
+Registrar essas informacoes no Salesforce via acao de qualificacao.
+Somente avancar para agendamento de visita apos concluir a qualificacao financeira.</scope>
+</GenAiPlugin>

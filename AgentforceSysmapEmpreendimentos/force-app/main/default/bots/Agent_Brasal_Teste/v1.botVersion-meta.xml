@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BotVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>v1</fullName>
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Olá, sou um assistente virtual da Brasal Incorporações. No que posso ajudar?</message>
+                <messageIdentifier>f297cf9d-76bc-4f04-982e-68a0bd8f7560</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>df8ae5e4-8294-4b4d-a662-3ac2281e8cd1</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>7a256716-e583-4fb6-af45-28ce9c3ed5d3</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Welcome</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Hi! I&apos;m your helpful bot.</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Desculpe, ocorreu um erro.</message>
+                <messageIdentifier>6d518182-2e7e-44a7-8eaa-b4b22114855f</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>5a8a0ece-5890-498d-9657-546f898bac79</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>e5ec02c8-9b80-44f1-8cc0-238808771b5e</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Error_Handling</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Unfortunately, a system error occurred. Let us start again.</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>One moment while I connect you to the next available service representative.</message>
+                <messageIdentifier>21e4f9fd-24cb-4e08-b1c9-7b0a4e527d16</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>9d96666b-8c89-499c-b0f3-90e25c467618</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <conversationSystemMessage>
+                <type>Transfer</type>
+            </conversationSystemMessage>
+            <stepIdentifier>c76169d2-4b2a-40a1-ab75-41d7f00720c7</stepIdentifier>
+            <type>SystemMessage</type>
+        </botSteps>
+        <developerName>Transfer_To_Agent</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Transfer To Agent</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <citationsEnabled>false</citationsEnabled>
+    <company>Brasal Incorporações</company>
+    <conversationDefinitionPlanners>
+        <genAiPlannerName>Agent_Brasal_Teste</genAiPlannerName>
+    </conversationDefinitionPlanners>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>VerifiedCustomerId</developerName>
+        <label>VerifiedCustomerId</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>pt_BR</copilotPrimaryLanguage>
+    <entryDialog>Welcome</entryDialog>
+    <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
+    <intentV3Enabled>false</intentV3Enabled>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <role>Voce e o assistente virtual da Brasal Incorporacoes, uma incorporadora de Brasilia.
+Seu papel e atuar como SDR (Sales Development Representative) virtual,
+ajudando leads interessados em nossos empreendimentos.
+
+REGRA OBRIGATORIA — ORDEM DAS ACOES:
+Independente do que o lead perguntar ou pedir, siga sempre esta sequencia:
+
+1. CADASTRAR O LEAD PRIMEIRO: Antes de qualquer outra acao, colete o nome completo, telefone e email do lead e cadastre-o usando a acao de cadastro. Nao prossiga para nenhuma outra etapa sem ter o leadId confirmado.
+
+2. QUALIFICAR O INTERESSE: Apos o cadastro, entenda o perfil do lead (empreendimento de interesse, bairro, numero de quartos, metragem) e apresente as opcoes disponiveis.
+
+3. QUALIFICAR FINANCEIRAMENTE: Pergunte se o lead possui financiamento aprovado ou carta de contemplacao, e qual o valor disponivel para entrada. Registre as respostas usando a acao de qualificacao financeira.
+
+4. AGENDAR VISITA: Somente apos concluir as etapas 1, 2 e 3, oferca o agendamento de visita ao stand de vendas.
+
+5. ESCALAR PARA CORRETOR: Se o lead fizer perguntas especificas que voce nao consegue responder, transfira para um corretor.
+
+NUNCA execute a acao de agendamento de visita sem ter o leadId. NUNCA execute a qualificacao financeira sem ter o leadId.</role>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <toneType>Casual</toneType>
+</BotVersion>

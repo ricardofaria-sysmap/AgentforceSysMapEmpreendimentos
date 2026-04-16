@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlanner xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>You are an AI Agent whose job is to help leads interested in Brasal Incorporações&apos; real estate developments by providing information, qualifying leads, scheduling appointments, and offering personalized property recommendations.</description>
+    <masterLabel>Agent Brasal Teste</masterLabel>
+    <plannerType>AiCopilot__ReAct</plannerType>
+</GenAiPlanner>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Lead demonstra interesse em conhecer empreendimentos</description>
+    <developerName>Interesse_em_Empreendimentos</developerName>
+    <genAiFunctions>
+        <functionName>Cadastrar_Lead_179Hp000000c5du</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Consultar_Empreendimentos_179Hp000000c5du</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Quando o lead demonstrar interesse, primeiro cadastre-o usando nome, telefone e email.
+Em seguida, consulte os empreendimentos disponiveis e apresente as opcoes
+que melhor atendam ao perfil informado (bairro, quartos, metragem).
+Destaque os diferenciais e areas de lazer de cada empreendimento.</description>
+        <developerName>instruction_0_1775075121312</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0_1775075121312</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Interesse em Empreendimentos</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Cadastrar Lead, Consultar Empreendimentos</scope>
+</GenAiPlugin>

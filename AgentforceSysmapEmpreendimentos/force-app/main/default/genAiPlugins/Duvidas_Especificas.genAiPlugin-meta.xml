@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lead tem duvida que o agente nao consegue responder</description>
+    <developerName>Duvidas_Especificas</developerName>
+    <genAiFunctions>
+        <functionName>Transferir_Para_Corretor_179Hp000000c5e9</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Se o lead tiver uma duvida que voce nao consegue responder com as informacoes disponiveis,
+transfira para um corretor especializado. Informe ao lead que um profissional entrara em contato.</description>
+        <developerName>instructions_0_1775076358452</developerName>
+        <language>en_US</language>
+        <masterLabel>instructions_0_1775076358452</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Duvidas Especificas</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Transferir para corretor</scope>
+</GenAiPlugin>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>This topic is selected when a lead needs assistance answering qualifying questions to identify their preferences and requirements for real estate properties.</description>
+    <developerName>p_16jHp0000008T3M_Lead_Qualification_Assistance</developerName>
+    <genAiFunctions>
+        <functionName>svc_emp_intelligence__GetEligibleServiceCatalogItems</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>EmployeeCopilot__AnswerQuestionsWithKnowledge</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>If the lead&apos;s preferences are unclear, clarify by asking targeted questions.</description>
+        <developerName>instruction_1</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_1</masterLabel>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>If the query is about identifying a lead&apos;s needs, use svc_emp_intelligence__GetEligibleServiceCatalogItems.</description>
+        <developerName>instruction_0</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>instruction_0</masterLabel>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Lead Qualification Assistance</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to only guide leads through a series of qualifying questions to understand their specific needs, preferences, and budget. You aren&apos;t able to provide property recommendations or schedule appointments within this topic.</scope>
+</GenAiPlugin>

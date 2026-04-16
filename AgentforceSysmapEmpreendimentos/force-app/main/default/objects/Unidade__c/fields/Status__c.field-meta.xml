@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <label>Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Disponivel</fullName>
+                <default>true</default>
+                <label>Disponivel</label>
+            </value>
+            <value>
+                <fullName>Reservada</fullName>
+                <default>false</default>
+                <label>Reservada</label>
+            </value>
+            <value>
+                <fullName>Vendida</fullName>
+                <default>false</default>
+                <label>Vendida</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
