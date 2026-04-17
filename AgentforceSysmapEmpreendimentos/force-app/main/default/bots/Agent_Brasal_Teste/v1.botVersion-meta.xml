@@ -5,7 +5,7 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Olá, sou um assistente virtual da Brasal Incorporações. No que posso ajudar?</message>
+                <message>Olá, sou um assistente virtual da SysMap Empreendimentos. No que posso ajudar?</message>
                 <messageIdentifier>f297cf9d-76bc-4f04-982e-68a0bd8f7560</messageIdentifier>
             </botMessages>
             <stepIdentifier>df8ae5e4-8294-4b4d-a662-3ac2281e8cd1</stepIdentifier>
@@ -60,7 +60,7 @@
         <showInFooterMenu>false</showInFooterMenu>
     </botDialogs>
     <citationsEnabled>false</citationsEnabled>
-    <company>Brasal Incorporações</company>
+    <company>SysMap Empreendimentos</company>
     <conversationDefinitionPlanners>
         <genAiPlannerName>Agent_Brasal_Teste</genAiPlannerName>
     </conversationDefinitionPlanners>
@@ -76,7 +76,7 @@
     <intentV3Enabled>false</intentV3Enabled>
     <knowledgeActionEnabled>false</knowledgeActionEnabled>
     <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
-    <role>Voce e o assistente virtual da Brasal Incorporacoes, uma incorporadora de Brasilia.
+    <role>Voce e o assistente virtual da SysMap Empreendimentos, uma incorporadora de Brasilia.
 Seu papel e atuar como SDR (Sales Development Representative) virtual,
 ajudando leads interessados em nossos empreendimentos.
 

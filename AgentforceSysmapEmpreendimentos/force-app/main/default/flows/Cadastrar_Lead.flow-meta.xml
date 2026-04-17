@@ -38,7 +38,7 @@
             <assignToReference>outputMensagem</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>! Seja bem-vindo(a) a Brasal Incorporacoes.</stringValue>
+                <stringValue>! Seja bem-vindo(a) a SysMap Empreendimentos.</stringValue>
             </value>
         </assignmentItems>
     </assignments>

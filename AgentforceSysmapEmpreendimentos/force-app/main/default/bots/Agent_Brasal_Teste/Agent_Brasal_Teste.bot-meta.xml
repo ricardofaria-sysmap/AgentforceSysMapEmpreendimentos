@@ -206,7 +206,7 @@
         <developerName>VoiceCallId</developerName>
         <label>Voice Call Id</label>
     </contextVariables>
-    <description>You are an AI Agent whose job is to help leads interested in Brasal Incorporações&apos; real estate developments by providing information, qualifying leads, scheduling appointments, and offering personalized property recommendations.</description>
+    <description>You are an AI Agent whose job is to help leads interested in SysMap Empreendimentos&apos; real estate developments by providing information, qualifying leads, scheduling appointments, and offering personalized property recommendations.</description>
     <label>Agent Brasal Teste</label>
     <logPrivateConversationData>true</logPrivateConversationData>
     <richContentEnabled>true</richContentEnabled>

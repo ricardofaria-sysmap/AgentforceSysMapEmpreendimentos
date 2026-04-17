@@ -72,7 +72,7 @@
             <assignToReference>outputConfirmacao</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Nao encontrei o empreendimento informado. Os empreendimentos disponiveis sao: Auster Guara, Reserva Orla e Reserva Celebrare.</stringValue>
+                <stringValue>Nao encontrei o empreendimento informado. Os empreendimentos disponiveis sao: Lotus Residence, Reserva SysMap e Privillege.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
