@@ -34,7 +34,7 @@ run_deploy() {
     -o "$ORG_ALIAS" \
     -d "$path" \
     --ignore-conflicts \
-    "${DEPLOY_FLAGS[@]}"
+    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
 }
 
 run_deploy "1/4" "force-app/main/default/objects"
@@ -48,7 +48,7 @@ if compgen -G "force-app/main/default/flows/*.flow-meta.xml" > /dev/null; then
     -o "$ORG_ALIAS" \
     -d force-app/main/default/flows \
     --ignore-conflicts \
-    "${DEPLOY_FLAGS[@]}"
+    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
 else
   echo "  (sem flows versionados ainda - crie na UI e rode retrieve.sh)"
 fi
@@ -58,7 +58,7 @@ if [ -d force-app/main/default/bots ] && compgen -G "force-app/main/default/bots
     -o "$ORG_ALIAS" \
     -d force-app/main/default/bots \
     --ignore-conflicts \
-    "${DEPLOY_FLAGS[@]}"
+    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
 else
   echo "  (sem agent versionado ainda - crie na UI e rode retrieve.sh)"
 fi
