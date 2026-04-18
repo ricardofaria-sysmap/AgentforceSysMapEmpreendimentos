@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <name>All</name>
+        <label>Todos</label>
+        <dataCategory>
+            <name>Ferias</name>
+            <label>Ferias</label>
+        </dataCategory>
+        <dataCategory>
+            <name>Beneficios</name>
+            <label>Beneficios</label>
+        </dataCategory>
+        <dataCategory>
+            <name>Home_Office</name>
+            <label>Home Office</label>
+        </dataCategory>
+    </dataCategory>
+    <description>Categorias para classificar politicas internas de RH (demo Agentforce Itau).</description>
+    <label>Topicos RH</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

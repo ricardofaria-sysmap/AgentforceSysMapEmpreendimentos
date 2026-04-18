@@ -35,8 +35,9 @@ Colaborador → Chat Embedded → Agente A (KB)
 │   ├── REGRAS_CLT.md                    # regras de negócio implementadas
 │   ├── TOPIC_AGENTE_A.md                # scope, instructions, actions
 │   ├── SCREEN_FLOW.md                   # especificação detalhada do Flow
+│   ├── KNOWLEDGE.md                     # metadata, artigos e categorias
 │   ├── DEPLOY_ORG_BRASAL.md             # guia de deploy na org SDO do Brasal
-│   └── knowledge-articles/              # conteúdo dos 5 artigos KB
+│   └── knowledge-articles/              # conteúdo dos 5 artigos KB (markdown)
 ├── data/
 │   ├── users.csv
 │   └── saldo_ferias.csv
@@ -47,6 +48,8 @@ Colaborador → Chat Embedded → Agente A (KB)
 │   ├── deploy.sh                        # com suporte a --dry-run
 │   ├── create-users.sh
 │   ├── bootstrap-data.sh
+│   ├── create-knowledge.sh              # publica os 5 artigos KB
+│   ├── apex/create-knowledge.apex
 │   └── retrieve.sh
 └── force-app/main/default/
     ├── objects/
@@ -71,6 +74,7 @@ sf org login web -a itau-demo
 ./scripts/deploy.sh itau-demo
 ./scripts/create-users.sh itau-demo
 ./scripts/bootstrap-data.sh itau-demo
+./scripts/create-knowledge.sh itau-demo
 ```
 
 ### Reusando a org SDO do Brasal
@@ -82,6 +86,7 @@ Ver [`docs/DEPLOY_ORG_BRASAL.md`](docs/DEPLOY_ORG_BRASAL.md). Resumo:
 ./scripts/deploy.sh AgentforceSysmapEmpreendimentos
 ./scripts/create-users.sh AgentforceSysmapEmpreendimentos
 ./scripts/bootstrap-data.sh AgentforceSysmapEmpreendimentos
+./scripts/create-knowledge.sh AgentforceSysmapEmpreendimentos
 ```
 
 ## Personas de teste

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Politica_Conteudo__c</fullName>
+    <description>Corpo do artigo de politica de RH (markdown renderizado em HTML).</description>
+    <externalId>false</externalId>
+    <label>Conteudo</label>
+    <length>131072</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>

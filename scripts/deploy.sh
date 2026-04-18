@@ -37,12 +37,25 @@ run_deploy() {
     ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
 }
 
-run_deploy "1/4" "force-app/main/default/objects"
-run_deploy "2/4" "force-app/main/default/permissionsets"
-run_deploy "3/4" "force-app/main/default/email"
+run_deploy "1/5" "force-app/main/default/objects"
+if [ -d force-app/main/default/dataCategoryGroups ]; then
+  run_deploy "2/5" "force-app/main/default/dataCategoryGroups"
+else
+  echo "==> [2/5] Sem dataCategoryGroups - pulando"
+fi
+run_deploy "3/5" "force-app/main/default/permissionsets"
+run_deploy "4/5" "force-app/main/default/email"
 
 echo ""
-echo "==> [4/4] Flows e Agent (se presentes)"
+echo "==> [5/5] Flows, Apex classes e Agent (se presentes)"
+if compgen -G "force-app/main/default/classes/*.cls" > /dev/null; then
+  sf project deploy start \
+    -o "$ORG_ALIAS" \
+    -d force-app/main/default/classes \
+    --ignore-conflicts \
+    --test-level RunSpecifiedTests --tests FeriasEmailSenderTest --tests FeriasApprovalSubmitterTest \
+    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
+fi
 if compgen -G "force-app/main/default/flows/*.flow-meta.xml" > /dev/null; then
   sf project deploy start \
     -o "$ORG_ALIAS" \
@@ -71,5 +84,6 @@ else
   echo "Proximos passos:"
   echo "  1. ./scripts/create-users.sh $ORG_ALIAS"
   echo "  2. ./scripts/bootstrap-data.sh $ORG_ALIAS"
-  echo "  3. Criar Approval Process, Knowledge e Agent via UI (ver force-app/README.md)"
+  echo "  3. ./scripts/create-knowledge.sh $ORG_ALIAS   # publica os 5 artigos de politica"
+  echo "  4. Configurar Agente A (Topic Consulta_Politicas_RH) via UI"
 fi
