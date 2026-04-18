@@ -4,6 +4,18 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Agentforce RH - Gestor</label>
     <license>Salesforce</license>
+    <classAccesses>
+        <apexClass>FeriasApprovalSubmitter</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FeriasEmailSender</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Agendamento_Ferias_Screen</flow>
+    </flowAccesses>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>

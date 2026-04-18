@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <description>Apos aprovacao do pedido de ferias, atualiza o Saldo_Ferias do colaborador e envia email de confirmacao (via Apex invocable).</description>
+    <environments>Default</environments>
+    <interviewLabel>Case Aprovado Ferias {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case Aprovado - Atualiza Saldo e Envia Email</label>
+    <processType>AutoLaunchedFlow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <status>Active</status>
+    <actionCalls>
+        <name>Enviar_Email_Aprovado</name>
+        <label>Enviar Email Aprovado</label>
+        <locationX>176</locationX>
+        <locationY>600</locationY>
+        <actionName>FeriasEmailSender</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tipo</name>
+            <value>
+                <stringValue>APROVADO</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <assignments>
+        <name>Atualizar_Dias_Tirados</name>
+        <label>Atualizar Dias Tirados</label>
+        <locationX>176</locationX>
+        <locationY>360</locationY>
+        <assignmentItems>
+            <assignToReference>Buscar_Saldo.Dias_Tirados__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Quantidade_Dias__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Buscar_Saldo.Dias_Abono_Vendidos__c</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Delta_Abono</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Atualizar_Saldo</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Tem_Saldo_Ref</name>
+        <label>Tem Saldo Referenciado?</label>
+        <locationX>176</locationX>
+        <locationY>120</locationY>
+        <defaultConnector>
+            <targetReference>Enviar_Email_Aprovado</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sem saldo ref</defaultConnectorLabel>
+        <rules>
+            <name>Com_Saldo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Saldo_Ferias_Ref__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Buscar_Saldo</targetReference>
+            </connector>
+            <label>Com saldo</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>Delta_Abono</name>
+        <dataType>Number</dataType>
+        <expression>IF({!$Record.Vender_Abono__c}, BLANKVALUE({!$Record.Dias_Abono__c}, 0), 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <recordLookups>
+        <name>Buscar_Saldo</name>
+        <label>Buscar Saldo</label>
+        <locationX>176</locationX>
+        <locationY>240</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Atualizar_Dias_Tirados</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Saldo_Ferias_Ref__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Saldo_Ferias__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Atualizar_Saldo</name>
+        <label>Atualizar Saldo</label>
+        <locationX>176</locationX>
+        <locationY>480</locationY>
+        <connector>
+            <targetReference>Enviar_Email_Aprovado</targetReference>
+        </connector>
+        <inputReference>Buscar_Saldo</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Tem_Saldo_Ref</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Aprovacao_Gestor__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Aprovado</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+</Flow>

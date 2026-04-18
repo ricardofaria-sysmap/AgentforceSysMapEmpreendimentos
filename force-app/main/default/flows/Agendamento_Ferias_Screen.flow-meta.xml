@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <description>Screen Flow para agendamento de ferias do colaborador, invocado pelo Agentforce ou botao na home. Valida regras CLT, cria Case e submete aprovacao.</description>
+    <environments>Default</environments>
+    <interviewLabel>Agendamento Ferias {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Agendamento de Ferias (Screen)</label>
+    <processType>Flow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <status>Active</status>
+
+    <actionCalls>
+        <name>Submit_Aprovacao</name>
+        <label>Submeter para Aprovacao</label>
+        <locationX>600</locationX>
+        <locationY>1200</locationY>
+        <actionName>FeriasApprovalSubmitter</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Tela_Sucesso</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>Criar_Case</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>comments</name>
+            <value>
+                <stringValue>Submetido via Agentforce (Screen Flow Agendamento_Ferias_Screen).</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+
+    <assignments>
+        <name>Set_Datas_Vars</name>
+        <label>Copiar inputs de datas para variables</label>
+        <locationX>600</locationX>
+        <locationY>560</locationY>
+        <assignmentItems>
+            <assignToReference>varDataInicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dataInicio</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDataRetorno</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dataRetorno</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Valida_CLT</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Abono_Vars</name>
+        <label>Copiar inputs de abono para variables</label>
+        <locationX>500</locationX>
+        <locationY>960</locationY>
+        <assignmentItems>
+            <assignToReference>varVenderAbono</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>venderAbono</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDiasAbono</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>diasAbono</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Confirmacao</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Erro_Aviso_30d</name>
+        <label>Erro: Aviso 30d</label>
+        <locationX>200</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Atencao: pela CLT, suas ferias devem ser comunicadas com no minimo 30 dias de antecedencia. A data de inicio escolhida nao atende este prazo. Escolha uma data a partir de 30 dias a contar de hoje.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Erro</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Erro_Saldo</name>
+        <label>Erro: Saldo insuficiente</label>
+        <locationX>350</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Voce nao tem saldo suficiente para a quantidade de dias solicitada. Reveja as datas ou consulte o RH.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Erro</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Erro_Minimo_5</name>
+        <label>Erro: Minimo 5 dias</label>
+        <locationX>500</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pela CLT, cada periodo de ferias precisa ter no minimo 5 dias corridos. Aumente o intervalo entre as datas.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Erro</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Erro_Concessivo</name>
+        <label>Erro: Periodo Concessivo</label>
+        <locationX>650</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>A data de retorno ultrapassa o periodo concessivo (12 meses apos o fim do periodo aquisitivo). Escolha um retorno ate o prazo final ou contate o RH.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Erro</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Erro_Dia_Semana</name>
+        <label>Erro: Dia da semana</label>
+        <locationX>800</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pela CLT (art. 134, paragrafo 3), as ferias nao podem comecar em sexta, sabado ou domingo. Escolha um dia util de segunda a quinta para iniciar.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Erro</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Erro_Vespera_Feriado</name>
+        <label>Erro: Vespera de Feriado</label>
+        <locationX>950</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pela CLT (art. 134, paragrafo 3), as ferias nao podem comecar nos 2 dias que antecedem um feriado. Escolha uma data de inicio mais afastada do proximo feriado.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tela_Erro</targetReference>
+        </connector>
+    </assignments>
+
+    <decisions>
+        <name>Decision_Saldo_Existe</name>
+        <label>Existe Saldo Vigente?</label>
+        <locationX>600</locationX>
+        <locationY>200</locationY>
+        <defaultConnector>
+            <targetReference>Tela_Sem_Saldo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Nao encontrou</defaultConnectorLabel>
+        <rules>
+            <name>Tem_Saldo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Saldo_Atual.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Manager</targetReference>
+            </connector>
+            <label>Tem saldo</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Valida_CLT</name>
+        <label>Validacoes CLT</label>
+        <locationX>600</locationX>
+        <locationY>500</locationY>
+        <defaultConnector>
+            <targetReference>Decision_Abono</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OK</defaultConnectorLabel>
+        <rules>
+            <name>R1_Aviso_30d</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fxDiasAteInicio</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>30.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Aviso_30d</targetReference>
+            </connector>
+            <label>Aviso 30d</label>
+        </rules>
+        <rules>
+            <name>R2_Saldo_Insuficiente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fxDiasSolicitados</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Saldo_Atual.Dias_Disponiveis__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Saldo</targetReference>
+            </connector>
+            <label>Saldo insuficiente</label>
+        </rules>
+        <rules>
+            <name>R3_Minimo_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fxDiasSolicitados</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>5.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Minimo_5</targetReference>
+            </connector>
+            <label>Minimo 5 dias</label>
+        </rules>
+        <rules>
+            <name>R4_Concessivo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varDataRetorno</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Saldo_Atual.Periodo_Concessivo_Fim__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Concessivo</targetReference>
+            </connector>
+            <label>Fora do concessivo</label>
+        </rules>
+        <rules>
+            <name>R5_Dia_Semana_Invalido</name>
+            <conditionLogic>1 OR 2 OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>fxDiaSemanaInicio</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>fxDiaSemanaInicio</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>6.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>fxDiaSemanaInicio</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>7.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Dia_Semana</targetReference>
+            </connector>
+            <label>Sex/Sab/Dom</label>
+        </rules>
+        <rules>
+            <name>R6_Vespera_Feriado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fxVesperaFeriado</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Vespera_Feriado</targetReference>
+            </connector>
+            <label>Vespera de feriado</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Decision_Abono</name>
+        <label>Pode vender abono?</label>
+        <locationX>600</locationX>
+        <locationY>800</locationY>
+        <defaultConnector>
+            <targetReference>Tela_Confirmacao</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Limite atingido</defaultConnectorLabel>
+        <rules>
+            <name>Pode_Vender</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fxLimiteAbono</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Tela_Abono</targetReference>
+            </connector>
+            <label>Pode oferecer abono</label>
+        </rules>
+    </decisions>
+
+    <formulas>
+        <name>fxDiasSolicitados</name>
+        <dataType>Number</dataType>
+        <expression>{!varDataRetorno} - {!varDataInicio} + 1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>fxDiasAteInicio</name>
+        <dataType>Number</dataType>
+        <expression>{!varDataInicio} - TODAY()</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>fxLimiteAbono</name>
+        <dataType>Number</dataType>
+        <expression>FLOOR({!Get_Saldo_Atual.Dias_Direito__c} / 3) - BLANKVALUE({!Get_Saldo_Atual.Dias_Abono_Vendidos__c}, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>fxDiaSemanaInicio</name>
+        <dataType>Number</dataType>
+        <expression>WEEKDAY({!varDataInicio})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>fxVesperaFeriado</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+    {!varDataInicio} + 1 = DATE(2026,4,21),
+    {!varDataInicio} + 2 = DATE(2026,4,21),
+    {!varDataInicio} + 1 = DATE(2026,5,1),
+    {!varDataInicio} + 2 = DATE(2026,5,1),
+    {!varDataInicio} + 1 = DATE(2026,9,7),
+    {!varDataInicio} + 2 = DATE(2026,9,7),
+    {!varDataInicio} + 1 = DATE(2026,10,12),
+    {!varDataInicio} + 2 = DATE(2026,10,12),
+    {!varDataInicio} + 1 = DATE(2026,11,2),
+    {!varDataInicio} + 2 = DATE(2026,11,2),
+    {!varDataInicio} + 1 = DATE(2026,11,15),
+    {!varDataInicio} + 2 = DATE(2026,11,15),
+    {!varDataInicio} + 1 = DATE(2026,12,25),
+    {!varDataInicio} + 2 = DATE(2026,12,25),
+    {!varDataInicio} + 1 = DATE(2027,1,1),
+    {!varDataInicio} + 2 = DATE(2027,1,1)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>fxAssuntoCase</name>
+        <dataType>String</dataType>
+        <expression>"Pedido de Ferias - " &amp; TEXT({!varDataInicio}) &amp; " a " &amp; TEXT({!varDataRetorno})</expression>
+    </formulas>
+    <formulas>
+        <name>fxDataLembrete</name>
+        <dataType>Date</dataType>
+        <expression>{!varDataInicio} - 5</expression>
+    </formulas>
+
+    <recordLookups>
+        <name>Get_Saldo_Atual</name>
+        <label>Buscar Saldo Vigente</label>
+        <locationX>600</locationX>
+        <locationY>100</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decision_Saldo_Existe</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Colaborador__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varUserId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Vigente</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Saldo_Ferias__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+
+    <recordLookups>
+        <name>Get_Manager</name>
+        <label>Buscar Gestor do Colaborador</label>
+        <locationX>600</locationX>
+        <locationY>300</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_RT_Pedido_Ferias</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varUserId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+
+    <recordLookups>
+        <name>Get_RT_Pedido_Ferias</name>
+        <label>Buscar RecordType Pedido Ferias</label>
+        <locationX>600</locationX>
+        <locationY>380</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Tela_Boas_Vindas</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pedido_Ferias</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+
+    <recordCreates>
+        <name>Criar_Case</name>
+        <label>Criar Case de Ferias</label>
+        <locationX>600</locationX>
+        <locationY>1100</locationY>
+        <connector>
+            <targetReference>Submit_Aprovacao</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Pedido_Ferias.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>varUserId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Gestor__c</field>
+            <value>
+                <elementReference>Get_Manager.ManagerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>fxAssuntoCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Agentforce Chat</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Aprovacao_Gestor__c</field>
+            <value>
+                <stringValue>Pendente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Data_Inicio_Ferias__c</field>
+            <value>
+                <elementReference>varDataInicio</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Data_Retorno_Ferias__c</field>
+            <value>
+                <elementReference>varDataRetorno</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Vender_Abono__c</field>
+            <value>
+                <elementReference>varVenderAbono</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Dias_Abono__c</field>
+            <value>
+                <elementReference>varDiasAbono</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Saldo_Ferias_Ref__c</field>
+            <value>
+                <elementReference>Get_Saldo_Atual.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+
+    <screens>
+        <name>Tela_Sem_Saldo</name>
+        <label>Sem saldo vigente</label>
+        <locationX>300</locationX>
+        <locationY>300</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Sem_Saldo</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Nao encontramos um saldo de ferias vigente em seu nome.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Entre em contato com o RH pelo canal oficial para regularizar sua situacao antes de agendar.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Boas_Vindas</name>
+        <label>Boas vindas - Saldo</label>
+        <locationX>600</locationX>
+        <locationY>450</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Tela_Selecao_Datas</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Cabecalho</name>
+            <fieldText>{!textCabecalho}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Display_Saldo</name>
+            <fieldText>{!textSaldo}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Continuar</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Selecao_Datas</name>
+        <label>Selecao de Datas</label>
+        <locationX>600</locationX>
+        <locationY>550</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Voltar</backButtonLabel>
+        <connector>
+            <targetReference>Set_Datas_Vars</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Instrucoes</name>
+            <fieldText>&lt;p&gt;Escolha as datas das suas ferias. Lembre-se:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Minimo 5 dias corridos por periodo&lt;/li&gt;&lt;li&gt;Inicio de segunda a quinta, longe de feriados&lt;/li&gt;&lt;li&gt;Solicitar com pelo menos 30 dias de antecedencia&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>dataInicio</name>
+            <dataType>Date</dataType>
+            <fieldText>Data de inicio das ferias</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <defaultValue>
+                <elementReference>varDataInicio</elementReference>
+            </defaultValue>
+        </fields>
+        <fields>
+            <name>dataRetorno</name>
+            <dataType>Date</dataType>
+            <fieldText>Data de retorno ao trabalho</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <defaultValue>
+                <elementReference>varDataRetorno</elementReference>
+            </defaultValue>
+        </fields>
+        <nextOrFinishButtonLabel>Validar e continuar</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Abono</name>
+        <label>Abono Pecuniario</label>
+        <locationX>500</locationX>
+        <locationY>900</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Voltar</backButtonLabel>
+        <connector>
+            <targetReference>Set_Abono_Vars</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Abono_Info</name>
+            <fieldText>{!textAbonoInfo}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>venderAbono</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Desejo converter parte das minhas ferias em abono pecuniario</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <defaultValue>
+                <elementReference>varVenderAbono</elementReference>
+            </defaultValue>
+        </fields>
+        <fields>
+            <name>diasAbono</name>
+            <dataType>Number</dataType>
+            <fieldText>Quantos dias deseja converter em abono?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+            <defaultValue>
+                <elementReference>varDiasAbono</elementReference>
+            </defaultValue>
+        </fields>
+        <nextOrFinishButtonLabel>Continuar</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Confirmacao</name>
+        <label>Confirmacao</label>
+        <locationX>600</locationX>
+        <locationY>1000</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Voltar</backButtonLabel>
+        <connector>
+            <targetReference>Criar_Case</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Resumo</name>
+            <fieldText>{!textResumo}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>confirmoDados</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Confirmo que todas as informacoes acima estao corretas.</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Enviar para aprovacao</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Sucesso</name>
+        <label>Sucesso</label>
+        <locationX>600</locationX>
+        <locationY>1300</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Sucesso</name>
+            <fieldText>{!textSucesso}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Erro</name>
+        <label>Erro de Validacao</label>
+        <locationX>500</locationX>
+        <locationY>700</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Tela_Selecao_Datas</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Erro</name>
+            <fieldText>{!textErro}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Corrigir datas</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <start>
+        <locationX>350</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Saldo_Atual</targetReference>
+        </connector>
+    </start>
+
+    <textTemplates>
+        <name>textCabecalho</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;h2&gt;Ola, {!$User.FirstName}! Vamos agendar suas ferias?&lt;/h2&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textSaldo</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong&gt;Seu saldo atual:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Regime: {!Get_Saldo_Atual.Regime_Contratacao__c}&lt;/li&gt;&lt;li&gt;Direito no periodo aquisitivo: &lt;strong&gt;{!Get_Saldo_Atual.Dias_Direito__c} dias&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Ja tirados: {!Get_Saldo_Atual.Dias_Tirados__c} dias&lt;/li&gt;&lt;li&gt;Disponiveis: &lt;strong&gt;{!Get_Saldo_Atual.Dias_Disponiveis__c} dias&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Prazo concessivo: ate {!Get_Saldo_Atual.Periodo_Concessivo_Fim__c}&lt;/li&gt;&lt;/ul&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textAbonoInfo</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong&gt;Abono pecuniario:&lt;/strong&gt; voce pode converter ate 1/3 do seu direito em dinheiro.&lt;/p&gt;&lt;p&gt;Limite disponivel: &lt;strong&gt;{!fxLimiteAbono} dias&lt;/strong&gt;.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textResumo</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong&gt;Confira os dados do seu pedido:&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Inicio: {!varDataInicio}&lt;/li&gt;&lt;li&gt;Retorno: {!varDataRetorno}&lt;/li&gt;&lt;li&gt;Total: {!fxDiasSolicitados} dias corridos&lt;/li&gt;&lt;li&gt;Vender abono: {!varVenderAbono}&lt;/li&gt;&lt;li&gt;Dias em abono: {!varDiasAbono}&lt;/li&gt;&lt;li&gt;Gestor aprovador: {!Get_Manager.Name}&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Ao enviar, o pedido ira para aprovacao do seu gestor.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textSucesso</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;h2&gt;Pedido enviado com sucesso!&lt;/h2&gt;&lt;p&gt;Seu pedido foi encaminhado ao gestor para aprovacao.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Protocolo:&lt;/strong&gt; {!Criar_Case}&lt;/p&gt;&lt;p&gt;Assim que for aprovado, voce recebera um email de confirmacao. Um lembrete sera enviado 5 dias antes do inicio das ferias.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textErro</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;div style="color:#c23934"&gt;&lt;p&gt;&lt;strong&gt;Nao foi possivel validar seu pedido.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!varMensagemErro}&lt;/p&gt;&lt;/div&gt;</text>
+    </textTemplates>
+
+    <variables>
+        <name>varUserId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$User.Id</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>varDataInicio</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varDataRetorno</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varVenderAbono</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varDiasAbono</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varMensagemErro</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>
