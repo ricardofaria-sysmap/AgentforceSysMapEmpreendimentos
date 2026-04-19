@@ -4,6 +4,10 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Agentforce RH - Gestor</label>
     <license>Salesforce</license>
+    <applicationVisibilities>
+        <application>I_Connecta</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>FeriasApprovalSubmitter</apexClass>
         <enabled>true</enabled>
@@ -12,6 +16,14 @@
         <apexClass>FeriasEmailSender</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>SaldoFeriasController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Agendamento_Ferias_Autolaunch</flow>
+    </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Agendamento_Ferias_Screen</flow>
@@ -43,6 +55,20 @@
         <object>Knowledge__kav</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Feriado__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Feriado__c.Ano__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Knowledge__kav.Politica_Conteudo__c</field>
@@ -146,4 +172,20 @@
         <recordType>Knowledge__kav.Politica_RH</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>Feriado__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>I_Connecta_Home</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Saldo_Ferias__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-Case</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

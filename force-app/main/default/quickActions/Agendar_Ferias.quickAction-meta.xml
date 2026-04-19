@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Abre o Screen Flow Agendamento_Ferias_Screen para o colaborador solicitar ferias com validacao CLT inline.</description>
+    <flowDefinition>Agendamento_Ferias_Screen</flowDefinition>
+    <label>Agendar Ferias</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

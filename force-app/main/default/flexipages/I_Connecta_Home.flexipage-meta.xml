@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Home page do app I-Connecta (Itau RH). Banner, card de saldo, atalhos e CTA do chat.</description>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:richText</componentName>
+                <identifier>banner_welcome</identifier>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;div style="background:linear-gradient(135deg,#1d3557,#ec7211);color:#ffffff;border-radius:12px;padding:24px 28px;margin-bottom:16px;"&gt;&lt;h1 style="font-size:22px;margin:0 0 6px 0;font-weight:600;"&gt;Bem-vindo ao I-Connecta&lt;/h1&gt;&lt;p style="margin:0;font-size:14px;opacity:.92;"&gt;Sua jornada de colaborador Itau: consulte politicas, agende ferias e fale com o RH em um unico lugar.&lt;/p&gt;&lt;/div&gt;</value>
+                </componentInstanceProperties>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:saldoFeriasCard</componentName>
+                <identifier>saldo_card</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:richText</componentName>
+                <identifier>atalho_rapido</identifier>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;div style="border:1px solid #e6e6e6;border-radius:8px;padding:16px;margin-top:16px;"&gt;&lt;h3 style="margin:0 0 12px 0;color:#1d3557;font-size:15px;"&gt;Atalhos rapidos&lt;/h3&gt;&lt;ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;"&gt;&lt;li&gt;&lt;a href="/lightning/o/Case/list?filterName=Meus_Pedidos_Ferias" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Meus pedidos de ferias&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Knowledge__kav/list?filterName=RecentlyViewedArticles" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Politicas de RH (Knowledge)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Feriado__c/list" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Calendario de feriados&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Saldo_Ferias__c/list" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Meu historico de saldos&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</value>
+                </componentInstanceProperties>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:richText</componentName>
+                <identifier>chat_cta</identifier>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;div style="border:1px dashed #ec7211;border-radius:8px;padding:20px;background:#fef7ec;margin-top:16px;"&gt;&lt;h3 style="margin:0 0 8px 0;color:#1d3557;"&gt;Precisa de ajuda com RH?&lt;/h3&gt;&lt;p style="margin:0 0 12px 0;color:#4a5568;font-size:14px;"&gt;Converse com o Agent Itau RH: tire duvidas sobre politicas ou agende ferias diretamente pelo chat.&lt;/p&gt;&lt;p style="margin:0;font-size:13px;color:#8c6c2e;"&gt;O assistente aparece no canto inferior direito (Utility Bar). Se nao estiver visivel, clique em &lt;strong&gt;Agendar Ferias&lt;/strong&gt; ali ou no card de saldo acima.&lt;/p&gt;&lt;/div&gt;</value>
+                </componentInstanceProperties>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>I-Connecta Home</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>

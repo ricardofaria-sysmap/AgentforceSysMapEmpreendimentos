@@ -24,31 +24,32 @@ Persona: **Pedro**, PJ
 2. Agente detecta regime e traz regra contratual distinta
 3. Destacar: mesmo agente, contextualização por persona
 
-### Demo 3 — Agendamento bem-sucedido (5 min) — Ricardo
-Persona: **Marina** (volta ao chat)
-1. Perguntar saldo: **"Quantos dias eu tenho disponíveis?"** → agente mostra
-2. **"Quero marcar minhas férias"** → agente invoca Screen Flow automaticamente
-3. Preencher datas (início hoje+45, retorno hoje+59)
-4. Confirmar sem abono
-5. Revisar tela de confirmação e submeter
-6. Mostrar Case criado com Status "Pendente Aprovação"
-7. Trocar para usuário **Carlos** (gestor): abrir Approval Request, aprovar
-8. Voltar para Marina: mostrar e-mail de confirmação recebido
-9. Destacar:
-   - Determinismo das datas (nenhuma ambiguidade)
-   - Validações automáticas invisíveis ao colaborador (quando tudo ok)
-   - Aprovação roteada automaticamente ao manager
-   - E-mail disparado + próximo e-mail agendado para 5 dias antes
+### Demo 3 — Home I-Connecta + Agendamento bem-sucedido (6 min) — Ricardo
+Persona: **Marina** (CLT)
+1. Abrir o app **I-Connecta** pelo App Launcher → aterrissa na **Home** com o LWC `saldoFeriasCard` ("Você tem 30 dias disponíveis")
+2. Mostrar rapidamente os atalhos: Meus Pedidos, Feriados 2026, Chat RH
+3. Voltar ao chat do agent: **"Quantos dias eu tenho disponíveis?"** → agente consulta e mostra
+4. **"Quero marcar férias de 15/09 a 29/09, sem vender abono"** → agente invoca **Autolaunched Flow** `Agendamento_Ferias_Autolaunch`
+5. Agente confirma em linguagem natural: *"Pedido 00001234 enviado ao seu gestor Carlos."*
+6. Mostrar o Case criado com Status "Pendente Aprovação" (lista "Meus Pedidos de Ferias")
+7. Alternativa UI — abrir a **Global Quick Action "Agendar Ferias"** (ou botão "Agendar" do saldoFeriasCard): destacar que o **Screen Flow** é a mesma lógica para quem prefere formulário
+8. Trocar para **Carlos** (gestor): abrir Approval Request, aprovar
+9. Voltar para Marina: mostrar e-mail de confirmação recebido
+10. Destacar:
+    - Dois canais (chat + UI) compartilhando validação e Approval Process
+    - Determinismo: datas tipadas, não strings do LLM
+    - Aprovação roteada automaticamente ao manager
+    - E-mail disparado + lembrete agendado D-5
 
 ### Demo 4 — Validação CLT bloqueando (2 min) — Ricardo
 Persona: Marina novamente
-1. **"Quero marcar férias"** → Screen Flow
-2. Escolher data de início numa sexta-feira (ou véspera de feriado)
-3. Mostrar tela de erro com mensagem clara
-4. Corrigir e concluir
+1. No chat: **"Quero tirar 3 dias de férias na próxima sexta"**
+2. Agente invoca o Autolaunched Flow, que retorna `varSucesso=false` + `varMensagemErro` com a regra CLT violada
+3. Agente repassa o texto literal: *"Não foi possível. O período mínimo por segmento é de 5 dias corridos..."*
+4. Marina corrige no chat com novas datas → fluxo segue com sucesso
 5. Destacar:
-   - Regras CLT em código, não na cabeça do colaborador
-   - Feedback imediato evita retrabalho e fila no RH
+   - Regras CLT em Flow determinístico, não na cabeça do LLM
+   - Mensagem de erro é consistente independente do canal (chat ou Screen Flow)
 
 ### Encerramento (1 min) — Luís
 - Recapitular: 2 agentes, 1 experiência integrada
@@ -68,16 +69,20 @@ Persona: Marina novamente
 ## Antes da demo (checklist dia D-1)
 
 - [ ] Org funcional e com acesso externo (sandbox URL)
-- [ ] 3 usuários com senhas redefinidas
+- [ ] 3 usuários com senhas redefinidas (Marina, Pedro, Carlos)
 - [ ] Saldo_Ferias__c populado nos 3 cenários
+- [ ] Feriado__c com seed 2026/2027 carregado (`scripts/load-feriados.sh`)
+- [ ] Custom app **I-Connecta** visível no App Launcher para colaborador e gestor
+- [ ] FlexiPage `I_Connecta_Home` renderizando o LWC `saldoFeriasCard` para o usuário Marina
 - [ ] Nenhum Case aberto que possa disparar e-mail indesejado
-- [ ] Chat web acessível (URL pública do Embedded Service)
+- [ ] Agent Builder: Topics `Consulta_Politicas_RH` e `Agendamento_Ferias` ativos, preview testado
+- [ ] Chat web acessível (URL pública do Embedded Service) OU agente Preview aberto
 - [ ] Email Deliverability = "All email" na org
-- [ ] Janelas/abas pré-abertas: Chat (Marina), Approval (Carlos), Email simulado
-- [ ] Fonte "Feriados 2026" alinhada com data de demo
+- [ ] Janelas/abas pré-abertas: App I-Connecta (Marina), Approval Request (Carlos), inbox simulada
 
 ## Plano B
 
-- Se Agentforce não responder: abrir Knowledge Article direto
+- Se Agentforce não responder: usar a **Global Quick Action "Agendar Ferias"** (Screen Flow) e abrir o Knowledge Article direto
+- Se Autolaunched Flow falhar no chat: trocar para Screen Flow via Quick Action (lógica equivalente)
 - Se Screen Flow travar: mostrar gravação pré-feita
 - Se Approval não disparar: abrir Case manualmente e mostrar o Record-Triggered Flow no debug log

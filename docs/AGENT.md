@@ -3,7 +3,9 @@
 Este documento descreve a configuração do **Agent A** (assistente virtual de RH do I-Connecta). O agente cobre dois tópicos:
 
 1. **Consulta de Políticas de RH** — responde dúvidas consultando a base de Knowledge (RecordType `Politica_RH`, Data Categories `Topicos_RH`).
-2. **Agendamento de Férias** — invoca o Screen Flow `Agendamento_Ferias_Screen` para o colaborador marcar férias de forma estruturada.
+2. **Agendamento de Férias** — invoca o **Autolaunched Flow** `Agendamento_Ferias_Autolaunch` para o colaborador marcar férias via conversa.
+
+> **Estratégia híbrida (Escopo D):** o agent usa o flow _autolaunched_ (coleta inputs por linguagem natural). Para a experiência de formulário guiado, o mesmo `Agendamento_Ferias_Screen` está exposto como **Global Quick Action** (`Agendar_Ferias`) e no botão "Agendar" do card de saldo na Home I-Connecta.
 
 ## Por que UI + retrieve (e não deploy direto)?
 
@@ -90,11 +92,22 @@ Arquivo: `specs/agent-itau-rh.yaml`
    - *"Após o colaborador concluir o Flow com sucesso, o sistema cria um Case, submete ao Approval Process do gestor direto, envia email de confirmação quando aprovar, e dispara lembrete 5 dias antes do início. Pergunte se há mais alguma dúvida ou encerre educadamente."*
 
 6. **Actions** → **New Action → From Flow**:
-   - Selecione o Flow `Agendamento_Ferias_Screen`.
+   - Selecione o Flow **`Agendamento_Ferias_Autolaunch`** (autolaunched, não o Screen Flow).
    - Action Label: `Agendar Ferias` — API Name: `Agendar_Ferias`.
-   - **Input** `varUserId`: mapeie para `$User.Id` (contexto do usuário autenticado).
-   - **Output** `varCaseId`: deixe como default (exposto ao planner).
-   - Instructions: *"Invoke this action immediately when the user expresses intent to schedule or mark vacation ('tirar ferias', 'agendar ferias', 'marcar ferias')."*
+   - **Inputs** a coletar em conversa:
+     - `varUserId` → mapeie para `$User.Id` (contexto do usuário autenticado, **não pergunte**).
+     - `varDataInicio` → pergunte em linguagem natural ("Qual a data de início desejada?") — tipo Date.
+     - `varDataRetorno` → pergunte em linguagem natural ("E a data de retorno ao trabalho?") — tipo Date.
+     - `varVenderAbono` → pergunte se quer vender abono pecuniário (default `false`).
+     - `varDiasAbono` → se `varVenderAbono=true`, pergunte quantos dias (default `0`).
+   - **Outputs** a expor ao planner:
+     - `varSucesso` (Boolean): orienta a mensagem final.
+     - `varMensagemErro` (String): se `varSucesso=false`, o agent repassa esse texto literalmente ao colaborador (contém a regra CLT violada).
+     - `varCaseId` / `varCaseNumber`: use no feedback de sucesso ("Pedido 00001234 enviado ao seu gestor").
+   - Instructions:
+     - *"Invoke this action when the user expresses intent to schedule vacation ('tirar ferias', 'agendar ferias', 'marcar ferias'). Always pass `varUserId = $User.Id`."*
+     - *"If `varSucesso = false`, repeat `varMensagemErro` verbatim to the user — it already explains the CLT rule that was violated. Do not rephrase or invent extra rules."*
+     - *"If `varSucesso = true`, congratulate and mention the Case number (`varCaseNumber`), reminding that the manager will receive the approval request and an email will confirm the outcome."*
    - Salve.
 
 7. **Save Topic**.
@@ -103,12 +116,13 @@ Arquivo: `specs/agent-itau-rh.yaml`
 
 1. Volte ao overview do agent → **Activate**.
 2. Aba **Conversation Preview** → teste:
-   - *"Quantos dias de férias eu tenho direito?"* → deve invocar Knowledge search.
-   - *"Quero marcar férias de 15 dias em dezembro."* → deve abrir o Screen Flow.
-3. Se o Flow `Agendamento_Ferias_Screen` não aparecer na lista de Flows disponíveis para Action, confirme que:
-   - Está ativo (`sf data query -q "SELECT IsActive FROM FlowDefinitionView WHERE ApiName='Agendamento_Ferias_Screen'"`).
+   - *"Quantos dias de férias eu tenho direito?"* → deve invocar Knowledge search no topic `Consulta_Politicas_RH`.
+   - *"Quero marcar férias de 15/09 a 24/09, vendendo 10 dias de abono."* → deve coletar as datas, invocar `Agendamento_Ferias_Autolaunch` e retornar confirmação com Case number.
+   - *"Quero tirar 3 dias de férias na próxima semana."* → deve receber a mensagem de erro CLT ("mínimo 5 dias" e/ou "antecedência 30 dias").
+3. Se o Flow `Agendamento_Ferias_Autolaunch` não aparecer na lista de Flows disponíveis para Action, confirme que:
+   - Está ativo (`sf data query -q "SELECT IsActive FROM FlowDefinitionView WHERE ApiName='Agendamento_Ferias_Autolaunch'"`).
    - Tem `<environments>Default</environments>` (já configurado no XML).
-   - O usuário do agent (botUser) tem a permission set `Agentforce_RH_Colaborador` para executar o Flow.
+   - O usuário do agent (botUser) tem a permission set `Agentforce_RH_Colaborador` para executar o Flow (já inclui `Agendamento_Ferias_Autolaunch` + `SaldoFeriasController`).
 
 ### 5. Versionar o metadata
 
