@@ -1,0 +1,4 @@
+Name,Colaborador__r.FederationIdentifier,Regime_Contratacao__c,Periodo_Aquisitivo_Inicio__c,Faltas_Injustificadas__c,Dias_Tirados__c,Dias_Abono_Vendidos__c,Status__c
+Saldo Marina 2025,IT-CLT-001,CLT,2025-03-01,2,0,0,Vigente
+Saldo Pedro 2025,IT-PJ-001,PJ,2025-01-15,0,5,0,Vigente
+Saldo Carlos 2025,IT-GST-001,CLT,2024-11-01,0,20,0,Vigente

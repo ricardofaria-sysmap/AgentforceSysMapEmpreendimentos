@@ -1,0 +1,15 @@
+Olá {!Case.Contact.FirstName},
+
+Este é um lembrete amigável: suas férias começam em 5 dias!
+
+Resumo:
+- Início: {!Case.Data_Inicio_Ferias__c}
+- Retorno: {!Case.Data_Retorno_Ferias__c}
+
+Checklist pré-férias:
+1. Registre o handover dos seus projetos em aberto
+2. Configure resposta automática no e-mail
+3. Alinhe substituto(a) com seu gestor
+4. Não esqueça do descanso! Aproveite ao máximo.
+
+Equipe de RH - Itaú

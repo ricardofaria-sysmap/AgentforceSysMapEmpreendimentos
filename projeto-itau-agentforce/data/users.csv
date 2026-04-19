@@ -1,0 +1,4 @@
+Username,LastName,FirstName,Email,Alias,TimeZoneSidKey,LocaleSidKey,EmailEncodingKey,ProfileName,LanguageLocaleKey,Title,Department,ManagerUsername,FederationIdentifier
+marina.colaboradora@itau.demo.local,Colaboradora CLT,Marina,marina.colaboradora@itau.demo.local,mcltd,America/Sao_Paulo,pt_BR,UTF-8,Standard User,pt_BR,Analista Pleno,Tecnologia,carlos.gestor@itau.demo.local,IT-CLT-001
+pedro.colaborador@itau.demo.local,Colaborador PJ,Pedro,pedro.colaborador@itau.demo.local,pcolpj,America/Sao_Paulo,pt_BR,UTF-8,Standard User,pt_BR,Consultor PJ,Tecnologia,carlos.gestor@itau.demo.local,IT-PJ-001
+carlos.gestor@itau.demo.local,Gestor,Carlos,carlos.gestor@itau.demo.local,cgest,America/Sao_Paulo,pt_BR,UTF-8,Standard User,pt_BR,Coordenador,Tecnologia,,IT-GST-001

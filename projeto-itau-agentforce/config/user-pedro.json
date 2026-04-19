@@ -1,0 +1,19 @@
+{
+  "Username": "pedro.colaborador@itau.demo.local",
+  "LastName": "Colaborador PJ",
+  "FirstName": "Pedro",
+  "Email": "pedro.colaborador@itau.demo.local",
+  "Alias": "pcolpj",
+  "TimeZoneSidKey": "America/Sao_Paulo",
+  "LocaleSidKey": "pt_BR",
+  "EmailEncodingKey": "UTF-8",
+  "LanguageLocaleKey": "pt_BR",
+  "profileName": "Standard User",
+  "Title": "Consultor PJ",
+  "Department": "Tecnologia",
+  "FederationIdentifier": "IT-PJ-001",
+  "permsets": [
+    "Agentforce_RH_Colaborador"
+  ],
+  "generatePassword": true
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pedido_Ferias</fullName>
+    <active>true</active>
+    <businessProcess>Pedido_Ferias_Process</businessProcess>
+    <description>Pedido formal de ferias submetido pelo colaborador via I-Connecta.</description>
+    <label>Pedido de Ferias</label>
+</RecordType>

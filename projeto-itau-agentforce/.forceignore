@@ -1,0 +1,15 @@
+# LWC configuration files
+**/jsconfig.json
+**/.eslintrc.json
+
+# LWC Jest
+**/__tests__/**
+
+# Sistema
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Backup temporário
+**/*.dup

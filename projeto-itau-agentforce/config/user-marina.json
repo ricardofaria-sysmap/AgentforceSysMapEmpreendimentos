@@ -1,0 +1,19 @@
+{
+  "Username": "marina.colaboradora@itau.demo.local",
+  "LastName": "Colaboradora CLT",
+  "FirstName": "Marina",
+  "Email": "marina.colaboradora@itau.demo.local",
+  "Alias": "mcltd",
+  "TimeZoneSidKey": "America/Sao_Paulo",
+  "LocaleSidKey": "pt_BR",
+  "EmailEncodingKey": "UTF-8",
+  "LanguageLocaleKey": "pt_BR",
+  "profileName": "Standard User",
+  "Title": "Analista Pleno",
+  "Department": "Tecnologia",
+  "FederationIdentifier": "IT-CLT-001",
+  "permsets": [
+    "Agentforce_RH_Colaborador"
+  ],
+  "generatePassword": true
+}

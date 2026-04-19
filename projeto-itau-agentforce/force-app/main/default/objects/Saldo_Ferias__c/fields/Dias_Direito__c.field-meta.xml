@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dias_Direito__c</fullName>
+    <description>Aplica a escala do art. 130 CLT com base em faltas injustificadas. Para PJ, retorna 20 fixos.</description>
+    <formula>IF(
+    ISPICKVAL(Regime_Contratacao__c, "PJ"),
+    20,
+    IF(Faltas_Injustificadas__c &lt;= 5, 30,
+        IF(Faltas_Injustificadas__c &lt;= 14, 24,
+            IF(Faltas_Injustificadas__c &lt;= 23, 18,
+                IF(Faltas_Injustificadas__c &lt;= 32, 12, 0)
+            )
+        )
+    )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Dias de Direito</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

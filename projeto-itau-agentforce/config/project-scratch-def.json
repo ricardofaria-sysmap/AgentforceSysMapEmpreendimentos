@@ -1,0 +1,30 @@
+{
+  "orgName": "Itau Agentforce RH Demo",
+  "edition": "Developer",
+  "features": [
+    "Communities",
+    "ServiceCloud",
+    "LiveAgent",
+    "Knowledge",
+    "EinsteinGPTPlatform"
+  ],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    },
+    "knowledgeSettings": {
+      "defaultLanguage": "pt_BR",
+      "enableKnowledge": true,
+      "enableLightningKbEnabled": true
+    },
+    "caseSettings": {
+      "systemUserEmail": "noreply@itau.demo.local"
+    },
+    "emailAdministrationSettings": {
+      "enableEnhancedEmailEnabled": true
+    }
+  }
+}

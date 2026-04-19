@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Pedido_Ferias_Aprovado</fullName>
+        <description>Marca Aprovacao_Gestor__c = Aprovado e muda Status do Case para Working.</description>
+        <field>Aprovacao_Gestor__c</field>
+        <literalValue>Aprovado</literalValue>
+        <name>Pedido Ferias Aprovado</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Pedido_Ferias_Reprovado</fullName>
+        <description>Marca Aprovacao_Gestor__c = Reprovado quando o gestor rejeita o pedido.</description>
+        <field>Aprovacao_Gestor__c</field>
+        <literalValue>Reprovado</literalValue>
+        <name>Pedido Ferias Reprovado</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Case_Status_Working</fullName>
+        <description>Move o Case para Working ao submeter aprovacao.</description>
+        <field>Status</field>
+        <literalValue>Working</literalValue>
+        <name>Case Status Working</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Case_Status_Closed</fullName>
+        <description>Fecha o Case automaticamente apos aprovacao final.</description>
+        <field>Status</field>
+        <literalValue>Closed</literalValue>
+        <name>Case Status Closed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

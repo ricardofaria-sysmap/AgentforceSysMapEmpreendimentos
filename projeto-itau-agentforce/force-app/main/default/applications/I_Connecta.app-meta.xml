@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#1D3557</headerColor>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
+    </brand>
+    <description>Portal interno de RH do Itau. Colaborador consulta politicas, agenda ferias, ve saldo, feriados e historicos.</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>I-Connecta</label>
+    <navType>Standard</navType>
+    <tabs>I_Connecta_Home</tabs>
+    <tabs>standard-Case</tabs>
+    <tabs>Saldo_Ferias__c</tabs>
+    <tabs>Feriado__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

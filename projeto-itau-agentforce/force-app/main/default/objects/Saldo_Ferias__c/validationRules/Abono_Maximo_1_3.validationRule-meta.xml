@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Abono_Maximo_1_3</fullName>
+    <active>true</active>
+    <description>CLT art. 143: abono pecuniario limitado a 1/3 do periodo. PJ nao tem abono.</description>
+    <errorConditionFormula>OR(
+  ISPICKVAL(Regime_Contratacao__c, "PJ") &amp;&amp; Dias_Abono_Vendidos__c &gt; 0,
+  Dias_Abono_Vendidos__c &gt; FLOOR(Dias_Direito__c / 3)
+)</errorConditionFormula>
+    <errorMessage>Abono pecuniario limitado a 1/3 dos dias de direito (CLT art. 143). PJ nao possui abono.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+Olá {!Case.Contact.FirstName},
+
+Temos uma ótima notícia: suas férias foram aprovadas pelo seu gestor!
+
+Detalhes do pedido:
+- Protocolo: {!Case.CaseNumber}
+- Data de início: {!Case.Data_Inicio_Ferias__c}
+- Data de retorno: {!Case.Data_Retorno_Ferias__c}
+- Total de dias: {!Case.Quantidade_Dias__c}
+
+Você receberá um lembrete 5 dias antes do início das suas férias.
+
+Boas férias!
+Equipe de RH - Itaú

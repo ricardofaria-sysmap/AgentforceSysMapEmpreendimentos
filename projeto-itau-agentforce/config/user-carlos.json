@@ -1,0 +1,19 @@
+{
+  "Username": "carlos.gestor@itau.demo.local",
+  "LastName": "Gestor",
+  "FirstName": "Carlos",
+  "Email": "carlos.gestor@itau.demo.local",
+  "Alias": "cgest",
+  "TimeZoneSidKey": "America/Sao_Paulo",
+  "LocaleSidKey": "pt_BR",
+  "EmailEncodingKey": "UTF-8",
+  "LanguageLocaleKey": "pt_BR",
+  "profileName": "Standard User",
+  "Title": "Coordenador",
+  "Department": "Tecnologia",
+  "FederationIdentifier": "IT-GST-001",
+  "permsets": [
+    "Agentforce_RH_Gestor"
+  ],
+  "generatePassword": true
+}
