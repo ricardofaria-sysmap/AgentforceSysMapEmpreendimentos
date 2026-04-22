@@ -1,0 +1,42 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "varDataInicio" : {
+      "title" : "Var Data Inicio",
+      "description" : "Data de inicio no formato ISO YYYY-MM-DD.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "varDataRetorno" : {
+      "title" : "Var Data Retorno",
+      "description" : "Data de retorno no formato ISO YYYY-MM-DD.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "varDiasAbono" : {
+      "title" : "Var Dias Abono",
+      "description" : "Quantidade de dias de abono (0 se nao esta vendendo).",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "varUserId" : {
+      "title" : "Var User Id",
+      "description" : "Sempre passar string vazia. O Flow faz fallback para $User.Id (colaborador logado).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "varVenderAbono" : {
+      "title" : "Var Vender Abono",
+      "description" : "True se o colaborador quer vender abono pecuniario.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

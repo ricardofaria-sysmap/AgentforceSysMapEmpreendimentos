@@ -17,4 +17,5 @@
     <tabs>Saldo_Ferias__c</tabs>
     <tabs>Feriado__c</tabs>
     <uiType>Lightning</uiType>
+    <utilityBar>I_Connecta_UtilityBar</utilityBar>
 </CustomApplication>

@@ -1,0 +1,38 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "varCaseId" : {
+      "title" : "Var Case Id",
+      "description" : "Id interno do Case.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varCaseNumber" : {
+      "title" : "Var Case Number",
+      "description" : "Numero do Case criado (ex: 00001234).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varMensagemErro" : {
+      "title" : "Var Mensagem Erro",
+      "description" : "Mensagem especifica quando varSucesso=False (qual regra foi violada).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varSucesso" : {
+      "title" : "Var Sucesso",
+      "description" : "True se o agendamento foi criado e aprovacao submetida.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -205,7 +205,7 @@
             <assignToReference>varMensagemErro</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>As ferias nao podem iniciar em sexta-feira, sabado ou domingo (politica interna do Itau). Escolha um dia de segunda a quinta.</stringValue>
+                <stringValue>As ferias nao podem iniciar de quinta a domingo (art. 134-A CLT: inicio deve estar a pelo menos 2 dias do repouso semanal). Escolha um dia de segunda, terca ou quarta.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -226,7 +226,28 @@
             <assignToReference>varMensagemErro</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>As ferias nao podem comecar nos 2 dias que antecedem um feriado nacional (art. 134, par. 3 CLT). Ajuste a data de inicio.</stringValue>
+                <stringValue>As ferias nao podem comecar nos 2 dias que antecedem um feriado (art. 134-A CLT). Ajuste a data de inicio para pelo menos 3 dias uteis antes do proximo feriado.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+
+    <assignments>
+        <name>Set_Erro_Inicio_Feriado</name>
+        <label>Erro - inicio em feriado</label>
+        <locationX>680</locationX>
+        <locationY>600</locationY>
+        <assignmentItems>
+            <assignToReference>varSucesso</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>As ferias nao podem iniciar em dia de feriado (art. 134-A CLT). As ferias devem comecar em um dia util. Escolha outra data de inicio.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -406,12 +427,19 @@
         </rules>
         <rules>
             <name>R5_Dia_Semana_Invalido</name>
-            <conditionLogic>1 OR 2 OR 3</conditionLogic>
+            <conditionLogic>1 OR 2 OR 3 OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>fxDiaSemanaInicio</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>fxDiaSemanaInicio</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>5.0</numberValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -431,16 +459,38 @@
             <connector>
                 <targetReference>Set_Erro_Dia_Semana</targetReference>
             </connector>
-            <label>Sex/Sab/Dom</label>
+            <label>Qui/Sex/Sab/Dom</label>
         </rules>
         <rules>
-            <name>R6_Vespera_Feriado</name>
-            <conditionLogic>and</conditionLogic>
+            <name>R6_Inicio_Eh_Feriado</name>
+            <conditionLogic>1 AND 2</conditionLogic>
             <conditions>
-                <leftValueReference>fxVesperaFeriado</leftValueReference>
+                <leftValueReference>Get_Feriado_Range.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Feriado_Range.Data__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>varDataInicio</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Inicio_Feriado</targetReference>
+            </connector>
+            <label>Inicio eh feriado</label>
+        </rules>
+        <rules>
+            <name>R7_Vespera_Feriado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Feriado_Range.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -513,26 +563,9 @@
         <scale>0</scale>
     </formulas>
     <formulas>
-        <name>fxVesperaFeriado</name>
-        <dataType>Boolean</dataType>
-        <expression>OR(
-    {!varDataInicio} + 1 = DATE(2026,4,21),
-    {!varDataInicio} + 2 = DATE(2026,4,21),
-    {!varDataInicio} + 1 = DATE(2026,5,1),
-    {!varDataInicio} + 2 = DATE(2026,5,1),
-    {!varDataInicio} + 1 = DATE(2026,9,7),
-    {!varDataInicio} + 2 = DATE(2026,9,7),
-    {!varDataInicio} + 1 = DATE(2026,10,12),
-    {!varDataInicio} + 2 = DATE(2026,10,12),
-    {!varDataInicio} + 1 = DATE(2026,11,2),
-    {!varDataInicio} + 2 = DATE(2026,11,2),
-    {!varDataInicio} + 1 = DATE(2026,11,15),
-    {!varDataInicio} + 2 = DATE(2026,11,15),
-    {!varDataInicio} + 1 = DATE(2026,12,25),
-    {!varDataInicio} + 2 = DATE(2026,12,25),
-    {!varDataInicio} + 1 = DATE(2027,1,1),
-    {!varDataInicio} + 2 = DATE(2027,1,1)
-)</expression>
+        <name>fxDataInicioMais2</name>
+        <dataType>Date</dataType>
+        <expression>{!varDataInicio} + 2</expression>
     </formulas>
     <formulas>
         <name>Formula_UserIdResolvido</name>
@@ -682,7 +715,7 @@
         <locationY>420</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Valida_CLT</targetReference>
+            <targetReference>Get_Feriado_Range</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -701,6 +734,37 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+
+    <recordLookups>
+        <name>Get_Feriado_Range</name>
+        <label>Buscar Feriado no intervalo [inicio, inicio+2]</label>
+        <locationX>600</locationX>
+        <locationY>460</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valida_CLT</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Data__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>varDataInicio</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Data__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>fxDataInicioMais2</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Feriado__c</object>
+        <sortField>Data__c</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
 
