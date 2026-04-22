@@ -6,3 +6,5 @@
 node_modules/
 *.log
 scripts/.usernames.env
+force-app/main/default/lwc/jsconfig.json
+**/.eslintrc.json

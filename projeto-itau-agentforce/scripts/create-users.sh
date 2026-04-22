@@ -43,7 +43,7 @@ create_user() {
   local existing
   existing=$(get_user_id "$username")
   if [ -n "$existing" ]; then
-    echo "  (ja existe: $existing)"
+    echo "  (ja existe: $existing)" >&2
     echo "$existing"
     return
   fi

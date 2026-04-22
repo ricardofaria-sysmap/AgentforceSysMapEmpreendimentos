@@ -25,70 +25,78 @@ sf org display -o "$ORG_ALIAS" --json > /dev/null || {
   exit 1
 }
 
+# Ordem de deploy (respeita dependencias entre componentes):
+#   1. objects              (campos, RTs, validation rules, list views, business process)
+#   2. dataCategoryGroups   (Knowledge)
+#   3. profiles             (categoryGroupVisibilities etc - depende de DCG)
+#   4. permissionsets       (dependem dos objects/fields)
+#   5. email                (templates usados por Flows/Approval/Workflow)
+#   6. classes (Apex)       (referenciadas por Flows, Approval, QuickActions)
+#   7. lwc                  (referenciados por FlexiPages/QuickActions)
+#   8. tabs                 (dependem dos objects)
+#   9. flexipages           (dependem de LWC, tabs, objects)
+#  10. applications         (dependem de tabs/flexipages)
+#  11. quickActions         (dependem de objects, flows e LWC)
+#  12. approvalProcesses    (dependem de fields, email, Apex)
+#  13. workflows            (dependem de fields e email)
+#  14. flows                (dependem de tudo acima)
+#  15-17. genAiPlannerBundles / genAiPlugins / bots (Agentforce - ultimo)
+
+step_counter=0
+total_steps=14
+
 run_deploy() {
-  local step="$1"
-  local path="$2"
+  local path="$1"
+  shift
+  local extra_flags=()
+  if [ "$#" -gt 0 ]; then
+    extra_flags=("$@")
+  fi
+  step_counter=$((step_counter + 1))
+  local step="$step_counter/$total_steps"
+  if [ ! -d "$path" ]; then
+    echo ""
+    echo "==> [$step] $path - pulando (nao existe)"
+    return 0
+  fi
+  if ! compgen -G "$path/*" > /dev/null; then
+    echo ""
+    echo "==> [$step] $path - pulando (vazio)"
+    return 0
+  fi
   echo ""
   echo "==> [$step] $path"
   sf project deploy start \
     -o "$ORG_ALIAS" \
     -d "$path" \
     --ignore-conflicts \
+    ${extra_flags[@]+"${extra_flags[@]}"} \
     ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
 }
 
-run_deploy "1/5" "force-app/main/default/objects"
-if [ -d force-app/main/default/dataCategoryGroups ]; then
-  run_deploy "2/5" "force-app/main/default/dataCategoryGroups"
-else
-  echo "==> [2/5] Sem dataCategoryGroups - pulando"
-fi
-run_deploy "3/5" "force-app/main/default/permissionsets"
-run_deploy "4/5" "force-app/main/default/email"
+run_deploy "force-app/main/default/objects"
+run_deploy "force-app/main/default/dataCategoryGroups"
+run_deploy "force-app/main/default/profiles"
+run_deploy "force-app/main/default/permissionsets"
+run_deploy "force-app/main/default/email"
+run_deploy "force-app/main/default/classes" \
+  --test-level RunSpecifiedTests \
+  --tests FeriasEmailSenderTest \
+  --tests FeriasApprovalSubmitterTest
+run_deploy "force-app/main/default/lwc"
+run_deploy "force-app/main/default/tabs"
+run_deploy "force-app/main/default/flexipages"
+run_deploy "force-app/main/default/applications"
+run_deploy "force-app/main/default/quickActions"
+run_deploy "force-app/main/default/approvalProcesses"
+run_deploy "force-app/main/default/workflows"
+run_deploy "force-app/main/default/flows"
 
-echo ""
-echo "==> [5/5] Flows, Apex classes e Agent (se presentes)"
-if compgen -G "force-app/main/default/classes/*.cls" > /dev/null; then
-  sf project deploy start \
-    -o "$ORG_ALIAS" \
-    -d force-app/main/default/classes \
-    --ignore-conflicts \
-    --test-level RunSpecifiedTests --tests FeriasEmailSenderTest --tests FeriasApprovalSubmitterTest \
-    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
-fi
-if compgen -G "force-app/main/default/flows/*.flow-meta.xml" > /dev/null; then
-  sf project deploy start \
-    -o "$ORG_ALIAS" \
-    -d force-app/main/default/flows \
-    --ignore-conflicts \
-    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
-else
-  echo "  (sem flows versionados ainda - crie na UI e rode retrieve.sh)"
-fi
-
-if [ -d force-app/main/default/genAiPlannerBundles ] && compgen -G "force-app/main/default/genAiPlannerBundles/*" > /dev/null; then
-  sf project deploy start \
-    -o "$ORG_ALIAS" \
-    -d force-app/main/default/genAiPlannerBundles \
-    --ignore-conflicts \
-    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
-fi
-if [ -d force-app/main/default/genAiPlugins ] && compgen -G "force-app/main/default/genAiPlugins/*" > /dev/null; then
-  sf project deploy start \
-    -o "$ORG_ALIAS" \
-    -d force-app/main/default/genAiPlugins \
-    --ignore-conflicts \
-    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
-fi
-if [ -d force-app/main/default/bots ] && compgen -G "force-app/main/default/bots/*" > /dev/null; then
-  sf project deploy start \
-    -o "$ORG_ALIAS" \
-    -d force-app/main/default/bots \
-    --ignore-conflicts \
-    ${DEPLOY_FLAGS[@]+"${DEPLOY_FLAGS[@]}"}
-else
-  echo "  (sem agent versionado ainda - crie via UI seguindo docs/AGENT.md e rode scripts/retrieve-agent.sh)"
-fi
+# Agentforce (opcional — so existe depois de criar via UI e rodar retrieve-agent.sh)
+total_steps=17
+run_deploy "force-app/main/default/genAiPlannerBundles"
+run_deploy "force-app/main/default/genAiPlugins"
+run_deploy "force-app/main/default/bots"
 
 echo ""
 echo "$LABEL concluido."
@@ -98,7 +106,8 @@ else
   echo "Proximos passos:"
   echo "  1. ./scripts/create-users.sh $ORG_ALIAS"
   echo "  2. ./scripts/bootstrap-data.sh $ORG_ALIAS"
-  echo "  3. ./scripts/create-knowledge.sh $ORG_ALIAS   # publica os 5 artigos de politica"
-  echo "  4. Criar Agent_Itau_RH via Agent Builder UI - ver docs/AGENT.md (5 min)"
-  echo "  5. ./scripts/retrieve-agent.sh $ORG_ALIAS   # versiona o agent no SFDX project"
+  echo "  3. ./scripts/load-feriados.sh $ORG_ALIAS"
+  echo "  4. ./scripts/create-knowledge.sh $ORG_ALIAS   # publica os 5 artigos de politica"
+  echo "  5. Criar Agent_Itau_RH via Agent Builder UI - ver docs/AGENT.md (5 min)"
+  echo "  6. ./scripts/retrieve-agent.sh $ORG_ALIAS    # versiona o agent no SFDX project"
 fi
