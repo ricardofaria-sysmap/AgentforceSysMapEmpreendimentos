@@ -1,10 +1,11 @@
 public with sharing class ConsultarPoliticasRH {
 
     private static final Integer MAX_RESULTS = 5;
+    private static final Integer MIN_TERM_LENGTH = 2;
 
     @InvocableMethod(
         label='Consultar Politicas RH (Knowledge)'
-        description='Busca artigos publicados de Knowledge na Data Category Topicos_RH filtrando por palavra-chave. Retorna lista achatada (titulo, resumo, conteudo, fonte legal, url) para o Agent compor resposta com citacao obrigatoria.'
+        description='Busca artigos publicados de Knowledge filtrando por palavra-chave. Usa SOSL (accent-insensitive e varre tambem o conteudo do artigo). Retorna lista achatada (titulo, resumo, conteudo, fonte legal, url) para o Agent compor resposta com citacao obrigatoria.'
     )
     public static List<Result> consultar(List<Request> requests) {
         List<Result> out = new List<Result>();
@@ -23,20 +24,29 @@ public with sharing class ConsultarPoliticasRH {
                 continue;
             }
 
-            String needle = '%' + req.query.trim().toLowerCase() + '%';
+            String termoBruto = req.query.trim();
+            if (termoBruto.length() < MIN_TERM_LENGTH) {
+                r.message = 'Palavra-chave muito curta (minimo ' + MIN_TERM_LENGTH + ' caracteres).';
+                out.add(r);
+                continue;
+            }
+
+            String termo = sanitizarParaSOSL(termoBruto);
+
             try {
-                List<Knowledge__kav> kavs = [
-                    SELECT Id, Title, UrlName, Summary, ArticleNumber,
-                           Politica_Fonte_Legal__c, Politica_Conteudo__c,
-                           Politica_Ultima_Revisao__c, LastPublishedDate
-                    FROM Knowledge__kav
-                    WHERE PublishStatus = 'Online'
-                      AND Language = 'pt_BR'
-                      AND (Title LIKE :needle OR Summary LIKE :needle)
-                    WITH USER_MODE
-                    ORDER BY LastPublishedDate DESC
-                    LIMIT :MAX_RESULTS
-                ];
+                List<List<SObject>> found = Search.query(
+                    'FIND {' + termo + '} IN ALL FIELDS '
+                    + 'RETURNING Knowledge__kav('
+                    + 'Id, Title, UrlName, Summary, ArticleNumber, '
+                    + 'Politica_Fonte_Legal__c, Politica_Conteudo__c, '
+                    + 'Politica_Ultima_Revisao__c, LastPublishedDate '
+                    + 'WHERE PublishStatus = \'Online\' AND Language = \'pt_BR\' '
+                    + 'ORDER BY LastPublishedDate DESC '
+                    + 'LIMIT ' + MAX_RESULTS
+                    + ')'
+                );
+
+                List<Knowledge__kav> kavs = (List<Knowledge__kav>) found[0];
 
                 for (Knowledge__kav k : kavs) {
                     Artigo a = new Artigo();
@@ -53,7 +63,7 @@ public with sharing class ConsultarPoliticasRH {
                 r.totalEncontrados = r.articles.size();
                 r.success = !r.articles.isEmpty();
                 if (r.articles.isEmpty()) {
-                    r.message = 'Nenhum artigo encontrado para "' + req.query + '". Sugira outra palavra-chave ou transfira para atendimento humano.';
+                    r.message = 'Nenhum artigo encontrado para "' + termoBruto + '". Sugira outra palavra-chave ou transfira para atendimento humano.';
                 }
             } catch (Exception e) {
                 r.message = 'Erro ao consultar Knowledge: ' + e.getMessage();
@@ -61,6 +71,16 @@ public with sharing class ConsultarPoliticasRH {
             out.add(r);
         }
         return out;
+    }
+
+    // SOSL tem caracteres reservados (?&|!{}[]()^~*:"'+-\) que precisam ser escapados
+    // ou removidos. Tambem proibimos multiplas palavras coladas em operadores logicos
+    // implicitos para manter a busca estavel para termos conversacionais.
+    @TestVisible
+    private static String sanitizarParaSOSL(String raw) {
+        if (String.isBlank(raw)) return raw;
+        String escaped = raw.replaceAll('([\\\\\\?\\&\\|\\!\\{\\}\\[\\]\\(\\)\\^\\~\\*\\:\\"\\\'\\+\\-])', '\\\\$1');
+        return escaped.trim();
     }
 
     private static String resumirConteudo(String raw, Integer limite) {

@@ -35,20 +35,30 @@ start_agent topic_selector:
 
     reasoning:
         instructions: ->
-            | Analise a mensagem inicial do colaborador.
-              - Se for DUVIDA sobre politica ou regra (ex: quantos dias de ferias tenho direito, como funciona abono), va para Consulta Politicas RH.
-              - Se for INTENCAO DE AGENDAR (ex: quero tirar ferias, preciso marcar, agendar minhas ferias), va para Agendamento de Ferias.
-              - Se pedir HUMANO ou expressar frustracao, va para Escalation.
-              - Se ambiguo, va para Ambiguous Question para pedir clarificacao.
+            | Analise a mensagem inicial do colaborador e escolha UMA rota. Regras (em ordem de prioridade):
+
+              1. CONSULTA DE SALDO PESSOAL ou INTENCAO DE AGENDAR ferias -> Agendamento de Ferias.
+                 Pistas: pronomes/posseissivos pessoais ("meu", "minhas", "eu", "tenho", "me resta"), palavras sobre estado atual ("saldo", "disponivel", "disponiveis", "quantos tenho", "quanto me resta", "me resta de ferias", "ja tirei", "ja usei"), verbos de acao ("marcar", "tirar", "agendar", "solicitar").
+                 Exemplos: "quantos dias eu tenho disponiveis", "qual meu saldo", "me resta quanto de ferias", "quero marcar ferias", "preciso tirar em dezembro".
+
+              2. DUVIDA SOBRE REGRA/POLITICA (atemporal, impessoal, igual para todo mundo) -> Consulta Politicas RH.
+                 Pistas: perguntas sobre o FUNCIONAMENTO da regra, nao sobre o estado pessoal. "como funciona", "posso", "e permitido", "qual a regra", "direito" no sentido legal geral (CLT/PJ).
+                 Exemplos: "como funciona o abono pecuniario", "posso dividir as ferias em 3 partes", "quantos dias de ferias CLT da direito por ano", "PJ tem direito a ferias?".
+
+              3. PEDIDO DE HUMANO ou frustracao explicita -> Escalation.
+
+              4. Se genuinamente ambiguo (nao se encaixa em nada acima) -> Ambiguous Question.
+
+              IMPORTANTE: "saldo de ferias", "meus dias", "disponiveis" NUNCA sao politica (a base de Knowledge nao tem dado pessoal do colaborador). Sempre roteie para Agendamento.
         actions:
             go_to_consulta_politicas: @utils.transition to @topic.consulta_politicas_rh
-                description: "Usar quando o colaborador tem duvida sobre politica de RH."
+                description: "Usar APENAS para duvidas sobre regra geral/politica (atemporal, impessoal). Exemplos validos: 'como funciona o abono', 'posso dividir ferias em 3 partes', 'qual e o prazo de aviso CLT', 'PJ tem direito a ferias'. NUNCA usar quando a pergunta envolve saldo pessoal (palavras 'meu', 'minhas', 'tenho', 'disponiveis', 'saldo', 'me resta')."
             go_to_agendamento: @utils.transition to @topic.agendamento_ferias
-                description: "Usar quando o colaborador quer agendar ferias."
+                description: "Usar para qualquer pergunta sobre SALDO PESSOAL do colaborador logado OU intencao de agendar ferias. Exemplos validos: 'quantos dias eu tenho disponiveis', 'qual e o meu saldo', 'me resta quanto de ferias', 'quero marcar ferias', 'preciso tirar em dezembro', 'quantos dias ainda tenho para tirar'. Esta e a rota padrao sempre que o colaborador fala em primeira pessoa sobre suas proprias ferias."
             go_to_escalation: @utils.transition to @topic.escalation
-                description: "Usar quando o colaborador pede atendimento humano."
+                description: "Usar quando o colaborador pede atendimento humano ou expressa frustracao explicita."
             go_to_ambiguous_question: @utils.transition to @topic.ambiguous_question
-                description: "Usar quando a intencao nao esta clara."
+                description: "Usar APENAS se a mensagem for totalmente vaga (ex: 'oi', 'ajuda'). Nao usar se houver qualquer pista sobre o tema."
 
 
 topic consulta_politicas_rh:
@@ -73,15 +83,20 @@ topic consulta_politicas_rh:
 
     reasoning:
         instructions: ->
-            | Voce responde duvidas sobre politicas internas de RH do Banco Itau.
-              REGRA CRITICA: antes de responder qualquer coisa, SEMPRE chame a action pesquisar com a palavra-chave da pergunta do usuario. Nunca responda de memoria propria - apenas com base no conteudo retornado pela action. Se a action nao retornar artigos, diga explicitamente "nao localizei politica sobre isso" e ofereca transferir para atendimento humano.
+            | Voce responde duvidas sobre politicas internas de RH do Banco Itau (regras gerais, atemporais, iguais para todo colaborador).
+
+              ANTES DE TUDO, verifique se a pergunta e sobre REGRA (politica) ou sobre DADO PESSOAL (saldo do colaborador logado):
+              - Se a pergunta contem pronomes/posseissivos pessoais sobre ferias ("meu saldo", "meus dias", "quantos eu tenho", "quantos tenho disponiveis", "me resta", "ja tirei"), NAO e politica - e saldo pessoal. NESSE CASO, transicione imediatamente para o subagente Agendamento (action ir_para_agendamento) - NAO chame pesquisar.
+              - Se o colaborador demonstrar intencao de AGENDAR ferias (ex: "quero marcar", "preciso tirar"), transicione para o subagente Agendamento.
+
+              Se for pergunta real sobre politica/regra (impessoal), siga a REGRA CRITICA: SEMPRE chame a action pesquisar com a palavra-chave da pergunta. Nunca responda de memoria propria - apenas com base no conteudo retornado pela action. Se a action nao retornar artigos, diga explicitamente "nao localizei politica sobre isso" e ofereca transferir para atendimento humano.
+
               Quando a action retornar artigos, cite os mais relevantes com fonte legal (ex: conforme art. 130 CLT, ou conforme Politica Interna Itau XYZ). Responda em 2-3 paragrafos curtos, nunca despeje o artigo inteiro.
-              Se o colaborador demonstrar intencao de AGENDAR ferias (ex: "quero marcar", "preciso tirar"), transfira para o subagente Agendamento.
         actions:
             pesquisar: @actions.consultar_politicas
-                description: "Busca politicas por palavra-chave. Obrigatoria antes de qualquer resposta sobre regra/politica."
+                description: "Busca politicas por palavra-chave GERAL (ex: abono, fracionamento, home office). NAO usar para perguntas sobre saldo pessoal ou intencao de agendar."
             ir_para_agendamento: @utils.transition to @topic.agendamento_ferias
-                description: "Usar quando o colaborador manifesta intencao de marcar ou agendar ferias."
+                description: "Usar SEMPRE que o colaborador pergunta sobre saldo pessoal (dias disponiveis, quantos dias tenho, meu saldo, me resta) OU manifesta intencao de marcar/agendar/tirar ferias. Chame ESTA action ANTES de pesquisar se a pergunta for sobre dado pessoal."
             escalar: @utils.transition to @topic.escalation
                 description: "Usar quando o colaborador pede para falar com humano."
 
