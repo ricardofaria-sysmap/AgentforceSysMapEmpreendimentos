@@ -1,0 +1,14 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "userId" : {
+      "title" : "User Id",
+      "description" : "User Id do colaborador. Usar @variables.ColaboradorUserId.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

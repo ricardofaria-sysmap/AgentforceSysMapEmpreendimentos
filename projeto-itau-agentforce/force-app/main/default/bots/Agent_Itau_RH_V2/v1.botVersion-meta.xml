@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BotVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>v1</fullName>
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Olá! Sou o assistente virtual de RH do Itaú. Posso consultar políticas (férias, abono, home office) e ajudar você a agendar suas férias. Como posso ajudar?</message>
+                <messageIdentifier>4af26121-641d-4c94-8dfc-f034ea65efb2</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>05b3e53d-570e-4e0b-bc64-17d59c6de2b2</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>a0db9210-4022-4060-a83f-eec532ae9499</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Welcome</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Welcome</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Desculpe, não consegui processar sua solicitação agora. Vou transferir para um atendente humano.</message>
+                <messageIdentifier>581c6c7d-afeb-4902-a7c9-aaca6d527b41</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>45c9826f-f7da-46c2-bcf5-5450b6963f2d</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>18749083-14eb-47e0-89ca-8371b44e3853</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Rich_Content_Error_Handling</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Error Handler</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <conversationSystemMessage>
+                <type>Transfer</type>
+            </conversationSystemMessage>
+            <stepIdentifier>eccf1d88-f76e-47aa-98fa-a2002b371e86</stepIdentifier>
+            <type>SystemMessage</type>
+        </botSteps>
+        <developerName>Transfer_To_Agent</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Transfer To Agent</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationDefinitionPlanners>
+        <genAiPlannerName>Agent_Itau_RH_V2_v1</genAiPlannerName>
+    </conversationDefinitionPlanners>
+    <conversationSystemDialogs>
+        <dialog>Rich_Content_Error_Handling</dialog>
+        <type>ErrorHandling</type>
+    </conversationSystemDialogs>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>User Id (Salesforce) do colaborador solicitante - preenchido pelo planner ou via Apex de resolucao Contact-&gt;User.</description>
+        <developerName>ColaboradorUserId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Colaborador User Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Data de inicio das ferias solicitada pelo colaborador (formato ISO YYYY-MM-DD).</description>
+        <developerName>DataInicio</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Data Inicio</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Data de retorno das ferias (formato ISO YYYY-MM-DD).</description>
+        <developerName>DataRetorno</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Data Retorno</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Number</dataType>
+        <description>Quantidade de dias de abono a vender (0 se nao estiver vendendo).</description>
+        <developerName>DiasAbono</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Dias Abono</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Number</dataType>
+        <description>Contador de tentativas de agendamento falhas (para escalacao apos 3).</description>
+        <developerName>TentativasAgendamento</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Tentativas Agendamento</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>CaseNumber retornado apos agendamento bem sucedido.</description>
+        <developerName>UltimoCaseNumber</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Ultimo Case Number</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>True se o colaborador quer vender abono pecuniario.</description>
+        <developerName>VenderAbono</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Vender Abono</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>pt_BR</copilotPrimaryLanguage>
+    <entryDialog>Welcome</entryDialog>
+    <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
+    <intentV3Enabled>false</intentV3Enabled>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <stopRecPrompts>false</stopRecPrompts>
+    <stopWelcomePrompts>false</stopWelcomePrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+</BotVersion>

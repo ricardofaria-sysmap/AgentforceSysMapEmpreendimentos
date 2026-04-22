@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assistente virtual do I-Connecta (Itau) para consultas de politicas de RH (ferias CLT/PJ, abono, home office) e agendamento de ferias com validacoes deterministicas em Agent Script.</description>
+    <localTopicLinks>
+        <genAiPluginName>agendamento_ferias_16jHp000000L0e2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jHp000000L0e2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>consulta_politicas_rh_16jHp000000L0e2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>escalation_16jHp000000L0e2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>topic_selector_16jHp000000L0e2</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>topic_selector_16jHp000000L0e2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Analisa a intencao do colaborador e escolhe entre consulta de politica, agendamento de ferias ou escalacao.</description>
+        <developerName>topic_selector_16jHp000000L0e2</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Não informe dados de outros colaboradores.</description>
+            <developerName>instruction0_179Hp00000112o4</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp00000112o4</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>topic_selector</localDeveloperName>
+        <masterLabel>Roteador de Entrada</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agendamento_ferias_16jHp000000L0e2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Guia o colaborador pelo agendamento de ferias validando regras CLT (30 dias aviso, saldo, minimo 5 dias, fora do concessivo, sex/sab/dom, vespera de feriado, abono 1/3) via Flow deterministico. Cria Case Pedido_Ferias e submete aprovacao automatica ao gestor direto.</description>
+        <developerName>agendamento_ferias_16jHp000000L0e2</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Não informe dados de outros colaboradores.</description>
+            <developerName>instruction0_179Hp00000112o5</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp00000112o5</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>agendar_ferias_179Hp00000112o5</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>consultar_saldo_179Hp00000112o5</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>agendar_ferias_179Hp00000112o5</fullName>
+            <description>Executa o agendamento: valida regras CLT, cria Case Pedido_Ferias, submete aprovacao do gestor. Retorna sucesso e CaseNumber, ou falha com mensagem de erro especifica.</description>
+            <developerName>agendar_ferias_179Hp00000112o5</developerName>
+            <invocationTarget>Agendamento_Ferias_Autolaunch</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>agendar_ferias</localDeveloperName>
+            <masterLabel>Agendar Ferias</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>consultar_saldo_179Hp00000112o5</fullName>
+            <description>Consulta saldo de ferias vigente do colaborador. Retorna dias disponiveis, regime (CLT ou PJ), periodo aquisitivo e limite do concessivo.</description>
+            <developerName>consultar_saldo_179Hp00000112o5</developerName>
+            <invocationTarget>ConsultarSaldoFerias</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>consultar_saldo</localDeveloperName>
+            <masterLabel>Consultar Saldo</masterLabel>
+        </localActions>
+        <localDeveloperName>agendamento_ferias</localDeveloperName>
+        <masterLabel>Agendamento de Ferias</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>escalation_16jHp000000L0e2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Transfere para um atendente humano de RH quando o colaborador explicitamente pede ou apos 3 tentativas falhas de agendamento.</description>
+        <developerName>escalation_16jHp000000L0e2</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Não informe dados de outros colaboradores.</description>
+            <developerName>instruction0_179Hp00000112o2</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp00000112o2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>escalation</localDeveloperName>
+        <masterLabel>Escalation</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jHp000000L0e2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Quando a intencao do colaborador nao esta clara, pede clarificacao sobre se ele quer consulta de politica ou agendamento de ferias.</description>
+        <developerName>ambiguous_question_16jHp000000L0e2</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Não informe dados de outros colaboradores.</description>
+            <developerName>instruction0_179Hp00000112o3</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp00000112o3</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Pergunta Ambigua</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>consulta_politicas_rh_16jHp000000L0e2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Responde duvidas sobre politicas de RH do Itau (ferias CLT/PJ, abono pecuniario, fracionamento, beneficios durante ferias, home office) consultando exclusivamente os artigos publicados na base de Knowledge.</description>
+        <developerName>consulta_politicas_rh_16jHp000000L0e2</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Não informe dados de outros colaboradores.</description>
+            <developerName>instruction0_179Hp00000112o1</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp00000112o1</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>consultar_politicas_179Hp00000112o1</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>consultar_politicas_179Hp00000112o1</fullName>
+            <description>Busca artigos de Knowledge publicados (PublishStatus Online) por palavra-chave. Retorna ate 5 artigos com titulo, resumo, conteudo e fonte legal.</description>
+            <developerName>consultar_politicas_179Hp00000112o1</developerName>
+            <invocationTarget>ConsultarPoliticasRH</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>consultar_politicas</localDeveloperName>
+            <masterLabel>Consultar Politicas</masterLabel>
+        </localActions>
+        <localDeveloperName>consulta_politicas_rh</localDeveloperName>
+        <masterLabel>Consulta Politicas RH</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Agent Itau RH (V2 - Agent Script)</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>
