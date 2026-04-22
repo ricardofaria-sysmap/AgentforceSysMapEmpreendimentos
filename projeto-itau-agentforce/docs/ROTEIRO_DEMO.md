@@ -10,6 +10,7 @@
 - Contexto: evolução do I-Connecta com Agentforce
 - Escopo da demo: jornada de férias como piloto, escalável para outras jornadas de RH (folha, benefícios, desligamento)
 - Promessa: ver em funcionamento antes do acesso formal ao ambiente do Itaú
+- **Ponto de segurança diferenciado**: o agente roda como Employee Agent — a identidade do colaborador vem do SSO do I-Connecta, não do texto do chat. Impossível um usuário operar em nome de outro. Detalhes em [AGENT_EMPLOYEE.md](AGENT_EMPLOYEE.md).
 
 ### Demo 1 — Dúvida simples (3 min) — Ricardo
 Persona: **Marina**, colaboradora CLT
@@ -75,8 +76,9 @@ Persona: Marina novamente
 - [ ] Custom app **I-Connecta** visível no App Launcher para colaborador e gestor
 - [ ] FlexiPage `I_Connecta_Home` renderizando o LWC `saldoFeriasCard` para o usuário Marina
 - [ ] Nenhum Case aberto que possa disparar e-mail indesejado
-- [ ] Agent Builder: Topics `Consulta_Politicas_RH` e `Agendamento_Ferias` ativos, preview testado
-- [ ] Chat web acessível (URL pública do Embedded Service) OU agente Preview aberto
+- [ ] Agent Builder: `Agent_Itau_RH_Employee` (Agent Script / Employee Agent) **activated** — ver [AGENT_EMPLOYEE.md](AGENT_EMPLOYEE.md)
+- [ ] Preview testado **via LEX** logado como Marina (a CLI `sf agent preview` não suporta Employee Agents — `Invalid user ID provided on start session`)
+- [ ] Componente Agentforce embutido na FlexiPage `I_Connecta_Home` OU aba de preview do Agent Builder já aberta logado como Marina
 - [ ] Email Deliverability = "All email" na org
 - [ ] Janelas/abas pré-abertas: App I-Connecta (Marina), Approval Request (Carlos), inbox simulada
 

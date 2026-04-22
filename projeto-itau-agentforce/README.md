@@ -36,7 +36,8 @@ Colaborador → Chat Embedded → Agente A (KB)
 │   ├── TOPIC_AGENTE_A.md                # scope, instructions, actions
 │   ├── SCREEN_FLOW.md                   # especificação detalhada do Flow
 │   ├── KNOWLEDGE.md                     # metadata, artigos e categorias
-│   ├── AGENT.md                         # passo-a-passo do Agent A (UI + retrieve)
+│   ├── AGENT.md                         # passo-a-passo do Agent A - legacy (UI + retrieve)
+│   ├── AGENT_EMPLOYEE.md                # arquitetura atual: Agent Script + Employee Agent (seguranca SSO)
 │   ├── DEPLOY_ORG_BRASAL.md             # guia de deploy na org SDO do Brasal
 │   └── knowledge-articles/              # conteúdo dos 5 artigos KB (markdown)
 ├── specs/
@@ -79,8 +80,11 @@ sf org login web -a itau-demo
 ./scripts/create-users.sh itau-demo
 ./scripts/bootstrap-data.sh itau-demo
 ./scripts/create-knowledge.sh itau-demo
-# criar Agent A via UI seguindo docs/AGENT.md (5 min), depois versionar:
-./scripts/retrieve-agent.sh itau-demo
+# agent atual (Agent Script + Employee Agent) ja esta versionado no repo:
+sf project deploy start --metadata "ApexClass:ConsultarSaldoFerias" "ApexClass:ConsultarPoliticasRH" "Flow:Agendamento_Ferias_Autolaunch" -o itau-demo
+sf agent publish authoring-bundle --api-name Agent_Itau_RH_Employee -o itau-demo
+sf agent activate                   --api-name Agent_Itau_RH_Employee -o itau-demo
+# detalhes de arquitetura e smoke test em docs/AGENT_EMPLOYEE.md
 ```
 
 ### Reusando a org SDO do Brasal
@@ -93,8 +97,10 @@ Ver [`docs/DEPLOY_ORG_BRASAL.md`](docs/DEPLOY_ORG_BRASAL.md). Resumo:
 ./scripts/create-users.sh AgentforceSysmapEmpreendimentos
 ./scripts/bootstrap-data.sh AgentforceSysmapEmpreendimentos
 ./scripts/create-knowledge.sh AgentforceSysmapEmpreendimentos
-# Agent A via UI (docs/AGENT.md) + retrieve:
-./scripts/retrieve-agent.sh AgentforceSysmapEmpreendimentos
+# agent ja versionado no repo (Agent Script + Employee Agent):
+sf agent publish authoring-bundle --api-name Agent_Itau_RH_Employee -o AgentforceSysmapEmpreendimentos
+sf agent activate                   --api-name Agent_Itau_RH_Employee -o AgentforceSysmapEmpreendimentos
+# preview somente via LEX (UI) - sf agent preview NAO suporta Employee Agents
 ```
 
 ## Personas de teste

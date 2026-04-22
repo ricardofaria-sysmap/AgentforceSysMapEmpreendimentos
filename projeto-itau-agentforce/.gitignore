@@ -8,3 +8,5 @@ node_modules/
 scripts/.usernames.env
 force-app/main/default/lwc/jsconfig.json
 **/.eslintrc.json
+temp/
+

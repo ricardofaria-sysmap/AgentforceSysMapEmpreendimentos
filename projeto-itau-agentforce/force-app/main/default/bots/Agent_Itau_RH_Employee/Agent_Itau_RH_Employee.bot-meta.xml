@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>AgentforceEmployeeAgent</agentType>
+    <botMlDomain>
+        <label>Agent Itau RH (Employee - I-Connecta)</label>
+        <name>Agent_Itau_RH_Employee</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <description>Assistente virtual do I-Connecta (Itau) para consultas de politicas de RH (ferias CLT/PJ, abono, home office) e agendamento de ferias com validacoes deterministicas em Agent Script. Executa como Employee Agent (roda no contexto do colaborador logado - a identidade vem do SSO, nao do texto do chat).</description>
+    <label>Agent Itau RH (Employee - I-Connecta)</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>InternalCopilot</type>
+</Bot>

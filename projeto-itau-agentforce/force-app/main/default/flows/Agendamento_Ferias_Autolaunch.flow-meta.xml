@@ -252,6 +252,23 @@
         </assignmentItems>
     </assignments>
 
+    <assignments>
+        <name>Resolver_UserId</name>
+        <label>Resolver UserId (fallback para usuario logado)</label>
+        <locationX>350</locationX>
+        <locationY>60</locationY>
+        <assignmentItems>
+            <assignToReference>varUserId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formula_UserIdResolvido</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Valida_Inputs</targetReference>
+        </connector>
+    </assignments>
+
     <decisions>
         <name>Valida_Inputs</name>
         <label>Inputs obrigatorios</label>
@@ -517,6 +534,11 @@
     {!varDataInicio} + 2 = DATE(2027,1,1)
 )</expression>
     </formulas>
+    <formulas>
+        <name>Formula_UserIdResolvido</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!varUserId}), {!$User.Id}, {!varUserId})</expression>
+    </formulas>
 
     <recordCreates>
         <name>Criar_Case</name>
@@ -708,7 +730,7 @@
         <locationX>350</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Valida_Inputs</targetReference>
+            <targetReference>Resolver_UserId</targetReference>
         </connector>
     </start>
 

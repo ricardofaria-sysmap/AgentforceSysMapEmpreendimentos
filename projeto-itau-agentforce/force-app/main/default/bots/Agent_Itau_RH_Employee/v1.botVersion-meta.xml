@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BotVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>v1</fullName>
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Olá! Sou o assistente virtual de RH do Itaú. Posso consultar políticas (férias, abono, home office) e ajudar você a agendar suas férias. Como posso ajudar?</message>
+                <messageIdentifier>fb74fe78-4609-4ac2-aca5-158eae6dead9</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>dcca3ce4-a9ec-4037-abc3-00496e18291c</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>4786c3e8-78c7-445d-b583-759553653790</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Welcome</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Welcome</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Desculpe, não consegui processar sua solicitação agora. Vou transferir para um atendente humano.</message>
+                <messageIdentifier>c14df579-deeb-4a68-b5ff-01c565bf8095</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>361a8868-d4d7-44c5-97b9-943b06eddd46</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>7c66f2cd-07da-4fa8-a918-9913964f612c</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Rich_Content_Error_Handling</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Error Handler</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <developerName>Transfer_To_Agent</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Transfer To Agent</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationDefinitionPlanners>
+        <genAiPlannerName>Agent_Itau_RH_Employee_v1</genAiPlannerName>
+    </conversationDefinitionPlanners>
+    <conversationSystemDialogs>
+        <dialog>Rich_Content_Error_Handling</dialog>
+        <type>ErrorHandling</type>
+    </conversationSystemDialogs>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Data de inicio das ferias solicitada pelo colaborador (formato ISO YYYY-MM-DD).</description>
+        <developerName>DataInicio</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Data Inicio</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Data de retorno das ferias (formato ISO YYYY-MM-DD).</description>
+        <developerName>DataRetorno</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Data Retorno</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Number</dataType>
+        <description>Quantidade de dias de abono a vender (0 se nao estiver vendendo).</description>
+        <developerName>DiasAbono</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Dias Abono</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Number</dataType>
+        <description>Contador de tentativas de agendamento falhas (para escalacao apos 3).</description>
+        <developerName>TentativasAgendamento</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Tentativas Agendamento</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>CaseNumber retornado apos agendamento bem sucedido.</description>
+        <developerName>UltimoCaseNumber</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Ultimo Case Number</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>True se o colaborador quer vender abono pecuniario.</description>
+        <developerName>VenderAbono</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Vender Abono</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>pt_BR</copilotPrimaryLanguage>
+    <entryDialog>Welcome</entryDialog>
+    <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
+    <intentV3Enabled>false</intentV3Enabled>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <stopRecPrompts>false</stopRecPrompts>
+    <stopWelcomePrompts>false</stopWelcomePrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+</BotVersion>
