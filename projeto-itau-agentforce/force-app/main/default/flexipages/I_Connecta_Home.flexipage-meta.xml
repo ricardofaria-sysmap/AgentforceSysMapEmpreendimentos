@@ -30,11 +30,17 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>c:iConnectaAgentforceChat</componentName>
+                <identifier>i_connecta_agentforce_chat</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>flexipage:richText</componentName>
                 <identifier>chat_cta</identifier>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;div style="border:1px dashed #ec7211;border-radius:8px;padding:20px;background:#fef7ec;margin-top:16px;"&gt;&lt;h3 style="margin:0 0 8px 0;color:#1d3557;"&gt;Precisa de ajuda com RH?&lt;/h3&gt;&lt;p style="margin:0 0 12px 0;color:#4a5568;font-size:14px;"&gt;Converse com o Agent Itau RH: tire duvidas sobre politicas ou agende ferias diretamente pelo chat.&lt;/p&gt;&lt;p style="margin:0;font-size:13px;color:#8c6c2e;"&gt;O assistente aparece no canto inferior direito (Utility Bar). Se nao estiver visivel, clique em &lt;strong&gt;Agendar Ferias&lt;/strong&gt; ali ou no card de saldo acima.&lt;/p&gt;&lt;/div&gt;</value>
+                    <value>&lt;div style="border:1px dashed #ec7211;border-radius:8px;padding:20px;background:#fef7ec;margin-top:16px;"&gt;&lt;h3 style="margin:0 0 8px 0;color:#1d3557;"&gt;Precisa de ajuda com RH?&lt;/h3&gt;&lt;p style="margin:0 0 12px 0;color:#4a5568;font-size:14px;"&gt;Converse com o Agent Itau RH no painel acima: tire duvidas sobre politicas ou agende ferias pelo chat.&lt;/p&gt;&lt;p style="margin:0;font-size:13px;color:#8c6c2e;"&gt;Se o painel pedir configuracao, abra o Lightning App Builder nesta Home e informe o &lt;strong&gt;Agent Id&lt;/strong&gt; do agente publicado. Voce tambem pode usar a Global Quick Action &lt;strong&gt;Agendar Ferias&lt;/strong&gt; ou o botao no card de saldo.&lt;/p&gt;&lt;/div&gt;</value>
                 </componentInstanceProperties>
             </componentInstance>
         </itemInstances>

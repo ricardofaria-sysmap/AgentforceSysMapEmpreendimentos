@@ -70,10 +70,12 @@ export default class SaldoFeriasCard extends NavigationMixin(LightningElement) {
     }
 
     handleAgendar() {
+        const flowApi = 'Agendamento_Ferias_Screen';
+        // Rota LEX dedicada ao fluxo (rodape com acoes visivel); standard__flow na App Page pode cortar o rodape.
         this[NavigationMixin.Navigate]({
-            type: 'standard__flow',
+            type: 'standard__webPage',
             attributes: {
-                apiName: 'Agendamento_Ferias_Screen'
+                url: `/lightning/flow/${flowApi}`
             }
         });
     }

@@ -38,6 +38,7 @@ Colaborador → Chat Embedded → Agente A (KB)
 │   ├── KNOWLEDGE.md                     # metadata, artigos e categorias
 │   ├── AGENT.md                         # passo-a-passo do Agent A - legacy (UI + retrieve)
 │   ├── AGENT_EMPLOYEE.md                # arquitetura atual: Agent Script + Employee Agent (seguranca SSO)
+│   ├── AGENTFORCE_CONVERSATION_CLIENT_EMBED.md  # bundle Static Resource + App Builder (Agent Id)
 │   ├── DEPLOY_ORG_BRASAL.md             # guia de deploy na org SDO do Brasal
 │   └── knowledge-articles/              # conteúdo dos 5 artigos KB (markdown)
 ├── specs/
@@ -48,6 +49,8 @@ Colaborador → Chat Embedded → Agente A (KB)
 ├── config/
 │   ├── project-scratch-def.json
 │   └── user-{marina,pedro,carlos}.json
+├── tools/
+│   └── agentforce-conversation-client-embed/  # gera AgentforceConversationClientEmbed.js (npm + esbuild)
 ├── scripts/
 │   ├── deploy.sh                        # com suporte a --dry-run
 │   ├── create-users.sh
@@ -69,6 +72,18 @@ Colaborador → Chat Embedded → Agente A (KB)
 - Salesforce CLI (`sf` >= 2.0)
 - Org Developer ou SDO com Agentforce / Einstein habilitado
 - Licenças: pelo menos 1 `Agentforce User` + 3 Standard Users
+
+## Agentforce embutido na Home I-Connecta
+
+A FlexiPage `I_Connecta_Home` inclui o LWC `iConnectaAgentforceChat`, que embute o **Agentforce Conversation Client** (Lightning Out 2.0). O **Agent Id** define-se no Lightning App Builder (não há Custom Metadata para este fluxo).
+
+O Static Resource `AgentforceConversationClientEmbed` vem como **placeholder** no Git. Antes de usar o chat, gere o bundle JavaScript real:
+
+```bash
+cd tools/agentforce-conversation-client-embed && npm install && npm run build
+```
+
+Depois faça deploy de `force-app` (ou só do Static Resource). Detalhes: [`docs/AGENTFORCE_CONVERSATION_CLIENT_EMBED.md`](docs/AGENTFORCE_CONVERSATION_CLIENT_EMBED.md).
 
 ## Deploy rápido
 

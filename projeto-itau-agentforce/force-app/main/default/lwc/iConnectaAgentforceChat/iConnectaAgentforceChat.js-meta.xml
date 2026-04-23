@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>I-Connecta Agentforce Chat</masterLabel>
+    <description>Embute o Agentforce Conversation Client (Employee Agent) na Home ou em Record Pages via Lightning Out 2.0. Exige Static Resource AgentforceConversationClientEmbed (ver README / docs).</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property name="agentId" type="String" label="Agent Id" description="Id de 18 caracteres do agente publicado (Agent Builder / lista de agentes). Obrigatorio para o chat iniciar."/>
+            <property name="agentLabel" type="String" label="Titulo do chat" description="Texto opcional no cabecalho do painel."/>
+            <property name="loAppId" type="String" label="Lightning Out 2.0 App Id" description="Opcional. Algumas orgs (Spring 26+) exigem o app Id do Lightning Out 2.0 App Manager."/>
+            <property name="floatingLauncher" type="Boolean" label="Modo flutuante" description="Se verdadeiro, o chat abre como launcher fixo; se falso, painel embutido na regiao do componente." default="false"/>
+            <property name="panelHeight" type="String" label="Altura do painel (inline)" description="Ex.: 520px ou 70vh. Usado apenas em modo embutido." default="520px"/>
+            <property name="panelWidth" type="String" label="Largura do painel (inline)" description="Ex.: 100% ou 420px. Usado apenas em modo embutido." default="100%"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

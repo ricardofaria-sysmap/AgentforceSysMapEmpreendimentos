@@ -1,0 +1,39 @@
+<template>
+    <section class="iac-root">
+        <template lwc:if={showNoAgent}>
+            <div class="iac-panel iac-panel_warn iac-banner" role="status">
+                <p class="iac-title">Agentforce nao configurado nesta pagina</p>
+                <p class="iac-body">
+                    Abra o Lightning App Builder na Home I-Connecta, selecione este componente e informe o
+                    <strong>Agent Id</strong> (copiado do Agent Builder).
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={showStub}>
+            <div class="iac-panel iac-panel_warn iac-banner" role="status">
+                <p class="iac-title">Static Resource ainda e o placeholder</p>
+                <p class="iac-body">
+                    Gere o bundle JavaScript e faca deploy (ou substitua o Static Resource na org). Veja
+                    <code>docs/AGENTFORCE_CONVERSATION_CLIENT_EMBED.md</code>.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={showLoadError}>
+            <div class="iac-panel iac-panel_error iac-banner" role="alert">
+                <p class="iac-title">Nao foi possivel carregar o Agentforce</p>
+                <p class="iac-body">{loadErrorMessage}</p>
+            </div>
+        </template>
+
+        <template lwc:if={showEmbedError}>
+            <div class="iac-panel iac-panel_error iac-banner" role="alert">
+                <p class="iac-title">Falha ao iniciar o chat</p>
+                <p class="iac-body">{embedErrorMessage}</p>
+            </div>
+        </template>
+
+        <div class={shellClass} lwc:dom="manual"></div>
+    </section>
+</template>

@@ -1,0 +1,52 @@
+.iac-root {
+    width: 100%;
+    position: relative;
+}
+
+.iac-banner {
+    margin-bottom: 12px;
+}
+
+.iac-shell {
+    width: 100%;
+    min-height: 1px;
+}
+
+.iac-shell_hidden {
+    display: none;
+    min-height: 0;
+}
+
+.iac-panel {
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.iac-panel_warn {
+    border: 1px dashed #ec7211;
+    background: #fef7ec;
+    color: #1d3557;
+}
+
+.iac-panel_error {
+    border: 1px solid #c23934;
+    background: #fef1f1;
+    color: #3e3e3c;
+}
+
+.iac-title {
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.iac-body {
+    margin: 0;
+}
+
+.iac-body code {
+    font-size: 12px;
+    word-break: break-all;
+}
