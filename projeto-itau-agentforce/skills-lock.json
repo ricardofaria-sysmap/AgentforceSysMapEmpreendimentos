@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "skills": {
+    "building-ui-bundle-app": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "7251dcb07b7356bcbd5f987e28ae598e9dda9527b5f85c377baece9369fe6525"
+    },
+    "building-ui-bundle-frontend": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "bdb0ffa8c93868a14e4e667edae08363d30e10ac2a4c188573d13f0bf7d3b20a"
+    },
+    "creating-b2b-commerce-store": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "1a2467915c0f4de84211a872a9aa01ea80f850f9c60a27c545e3e294d77c945b"
+    },
+    "deploying-ui-bundle": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "54969f5e541ca17a86d591888924d52b734ecb5767eac2dadca8058c34f7a233"
+    },
+    "developing-agentforce": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "f26b56a402133da3815cd79df05fe177b7d03ff1bb4ddce465666c304a7537c0"
+    },
+    "generating-apex": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "70bc674c724099206ff9328faa118d3952714dca01f2549a3d7374118f0ff1fe"
+    },
+    "generating-apex-test": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "92dd5da08f0ba046e2022dab6e63d9b8a528d8e1ef09e851002feec889ec8a1c"
+    },
+    "generating-custom-application": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "b664d6cdf066d8dda8f02a6b0c8dd3686fcead7d9d6857a351f24c2b2c3ef65b"
+    },
+    "generating-custom-field": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "8aba698ad7669b7cf8b5a5b408fea8f8dee7a01f618ca0620ab6b65346ac269a"
+    },
+    "generating-custom-lightning-type": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "c6b6b950a4b94a1ba179f2382fdb14014b2766a634dfa75b50a65cc77221f4b8"
+    },
+    "generating-custom-object": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "3c5bace2f29d7a07023578d58d3b11580a933e493c18a59318dc187e97004d92"
+    },
+    "generating-custom-tab": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "3ff64d18906b3e443dd0eefd41de9babdaa28daee2c15bf4dca2f70368a8a17d"
+    },
+    "generating-flexipage": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "afea886288e156d6bf4b378ba30c89fb3244e5a7764d6dae837e5e5f36c5d5b7"
+    },
+    "generating-flow": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "8264cb2f7b36547256319ae75f54c3328fd14209281a3620f9213e7f679f9d7a"
+    },
+    "generating-lightning-app": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "eb3b59a41560a44e7bb52acb68c31f0c43c1d74bdc7b801ab8e93a6c2341cd25"
+    },
+    "generating-list-view": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "a44b6ba02bf2d25e9e10e06982df7f177d17b3042c8d3b71e9df75a3ed276dfd"
+    },
+    "generating-permission-set": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "8dd564507ec53cc6913896ed04a50a0110f898faf532d157a696c47357d4ee65"
+    },
+    "generating-ui-bundle-features": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "ae9d238ac955fbe9ce98230f8825e4ec179bd11725bf72ca31f7934be273a3ec"
+    },
+    "generating-ui-bundle-metadata": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "38107ffc5024678cdc298e014de09a224984ceb6d2d1188a19af1db63f888994"
+    },
+    "generating-ui-bundle-site": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "9a6af45158b8033eacfe1e4e7e6a8f1c74fb09df96ff63d54890cabac3c87ec1"
+    },
+    "generating-validation-rule": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "466d5cb60c27f481b8b20aec7cb89bf347621a312fcc04b30166730e667b481d"
+    },
+    "implementing-ui-bundle-agentforce-conversation-client": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "8b7e9c8a12b73fad12cf54f630af31a5b867c3b3ac274a73fa59890985039528"
+    },
+    "implementing-ui-bundle-file-upload": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "6149156c48d6e3bd416f44b0bee13b573374d1479e41575a999c986020f552cd"
+    },
+    "observing-agentforce": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "7b106127da74edf70482fee1cdf78532d98a79fed63215552677fa3f93522201"
+    },
+    "searching-media": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "554cfa0a82bc25a14206f16521fa436721ad552091746b274b7d22e8e920f75c"
+    },
+    "switching-org": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "3cc52465e7674825f42c27a02011cacffeae35bb2003436e061037430cdba544"
+    },
+    "testing-agentforce": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "e0e7b8fba9804ee4a793104dc29565eb9aa4ae18be429aa36a6daf85f68d2bac"
+    },
+    "trigger-refactor-pipeline": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "ff6c148763acc36587fa6f0a75c77eaa8cc877be4dca3160a972c3877b00ecfc"
+    },
+    "uplifting-components-to-slds2": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "28d49c23adec96172aa46227a3529a0b35d9162def586ea79ee78d9e5aa0d27c"
+    },
+    "using-ui-bundle-salesforce-data": {
+      "source": "forcedotcom/afv-library",
+      "sourceType": "github",
+      "computedHash": "4311b555a4f01304714b719b6a024fa83cd8586f1778f81149eb029467daad56"
+    }
+  }
+}

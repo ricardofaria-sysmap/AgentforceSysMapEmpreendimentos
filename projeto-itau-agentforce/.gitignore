@@ -12,4 +12,5 @@ temp/
 
 # Agent Skills (forcedotcom/afv-library); reinstall: npx skills add forcedotcom/afv-library -y
 .agents/
+.claude/
 
