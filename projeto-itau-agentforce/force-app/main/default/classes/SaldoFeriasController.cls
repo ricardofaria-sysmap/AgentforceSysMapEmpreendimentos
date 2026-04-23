@@ -1,4 +1,4 @@
-public with sharing class SaldoFeriasController {
+public without sharing class SaldoFeriasController {
     @AuraEnabled(cacheable=true)
     public static Saldo_Ferias__c getSaldoVigente() {
         Id userId = UserInfo.getUserId();

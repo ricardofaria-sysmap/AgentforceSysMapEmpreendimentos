@@ -1,0 +1,116 @@
+<template>
+    <template if:true={hasError}>
+        <div class="msg msg_err">{errorMessage}</div>
+    </template>
+    <template if:false={hasError}>
+        <div class="wrap">
+            <p class="hint">Escolha o inicio (regras CLT e feriados) e depois o retorno (minimo 5 dias corridos, dentro do saldo e do concessivo).</p>
+            <div class="toolbar">
+                <lightning-button-icon
+                    icon-name="utility:left"
+                    alternative-text="Mes anterior"
+                    onclick={handlePrevStart}
+                ></lightning-button-icon>
+                <span class="title">{monthTitleStart}</span>
+                <lightning-button-icon
+                    icon-name="utility:right"
+                    alternative-text="Proximo mes"
+                    onclick={handleNextStart}
+                ></lightning-button-icon>
+            </div>
+            <table class="grid" role="grid" aria-label="Calendario inicio">
+                <thead>
+                    <tr>
+                        <th>Dom</th>
+                        <th>Seg</th>
+                        <th>Ter</th>
+                        <th>Qua</th>
+                        <th>Qui</th>
+                        <th>Sex</th>
+                        <th>Sab</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={startWeeks} for:item="row">
+                        <tr key={row.key}>
+                            <template for:each={row.cells} for:item="cell">
+                                <td key={cell.key}>
+                                    <template if:true={cell.empty}>
+                                        <span class="cell cell--empty"></span>
+                                    </template>
+                                    <template if:false={cell.empty}>
+                                        <button
+                                            type="button"
+                                            class={cell.classes}
+                                            data-iso={cell.iso}
+                                            data-disabled={cell.disabled}
+                                            disabled={cell.disabled}
+                                            onclick={handlePickStart}
+                                        >
+                                            {cell.label}
+                                        </button>
+                                    </template>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <template if:true={showEndPicker}>
+                <h3 class="sub">Data de retorno</h3>
+                <div class="toolbar">
+                    <lightning-button-icon
+                        icon-name="utility:left"
+                        alternative-text="Mes anterior"
+                        onclick={handlePrevEnd}
+                    ></lightning-button-icon>
+                    <span class="title">{monthTitleEnd}</span>
+                    <lightning-button-icon
+                        icon-name="utility:right"
+                        alternative-text="Proximo mes"
+                        onclick={handleNextEnd}
+                    ></lightning-button-icon>
+                </div>
+                <table class="grid" role="grid" aria-label="Calendario retorno">
+                    <thead>
+                        <tr>
+                            <th>Dom</th>
+                            <th>Seg</th>
+                            <th>Ter</th>
+                            <th>Qua</th>
+                            <th>Qui</th>
+                            <th>Sex</th>
+                            <th>Sab</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={endWeeks} for:item="row">
+                            <tr key={row.key}>
+                                <template for:each={row.cells} for:item="cell">
+                                    <td key={cell.key}>
+                                        <template if:true={cell.empty}>
+                                            <span class="cell cell--empty"></span>
+                                        </template>
+                                        <template if:false={cell.empty}>
+                                            <button
+                                                type="button"
+                                                class={cell.classes}
+                                                data-iso={cell.iso}
+                                                data-disabled={cell.disabled}
+                                                disabled={cell.disabled}
+                                                onclick={handlePickEnd}
+                                            >
+                                                {cell.label}
+                                            </button>
+                                        </template>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+    </template>
+</template>

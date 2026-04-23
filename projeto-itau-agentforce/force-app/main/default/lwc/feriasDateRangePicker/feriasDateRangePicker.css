@@ -1,0 +1,81 @@
+.wrap {
+    max-width: 26rem;
+}
+
+.hint {
+    font-size: 0.85rem;
+    color: var(--lwc-colorTextWeak, #706e6b);
+    margin-bottom: 0.75rem;
+}
+
+.sub {
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+.title {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.grid th {
+    font-weight: 600;
+    text-align: center;
+    padding: 0.2rem;
+    color: var(--lwc-colorTextWeak, #706e6b);
+}
+
+.grid td {
+    text-align: center;
+    padding: 0.1rem;
+}
+
+.cell {
+    display: inline-flex;
+    width: 2.1rem;
+    height: 2.1rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    border: 1px solid transparent;
+    background: var(--lwc-colorBackgroundAlt, #fff);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.cell--empty {
+    visibility: hidden;
+}
+
+.cell--disabled {
+    color: var(--lwc-colorTextWeak, #c9c7c5);
+    cursor: not-allowed;
+    background: var(--lwc-colorBackgroundRowHover, #f3f2f2);
+}
+
+.cell--selected {
+    background: var(--lwc-colorBrand, #0176d3);
+    color: #fff;
+    font-weight: 700;
+    border-color: var(--lwc-colorBrand, #0176d3);
+}
+
+.msg_err {
+    color: var(--lwc-colorTextError, #c23934);
+    font-size: 0.9rem;
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Calendario ferias (intervalo)</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+                name="saldoFeriasId"
+                type="String"
+                label="Id do saldo vigente"
+                description="Use Get_Saldo_Atual.Id"
+                role="inputOnly"
+                required="true"
+            />
+            <property name="inicioFerias" type="Date" label="Data de inicio" role="outputOnly" />
+            <property name="retornoFerias" type="Date" label="Data de retorno" role="outputOnly" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Meu Saldo de Ferias" icon-name="custom:custom97">
+    <lightning-card title="Meu Saldo de Férias" icon-name="custom:custom97">
         <div slot="actions">
             <lightning-button label="Agendar" variant="brand" icon-name="utility:event" onclick={handleAgendar}></lightning-button>
         </div>
@@ -13,13 +13,13 @@
 
             <template if:true={hasError}>
                 <div class="slds-text-color_error slds-p-vertical_medium">
-                    Nao foi possivel carregar seu saldo: {error}
+                    Não foi possível carregar seu saldo: {error}
                 </div>
             </template>
 
             <template if:true={noSaldo}>
                 <div class="slds-text-color_weak slds-p-vertical_medium">
-                    Voce ainda nao tem um periodo aquisitivo vigente.
+                    Você ainda não tem um período aquisitivo vigente.
                 </div>
             </template>
 
@@ -29,7 +29,7 @@
                         <div class="progress-ring" style={progressStyle}>
                             <div class="progress-inner">
                                 <div class="progress-value">{diasDisponiveis}</div>
-                                <div class="progress-label">dias<br/>disponiveis</div>
+                                <div class="progress-label">dias<br/>disponíveis</div>
                             </div>
                         </div>
                     </div>
@@ -41,15 +41,15 @@
                             </span>
                         </div>
                         <div class="stat-row">
-                            <span class="stat-label">Direito no periodo</span>
+                            <span class="stat-label">Direito no período</span>
                             <span class="stat-value stat-highlight">{diasDireito} dias</span>
                         </div>
                         <div class="stat-row">
-                            <span class="stat-label">Ja tirados</span>
+                            <span class="stat-label">Já tirados</span>
                             <span class="stat-value">{diasTirados} dias</span>
                         </div>
                         <div class="stat-row">
-                            <span class="stat-label">Concessivo ate</span>
+                            <span class="stat-label">Concessivo até</span>
                             <span class="stat-value">
                                 <lightning-formatted-date-time value={concessivoFim} year="numeric" month="short" day="2-digit"></lightning-formatted-date-time>
                             </span>

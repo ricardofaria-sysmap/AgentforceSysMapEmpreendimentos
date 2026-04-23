@@ -2,8 +2,8 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>Saldo de Ferias</masterLabel>
-    <description>Card visual com saldo de ferias do colaborador logado (dias direito, tirados, disponiveis). Usado na Home I-Connecta.</description>
+    <masterLabel>Saldo de Férias</masterLabel>
+    <description>Card visual com saldo de férias do colaborador logado (dias de direito, tirados e disponíveis). Usado na Home I-Connecta.</description>
     <targets>
         <target>lightning__AppPage</target>
         <target>lightning__HomePage</target>

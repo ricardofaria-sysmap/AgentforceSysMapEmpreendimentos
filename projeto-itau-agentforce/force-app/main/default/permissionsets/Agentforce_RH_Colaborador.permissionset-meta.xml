@@ -25,6 +25,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FeriasDateRulesService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SaldoFeriasController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -36,6 +40,10 @@
         <enabled>true</enabled>
         <flow>Agendamento_Ferias_Screen</flow>
     </flowAccesses>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunFlow</name>
+    </userPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
