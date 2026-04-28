@@ -1,0 +1,54 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "success" : {
+      "title" : "Sucesso",
+      "description" : "True se o pedido foi cancelado.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "message" : {
+      "title" : "Mensagem",
+      "description" : "Mensagem PRONTA para apresentar ao colaborador. SEMPRE copie literalmente.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "caseId" : {
+      "title" : "Case Id",
+      "description" : "Id do Case cancelado.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "caseNumber" : {
+      "title" : "Case Number",
+      "description" : "Numero do Case cancelado (ex: 00001407).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "dataInicio" : {
+      "title" : "Data Inicio Cancelada",
+      "description" : "Data de inicio do pedido cancelado (formato dd/MM/yyyy).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "dataRetorno" : {
+      "title" : "Data Retorno Cancelada",
+      "description" : "Data de retorno do pedido cancelado (formato dd/MM/yyyy).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -29,7 +29,9 @@
             <sortOrder>1</sortOrder>
         </genAiPluginInstructions>
         <genAiPluginInstructions>
-            <description>QUANDO chamar agendar_ferias: SEMPRE que houver intencao de marcar/agendar/tirar/solicitar ferias. NAO chame consultar_saldo antes - o Flow ja valida. Inputs: varDataInicio (ISO), varDataRetorno (ISO), varVenderAbono (bool), varDiasAbono (numero, 0 default). NAO passe varUserId. REGRAS: (1) Copie datas EXATAMENTE como o colaborador escreveu - mesmo mes, mesmo dia. NUNCA inverta inicio/retorno. NUNCA troque mes. Se "30/06 a 04/06" -> varDataInicio=2026-06-30 varDataRetorno=2026-06-04 (ambos mes 06). Flow detecta inversao e retorna erro. (2) Ano: use ano corrente. Se data ja passou no ano corrente, use proximo ano. Hoje=2026, "10 de agosto" -> 2026-08-10. (3) Faltou data ou abono? Pergunte SO o que falta, em 1 frase. Pos-resposta: se varSucesso=true, COPIE varMensagemSucesso literalmente como sua resposta final - NAO escale, NAO transfira para humano, NAO peca confirmacao. Apenas exiba a mensagem de sucesso. Se varSucesso=false, exiba varMensagemErro e, se varDatasSugeridas tiver valor, ofereca: "Sugestao: {varDatasSugeridas}. Quer agendar uma dessas?".</description>
+            <description>FLUXO ALTERACAO: Se o colaborador disser "alterar", "mudar", "trocar datas", "cancelar pedido", "remarcar ferias" referindo-se a um agendamento existente: PRIMEIRO confirme com 1 frase (ex: "Voce quer cancelar o pedido atual e agendar novas datas? Isso vai encerrar o protocolo X."). Apos confirmacao explicita do colaborador (sim/ok/pode), chame cancelar_pedido. Se success=true, mostre a mensagem retornada e pergunte "Quais novas datas?" (e abono). Apos o colaborador informar novas datas, chame agendar_ferias normalmente. Se success=false em cancelar_pedido, mostre a mensagem de erro retornada.
+
+QUANDO chamar agendar_ferias: SEMPRE que houver intencao de marcar/agendar/tirar/solicitar ferias. NAO chame consultar_saldo antes - o Flow ja valida. Inputs: varDataInicio (ISO), varDataRetorno (ISO), varVenderAbono (bool), varDiasAbono (numero, 0 default). NAO passe varUserId. REGRAS: (1) Copie datas EXATAMENTE como o colaborador escreveu - mesmo mes, mesmo dia. NUNCA inverta inicio/retorno. NUNCA troque mes. Se "30/06 a 04/06" -> varDataInicio=2026-06-30 varDataRetorno=2026-06-04 (ambos mes 06). Flow detecta inversao e retorna erro. (2) Ano: use ano corrente. Se data ja passou no ano corrente, use proximo ano. Hoje=2026, "10 de agosto" -> 2026-08-10. (3) Faltou data ou abono? Pergunte SO o que falta, em 1 frase. Pos-resposta: se varSucesso=true, COPIE varMensagemSucesso literalmente como sua resposta final - NAO escale, NAO transfira para humano, NAO peca confirmacao. Apenas exiba a mensagem de sucesso. Se varSucesso=false, exiba varMensagemErro e, se varDatasSugeridas tiver valor, ofereca: "Sugestao: {varDatasSugeridas}. Quer agendar uma dessas?".</description>
             <developerName>instruction1_179Hp00000112pq</developerName>
             <language>en_US</language>
             <masterLabel>instruction1_179Hp00000112pq</masterLabel>
@@ -42,6 +44,9 @@
         <localActionLinks>
             <functionName>consultar_saldo_179Hp00000112pq</functionName>
         </localActionLinks>
+        <localActionLinks>
+            <functionName>cancelar_pedido_179Hp00000112pq</functionName>
+        </localActionLinks>
         <localActions>
             <fullName>consultar_saldo_179Hp00000112pq</fullName>
             <description>Consulta saldo de ferias vigente do colaborador autenticado (o Apex usa UserInfo.getUserId internamente). Retorna dias disponiveis, regime (CLT ou PJ), periodo aquisitivo e limite do concessivo.</description>
@@ -52,6 +57,17 @@
             <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
             <localDeveloperName>consultar_saldo</localDeveloperName>
             <masterLabel>Consultar Saldo</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>cancelar_pedido_179Hp00000112pq</fullName>
+            <description>Cancela o pedido de ferias mais recente (Case Pedido_Ferias) do colaborador autenticado que esteja com aprovacao Pendente. Faz recall da aprovacao no gestor e fecha o Case (Status=Closed, Aprovacao_Gestor__c=Reprovado). Use ANTES de tentar agendar novas datas quando o colaborador disser "alterar", "mudar", "trocar datas", "cancelar pedido". O Apex resolve a identidade via UserInfo.getUserId - nunca passar Id.</description>
+            <developerName>cancelar_pedido_179Hp00000112pq</developerName>
+            <invocationTarget>CancelarPedidoFerias</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>true</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>cancelar_pedido</localDeveloperName>
+            <masterLabel>Cancelar Pedido</masterLabel>
         </localActions>
         <localActions>
             <fullName>agendar_ferias_179Hp00000112pq</fullName>
