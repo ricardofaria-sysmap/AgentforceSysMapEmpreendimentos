@@ -22,11 +22,18 @@
         <description>Guia o colaborador pelo agendamento de ferias validando regras CLT (30 dias aviso, saldo, minimo 5 dias, fora do concessivo, sex/sab/dom, vespera de feriado, abono 1/3) via Flow deterministico. Cria Case Pedido_Ferias e submete aprovacao automatica ao gestor direto. A identidade do colaborador vem sempre do contexto autenticado (Employee Agent) - NUNCA do texto do chat.</description>
         <developerName>agendamento_ferias_16jHp000000L0fF</developerName>
         <genAiPluginInstructions>
-            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, peça clarificação ao colaborador. Só escale para humano se o colaborador pedir explicitamente. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
             <developerName>instruction0_179Hp00000112pq</developerName>
             <language>en_US</language>
             <masterLabel>instruction0_179Hp00000112pq</masterLabel>
             <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>QUANDO chamar agendar_ferias: SEMPRE que houver intencao de marcar/agendar/tirar/solicitar ferias. NAO chame consultar_saldo antes - o Flow ja valida. Inputs: varDataInicio (ISO), varDataRetorno (ISO), varVenderAbono (bool), varDiasAbono (numero, 0 default). NAO passe varUserId. REGRAS: (1) Copie datas EXATAMENTE como o colaborador escreveu - mesmo mes, mesmo dia. NUNCA inverta inicio/retorno. NUNCA troque mes. Se "30/06 a 04/06" -> varDataInicio=2026-06-30 varDataRetorno=2026-06-04 (ambos mes 06). Flow detecta inversao e retorna erro. (2) Ano: use ano corrente. Se data ja passou no ano corrente, use proximo ano. Hoje=2026, "10 de agosto" -> 2026-08-10. (3) Faltou data ou abono? Pergunte SO o que falta, em 1 frase. Pos-resposta: se varSucesso=true, COPIE varMensagemSucesso literalmente como sua resposta final - NAO escale, NAO transfira para humano, NAO peca confirmacao. Apenas exiba a mensagem de sucesso. Se varSucesso=false, exiba varMensagemErro e, se varDatasSugeridas tiver valor, ofereca: "Sugestao: {varDatasSugeridas}. Quer agendar uma dessas?".</description>
+            <developerName>instruction1_179Hp00000112pq</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction1_179Hp00000112pq</masterLabel>
+            <sortOrder>2</sortOrder>
         </genAiPluginInstructions>
         <language>en_US</language>
         <localActionLinks>
@@ -67,7 +74,7 @@
         <description>Analisa a intencao do colaborador e escolhe entre consulta de politica, agendamento de ferias ou escalacao.</description>
         <developerName>topic_selector_16jHp000000L0fF</developerName>
         <genAiPluginInstructions>
-            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, peça clarificação ao colaborador. Só escale para humano se o colaborador pedir explicitamente. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
             <developerName>instruction0_179Hp00000112po</developerName>
             <language>en_US</language>
             <masterLabel>instruction0_179Hp00000112po</masterLabel>
@@ -84,7 +91,7 @@
         <description>Quando a intencao do colaborador nao esta clara, pede clarificacao sobre se ele quer consulta de politica ou agendamento de ferias.</description>
         <developerName>ambiguous_question_16jHp000000L0fF</developerName>
         <genAiPluginInstructions>
-            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, peça clarificação ao colaborador. Só escale para humano se o colaborador pedir explicitamente. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
             <developerName>instruction0_179Hp00000112pp</developerName>
             <language>en_US</language>
             <masterLabel>instruction0_179Hp00000112pp</masterLabel>
@@ -98,10 +105,10 @@
     <localTopics>
         <fullName>consulta_politicas_rh_16jHp000000L0fF</fullName>
         <canEscalate>false</canEscalate>
-        <description>Responde duvidas sobre politicas de RH do Itau (ferias CLT/PJ, abono pecuniario, fracionamento, beneficios durante ferias, home office) consultando exclusivamente os artigos publicados na base de Knowledge.</description>
+        <description>Responde duvidas CONCEITUAIS e regras gerais sobre politicas de RH do Itau (ferias CLT/PJ, abono pecuniario, vender abono, "posso vender", "como funciona", direito a ferias, fracionamento, beneficios durante ferias, home office) consultando exclusivamente os artigos publicados na base de Knowledge. Use este topico SEMPRE que a pergunta for sobre regras/o que e permitido, NAO sobre agendar ou consultar saldo proprio. Exemplos: "Posso vender abono?", "Como funciona o fracionamento?", "Tenho direito a quantos dias?".</description>
         <developerName>consulta_politicas_rh_16jHp000000L0fF</developerName>
         <genAiPluginInstructions>
-            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, peça clarificação ao colaborador. Só escale para humano se o colaborador pedir explicitamente. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
             <developerName>instruction0_179Hp00000112pm</developerName>
             <language>en_US</language>
             <masterLabel>instruction0_179Hp00000112pm</masterLabel>
@@ -129,10 +136,10 @@
     <localTopics>
         <fullName>escalation_16jHp000000L0fF</fullName>
         <canEscalate>false</canEscalate>
-        <description>Transfere para um atendente humano de RH quando o colaborador explicitamente pede ou apos 3 tentativas falhas de agendamento.</description>
+        <description>Transfere para atendente humano APENAS quando o colaborador EXPLICITAMENTE pedir contato humano usando frases diretas como "falar com humano", "atendente humano", "pessoa real", "transferir para alguem", "nao quero falar com bot". NUNCA escale apos sucesso de agendamento. NUNCA escale como fallback de erro - o agente deve retornar a mensagem de erro especifica do Flow ao colaborador. NUNCA escale por iniciativa propria.</description>
         <developerName>escalation_16jHp000000L0fF</developerName>
         <genAiPluginInstructions>
-            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, transfira para atendimento humano. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta). Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Nunca invente regras; quando não souber, peça clarificação ao colaborador. Só escale para humano se o colaborador pedir explicitamente. Ao citar uma regra, sempre informe a fonte legal (ex: conforme art. 143 CLT). Nunca pergunte ao colaborador por email, CPF ou User Id para se identificar — a identidade dele já é garantida pela sessão autenticada do I-Connecta. Nunca informe dados de outros colaboradores.</description>
             <developerName>instruction0_179Hp00000112pn</developerName>
             <language>en_US</language>
             <masterLabel>instruction0_179Hp00000112pn</masterLabel>

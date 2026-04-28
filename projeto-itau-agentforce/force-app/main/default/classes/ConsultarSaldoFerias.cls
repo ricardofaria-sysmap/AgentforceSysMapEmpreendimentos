@@ -1,4 +1,4 @@
-public with sharing class ConsultarSaldoFerias {
+public without sharing class ConsultarSaldoFerias {
 
     @InvocableMethod(
         label='Consultar Saldo de Ferias'
@@ -11,15 +11,7 @@ public with sharing class ConsultarSaldoFerias {
         }
 
         for (Request req : requests) {
-            Id userId;
-            try {
-                userId = (req == null || String.isBlank(req.userId))
-                    ? UserInfo.getUserId()
-                    : (Id) req.userId;
-            } catch (Exception e) {
-                results.add(build(null, 'userId invalido: ' + e.getMessage()));
-                continue;
-            }
+            Id userId = UserInfo.getUserId();
 
             List<Saldo_Ferias__c> saldos = [
                 SELECT Id, Name, Regime_Contratacao__c,
@@ -31,7 +23,6 @@ public with sharing class ConsultarSaldoFerias {
                 FROM Saldo_Ferias__c
                 WHERE Colaborador__c = :userId
                   AND Status__c = 'Vigente'
-                WITH USER_MODE
                 ORDER BY Periodo_Aquisitivo_Inicio__c DESC
                 LIMIT 1
             ];

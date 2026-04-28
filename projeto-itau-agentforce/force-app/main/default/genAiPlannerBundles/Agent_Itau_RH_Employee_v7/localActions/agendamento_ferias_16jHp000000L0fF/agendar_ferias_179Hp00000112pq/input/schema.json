@@ -4,14 +4,14 @@
   "properties" : {
     "varDataInicio" : {
       "title" : "Var Data Inicio",
-      "description" : "Data de inicio no formato ISO YYYY-MM-DD.",
+      "description" : "Data de inicio das ferias no formato ISO YYYY-MM-DD. Use SEMPRE o ano corrente (ou proximo, se data ja passou). NUNCA use anos anteriores.",
       "lightning:type" : "lightning__textType",
       "lightning:isPII" : false,
       "copilotAction:isUserInput" : false
     },
     "varDataRetorno" : {
       "title" : "Var Data Retorno",
-      "description" : "Data de retorno no formato ISO YYYY-MM-DD.",
+      "description" : "Data de retorno no formato ISO YYYY-MM-DD. Use SEMPRE o ano corrente (ou proximo, se data ja passou). NUNCA use anos anteriores.",
       "lightning:type" : "lightning__textType",
       "lightning:isPII" : false,
       "copilotAction:isUserInput" : false
@@ -20,13 +20,6 @@
       "title" : "Var Dias Abono",
       "description" : "Quantidade de dias de abono (0 se nao esta vendendo).",
       "lightning:type" : "lightning__numberType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : false
-    },
-    "varUserId" : {
-      "title" : "Var User Id",
-      "description" : "Sempre passar string vazia. O Flow faz fallback para $User.Id (colaborador logado).",
-      "lightning:type" : "lightning__textType",
       "lightning:isPII" : false,
       "copilotAction:isUserInput" : false
     },

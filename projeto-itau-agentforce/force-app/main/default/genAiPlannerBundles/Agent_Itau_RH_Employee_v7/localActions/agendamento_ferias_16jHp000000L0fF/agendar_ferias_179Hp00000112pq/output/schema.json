@@ -11,7 +11,7 @@
     },
     "varCaseNumber" : {
       "title" : "Var Case Number",
-      "description" : "Numero do Case criado (ex: 00001234).",
+      "description" : "Numero do Case criado.",
       "lightning:type" : "lightning__textType",
       "lightning:isPII" : false,
       "copilotAction:isDisplayable" : false,
@@ -19,7 +19,7 @@
     },
     "varMensagemErro" : {
       "title" : "Var Mensagem Erro",
-      "description" : "Mensagem especifica quando varSucesso=False (qual regra foi violada).",
+      "description" : "Mensagem especifica quando varSucesso=False.",
       "lightning:type" : "lightning__textType",
       "lightning:isPII" : false,
       "copilotAction:isDisplayable" : false,
@@ -31,6 +31,38 @@
       "lightning:type" : "lightning__booleanType",
       "lightning:isPII" : false,
       "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varDatasSugeridas" : {
+      "title" : "Var Datas Sugeridas",
+      "description" : "Lista de ate 5 sugestoes de periodos validos. Vazio quando nao houver sugestao.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varDataInicioEfetiva" : {
+      "title" : "Var Data Inicio Efetiva",
+      "description" : "Data de inicio EFETIVAMENTE registrada no Case (apos correcao automatica de ano).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varDataRetornoEfetiva" : {
+      "title" : "Var Data Retorno Efetiva",
+      "description" : "Data de retorno EFETIVAMENTE registrada no Case (apos correcao automatica de ano).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "varMensagemSucesso" : {
+      "title" : "Var Mensagem Sucesso",
+      "description" : "Mensagem PRONTA para apresentar ao colaborador quando varSucesso=True. Contem datas EFETIVAS ja com ano correto e numero do protocolo. INSTRUCAO CRITICA: quando varSucesso=True, copie e exiba ESTE TEXTO LITERALMENTE ao colaborador, sem reescrever ou recompor com dados anteriores.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
       "copilotAction:isUsedByPlanner" : true
     }
   },
