@@ -129,7 +129,7 @@ topic agendamento_ferias:
                     description: "Mensagem de erro se success=False."
 
         agendar_ferias:
-            description: "Executa o agendamento no contexto do colaborador autenticado: valida regras CLT, cria Case Pedido_Ferias, submete aprovacao do gestor. Retorna sucesso e CaseNumber, ou falha com mensagem de erro especifica. O Flow resolve o userId via $User.Id - nunca passar email/nome."
+            description: "Executa o agendamento APENAS depois que o colaborador confirmar explicitamente o eco de datas (sim/ok/pode/confirmo). Valida regras CLT, cria Case, submete aprovacao. O Flow resolve o userId via $User.Id - nunca passar email/nome."
             target: "flow://Agendamento_Ferias_Autolaunch"
             inputs:
                 varUserId: string
@@ -166,16 +166,18 @@ topic agendamento_ferias:
 
               Caso C - usuario quer AGENDAR (pistas: "quero marcar", "preciso tirar", "agendar ferias", ja falou datas tipo "15/12 a 29/12"):
               1. Reporte o saldo em 1 frase e peca as datas de inicio e retorno no formato DD/MM/AAAA se ainda nao informadas. Converta para ISO YYYY-MM-DD e salve via capturar_datas.
+                 REGRA DATAS (BR): em DD/MM/AAAA o segundo numero e o MES (06 = junho). Ex.: 04/06/2026 e sempre 2026-06-04, NUNCA julho (2026-07-04). Se o colaborador disser inicio 30/06 e retorno 04/06, use exatamente 2026-06-30 e 2026-06-04 - mesmo que no calendario o retorno pareca antes do inicio. NUNCA altere mes/dia para fabricar um periodo valido; o Flow detecta inversao e devolve erro sem criar Case.
               2. Pergunte se quer vender abono (sim/nao). Se sim, quantos dias (maximo 1/3 do direito = diasDisponiveis / 3 arredondado pra baixo). Salve via capturar_abono.
-              3. Confirme os dados com o usuario.
-              4. Execute executar_agendamento. Se varSucesso=false, leia varMensagemErro e explique o ajuste necessario ao usuario em linguagem natural. Incremente @variables.TentativasAgendamento. Apos 3 falhas (TentativasAgendamento >= 3), chame escalar.
-              5. Se varSucesso=true, confirme o protocolo (varCaseNumber) com o colaborador em 1-2 frases.
+              3. CONFIRMACAO POR ECO (obrigatoria antes de agendar): em UMA frase, repita as datas exatamente como DD/MM/AAAA e escreva o mes POR EXTENSO da data de retorno para evitar confusao 06/junho vs 07/julho. Exemplo: "Confirma ferias de 30/06/2026 a 04/06/2026, com retorno no dia 4 de junho de 2026, sem vender abono?" Neste turno NAO chame executar_agendamento. Aguarde a proxima mensagem do colaborador.
+              4. Se o colaborador corrigir datas ou abono, atualize com capturar_datas e/ou capturar_abono e VOLTE ao passo 3 (novo eco). Se confirmar de forma inequivoca (sim / ok / isso / confirmo / pode agendar / esta correto), chame executar_agendamento UMA vez com @variables.DataInicio e @variables.DataRetorno ja salvos.
+              5. Se varSucesso=false, leia varMensagemErro e explique o ajuste ao colaborador. Incremente @variables.TentativasAgendamento. Apos 3 falhas, chame escalar.
+              6. Se varSucesso=true, mostre varMensagemSucesso ou o protocolo (varCaseNumber) em 1-2 frases; nao peca outra confirmacao depois do sucesso.
         actions:
             pesquisar_saldo: @actions.consultar_saldo
                 description: "Consulta o saldo de ferias vigente do colaborador logado. OBRIGATORIA como PRIMEIRA acao deste subagente - sempre chamar antes de qualquer resposta ao usuario, tanto para perguntas de consulta de saldo quanto para agendamento. Retorna dias disponiveis, regime, aquisitivo, concessivo."
                 with userId = ""
             executar_agendamento: @actions.agendar_ferias
-                description: "Executar o agendamento apos datas e abono confirmados. UserId resolvido pelo Flow via $User.Id."
+                description: "Chamar somente apos o colaborador confirmar o eco do passo 3 (sim/ok/pode/confirmo). UserId resolvido pelo Flow via $User.Id."
                 with varUserId = ""
                 with varDataInicio = @variables.DataInicio
                 with varDataRetorno = @variables.DataRetorno

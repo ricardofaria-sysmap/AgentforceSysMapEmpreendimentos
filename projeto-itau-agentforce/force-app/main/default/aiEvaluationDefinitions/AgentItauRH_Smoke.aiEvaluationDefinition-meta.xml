@@ -13,7 +13,7 @@
             <name>action_sequence_match</name>
         </expectation>
         <expectation>
-            <expectedValue>Agente extrai datas, chama agendar_ferias e confirma criacao do Case com numero de protocolo.</expectedValue>
+            <expectedValue>Agente explica a restricao legal da CLT ao inicio do periodo solicitado (ex.: regra de dia da semana ou repouso), pode mencionar saldo se relevante, oferece datas alternativas validas ou pede que o colaborador escolha nova data de inicio; nao confirma criacao de Case com protocolo enquanto o periodo violar a regra legal.</expectedValue>
             <name>bot_response_rating</name>
         </expectation>
         <inputs>
@@ -89,7 +89,17 @@
             <name>bot_response_rating</name>
         </expectation>
         <inputs>
-            <utterance>Marcar ferias de 30/06/2026 a 04/06/2026, sem vender abono.</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>Marcar ferias de 30/06/2026 a 04/06/2026, sem vender abono.</message>
+                <index>0</index>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Confirma ferias de 30/06/2026 a 04/06/2026, com retorno no dia 4 de junho de 2026, sem vender abono? Responda sim para eu processar no sistema.</message>
+                <index>1</index>
+            </conversationHistory>
+            <utterance>Sim, confirmo. Pode agendar com essas datas exatamente.</utterance>
         </inputs>
         <number>5</number>
     </testCase>

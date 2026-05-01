@@ -461,7 +461,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Ajustar_Ano_Datas</targetReference>
+            <targetReference>Validar_Ordem_Datas_Iniciais</targetReference>
         </connector>
     </assignments>
 
@@ -485,9 +485,89 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Valida_Inputs</targetReference>
+            <targetReference>Validar_Ordem_Apos_Ajuste_Ano</targetReference>
         </connector>
     </assignments>
+
+    <decisions>
+        <name>Validar_Ordem_Datas_Iniciais</name>
+        <label>Inicio antes do retorno (entrada)</label>
+        <locationX>350</locationX>
+        <locationY>50</locationY>
+        <defaultConnector>
+            <targetReference>Ajustar_Ano_Datas</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ordem OK ou incompleto</defaultConnectorLabel>
+        <rules>
+            <name>Entrada_Datas_Invertidas</name>
+            <conditionLogic>1 AND 2 AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>varDataInicio</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varDataRetorno</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varDataInicio</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>varDataRetorno</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Datas_Invertidas</targetReference>
+            </connector>
+            <label>Inicio depois do retorno</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Validar_Ordem_Apos_Ajuste_Ano</name>
+        <label>Inicio antes do retorno (pos ajuste de ano)</label>
+        <locationX>350</locationX>
+        <locationY>95</locationY>
+        <defaultConnector>
+            <targetReference>Valida_Inputs</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ordem OK ou incompleto</defaultConnectorLabel>
+        <rules>
+            <name>PosAjuste_Datas_Invertidas</name>
+            <conditionLogic>1 AND 2 AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>varDataInicio</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varDataRetorno</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varDataInicio</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>varDataRetorno</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Erro_Datas_Invertidas</targetReference>
+            </connector>
+            <label>Inicio depois do retorno</label>
+        </rules>
+    </decisions>
 
     <decisions>
         <name>Valida_Inputs</name>

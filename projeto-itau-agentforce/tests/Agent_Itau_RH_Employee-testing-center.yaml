@@ -7,7 +7,7 @@ testCases:
     expectedTopic: agendamento_ferias
     expectedActions:
       - agendar_ferias
-    expectedOutcome: "Agente extrai datas, chama agendar_ferias e confirma criacao do Case com numero de protocolo."
+    expectedOutcome: "Agente explica a restricao legal da CLT ao inicio do periodo solicitado (ex.: regra de dia da semana ou repouso), pode mencionar saldo se relevante, oferece datas alternativas validas ou pede que o colaborador escolha nova data de inicio; nao confirma criacao de Case com protocolo enquanto o periodo violar a regra legal."
 
   - utterance: "Marcar ferias de 08/06/2026 ate 22/06/2026 vendendo 10 dias de abono."
     expectedTopic: agendamento_ferias
@@ -27,7 +27,12 @@ testCases:
       - agendar_ferias
     expectedOutcome: "Agente chama agendar_ferias; Flow retorna erro de aviso de 30 dias e sugestao de datas validas."
 
-  - utterance: "Marcar ferias de 30/06/2026 a 04/06/2026, sem vender abono."
+  - utterance: "Sim, confirmo. Pode agendar com essas datas exatamente."
+    conversationHistory:
+      - role: user
+        message: "Marcar ferias de 30/06/2026 a 04/06/2026, sem vender abono."
+      - role: agent
+        message: "Confirma ferias de 30/06/2026 a 04/06/2026, com retorno no dia 4 de junho de 2026, sem vender abono? Responda sim para eu processar no sistema."
     expectedTopic: agendamento_ferias
     expectedActions:
       - agendar_ferias
