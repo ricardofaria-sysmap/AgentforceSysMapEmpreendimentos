@@ -31,6 +31,8 @@
         <genAiPluginInstructions>
             <description>FLUXO ALTERACAO: Se o colaborador disser "alterar", "mudar", "trocar datas", "cancelar pedido", "remarcar ferias" referindo-se a um agendamento existente: PRIMEIRO confirme com 1 frase (ex: "Voce quer cancelar o pedido atual e agendar novas datas? Isso vai encerrar o protocolo X."). Apos confirmacao explicita do colaborador (sim/ok/pode), chame cancelar_pedido. Se success=true, mostre a mensagem retornada e pergunte "Quais novas datas?" (e abono). Apos o colaborador informar novas datas, aplique o mesmo ECO + confirmacao abaixo antes de chamar agendar_ferias. Se success=false em cancelar_pedido, mostre a mensagem de erro retornada.
 
+PARSER APEX (obrigatorio antes do ISO final): assim que tiver as duas datas em texto do colaborador, chame parsear_datas_ferias com textoDataInicio e textoDataRetorno iguais ao que ele escreveu (ex.: 30/06/2026 e 04/06/2026). Se success=false, mostre message. Se success=true, use dataInicioIso e dataRetornoIso retornados como varDataInicio e varDataRetorno em agendar_ferias — nao converta DD/MM mentalmente sem o parser.
+
 QUANDO chamar agendar_ferias: Ha intencao de marcar ferias, mas a action so pode ser chamada DEPOIS do colaborador confirmar explicitamente (sim/ok/pode/confirmo/esta correto) o eco de datas da sua mensagem anterior. Se o agente consultar saldo antes, tudo bem; o essencial e eco com mes por extenso, depois confirmacao, depois agendar_ferias. Inputs: varDataInicio (ISO), varDataRetorno (ISO), varVenderAbono (bool), varDiasAbono (numero, 0 default). NAO passe varUserId.
 
 CONFIRMACAO POR ECO (obrigatoria): Antes da PRIMEIRA chamada agendar_ferias (e de novo se o colaborador mudar datas ou abono), envie UMA frase repetindo inicio e retorno em DD/MM/AAAA e o mes POR EXTENSO da data de RETORNO (ex.: retorno 04/06/2026 = 4 de junho de 2026, nunca julho). Na mensagem do eco NAO chame agendar_ferias. Na mensagem seguinte, se o colaborador confirmar, chame agendar_ferias com ISO fiel ao eco (04/06/2026 = 2026-06-04).
@@ -49,6 +51,9 @@ REGRAS: (1) Copie datas EXATAMENTE como o colaborador escreveu - mesmo mes, mesm
             <functionName>consultar_saldo_179Hp00000112pq</functionName>
         </localActionLinks>
         <localActionLinks>
+            <functionName>parse_datas_ferias_179Hp00000112pv</functionName>
+        </localActionLinks>
+        <localActionLinks>
             <functionName>cancelar_pedido_179Hp00000112pq</functionName>
         </localActionLinks>
         <localActions>
@@ -61,6 +66,17 @@ REGRAS: (1) Copie datas EXATAMENTE como o colaborador escreveu - mesmo mes, mesm
             <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
             <localDeveloperName>consultar_saldo</localDeveloperName>
             <masterLabel>Consultar Saldo</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>parse_datas_ferias_179Hp00000112pv</fullName>
+            <description>Converte texto de data em formato brasileiro DD/MM/AAAA (ou ISO YYYY-MM-DD) para ISO deterministico. O segundo numero em DD/MM/AAAA e o MES. Chame com os dois trechos exatamente como o colaborador escreveu; use dataInicioIso e dataRetornoIso nas entradas ISO de agendar_ferias.</description>
+            <developerName>parse_datas_ferias_179Hp00000112pv</developerName>
+            <invocationTarget>ParseDatasFeriasBR</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>parsear_datas_ferias</localDeveloperName>
+            <masterLabel>Parse Datas Ferias BR</masterLabel>
         </localActions>
         <localActions>
             <fullName>cancelar_pedido_179Hp00000112pq</fullName>

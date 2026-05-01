@@ -83,7 +83,8 @@ run_deploy "force-app/main/default/classes" \
   --test-level RunSpecifiedTests \
   --tests FeriasEmailSenderTest \
   --tests FeriasApprovalSubmitterTest \
-  --tests FeriasDateRulesServiceTest
+  --tests FeriasDateRulesServiceTest \
+  --tests ParseDatasFeriasBRTest
 run_deploy "force-app/main/default/lwc"
 run_deploy "force-app/main/default/tabs"
 run_deploy "force-app/main/default/flexipages"
