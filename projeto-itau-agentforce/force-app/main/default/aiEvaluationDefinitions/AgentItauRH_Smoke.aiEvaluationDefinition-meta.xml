@@ -67,11 +67,21 @@
             <name>action_sequence_match</name>
         </expectation>
         <expectation>
-            <expectedValue>Agente chama agendar_ferias; Flow retorna erro de aviso de 30 dias e sugestao de datas validas.</expectedValue>
+            <expectedValue>Apos confirmacao explicita, agente chama agendar_ferias; Flow retorna erro de aviso de 30 dias (antecedencia minima) e sugestao de datas validas. Agente comunica o erro e as sugestoes ao colaborador, sem criar Case com sucesso.</expectedValue>
             <name>bot_response_rating</name>
         </expectation>
         <inputs>
-            <utterance>Quero ferias comecando amanha por 10 dias.</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>Quero ferias comecando amanha por 10 dias.</message>
+                <index>0</index>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Você tem 30 dias de férias disponíveis (regime CLT). Confirme: deseja iniciar as férias em 02/05/2026 e retornar em 12/05/2026? Gostaria de vender abono pecuniário (até 10 dias)?</message>
+                <index>1</index>
+            </conversationHistory>
+            <utterance>Sim, confirmo. Pode processar com essas datas exatamente, sem vender abono.</utterance>
         </inputs>
         <number>4</number>
     </testCase>

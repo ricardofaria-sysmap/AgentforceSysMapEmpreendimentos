@@ -21,11 +21,16 @@ testCases:
       - agendar_ferias
     expectedOutcome: "Agente chama agendar_ferias; Flow ajusta ano automaticamente para o corrente e cria o Case com sucesso."
 
-  - utterance: "Quero ferias comecando amanha por 10 dias."
+  - utterance: "Sim, confirmo. Pode processar com essas datas exatamente, sem vender abono."
+    conversationHistory:
+      - role: user
+        message: "Quero ferias comecando amanha por 10 dias."
+      - role: agent
+        message: "Você tem 30 dias de férias disponíveis (regime CLT). Confirme: deseja iniciar as férias em 02/05/2026 e retornar em 12/05/2026? Gostaria de vender abono pecuniário (até 10 dias)?"
     expectedTopic: agendamento_ferias
     expectedActions:
       - agendar_ferias
-    expectedOutcome: "Agente chama agendar_ferias; Flow retorna erro de aviso de 30 dias e sugestao de datas validas."
+    expectedOutcome: "Apos confirmacao explicita, agente chama agendar_ferias; Flow retorna erro de aviso de 30 dias (antecedencia minima) e sugestao de datas validas. Agente comunica o erro e as sugestoes ao colaborador, sem criar Case com sucesso."
 
   - utterance: "Sim, confirmo. Pode agendar com essas datas exatamente."
     conversationHistory:
