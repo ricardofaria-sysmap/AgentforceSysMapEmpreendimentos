@@ -9,6 +9,7 @@ scripts/.usernames.env
 force-app/main/default/lwc/jsconfig.json
 **/.eslintrc.json
 temp/
+test-results/
 
 # Agent Skills (forcedotcom/afv-library); reinstall: npx skills add forcedotcom/afv-library -y
 .agents/
