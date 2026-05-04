@@ -24,7 +24,7 @@
                 <identifier>atalho_rapido</identifier>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;div style="border:1px solid #e6e6e6;border-radius:8px;padding:16px;margin-top:16px;"&gt;&lt;h3 style="margin:0 0 12px 0;color:#1d3557;font-size:15px;"&gt;Atalhos rapidos&lt;/h3&gt;&lt;ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;"&gt;&lt;li&gt;&lt;a href="/lightning/o/Case/list?filterName=Meus_Pedidos_Ferias" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Meus pedidos de ferias&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Knowledge__kav/list?filterName=RecentlyViewedArticles" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Politicas de RH (Knowledge)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Feriado__c/list" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Calendario de feriados&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Saldo_Ferias__c/list" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Meu historico de saldos&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</value>
+                    <value>&lt;div style="border:1px solid #e6e6e6;border-radius:8px;padding:16px;margin-top:16px;"&gt;&lt;h3 style="margin:0 0 12px 0;color:#1d3557;font-size:15px;"&gt;Atalhos rapidos&lt;/h3&gt;&lt;ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;"&gt;&lt;li&gt;&lt;a href="/lightning/o/Case/list?filterName=Meus_Pedidos_Ferias" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Meus pedidos de ferias&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Knowledge__kav/list?filterName=I_Connecta_Politicas_RH" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Politicas de RH (Knowledge)&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Feriado__c/list" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Calendario de feriados&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/lightning/o/Saldo_Ferias__c/list" style="color:#ec7211;font-weight:600;text-decoration:none;"&gt;&#x25B6; Meu historico de saldos&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</value>
                 </componentInstanceProperties>
             </componentInstance>
         </itemInstances>
@@ -32,6 +32,14 @@
             <componentInstance>
                 <componentName>c:iConnectaAgentforceChat</componentName>
                 <identifier>i_connecta_agentforce_chat</identifier>
+                <componentInstanceProperties>
+                    <name>agentId</name>
+                    <value>0XxHp000000UPrCKAW</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>agentLabel</name>
+                    <value>Agent Itau RH</value>
+                </componentInstanceProperties>
             </componentInstance>
         </itemInstances>
         <itemInstances>

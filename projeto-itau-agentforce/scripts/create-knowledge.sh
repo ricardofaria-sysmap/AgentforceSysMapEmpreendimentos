@@ -5,7 +5,8 @@
 # Pre-requisitos (ja cobertos pelo deploy):
 #   - Knowledge ativado na org (Setup > Knowledge Settings)
 #   - RecordType Knowledge__kav.Politica_RH deployado
-#   - DataCategoryGroup Topicos_RH com categorias Ferias/Beneficios/Home_Office
+#   - (Opcional) DataCategoryGroup Topicos_RH — nao e mais exigido para artigos; categorias na versao
+#     escondiam artigos nas list views LEX para quem sem visibilidade ALL no grupo.
 #   - Custom fields Politica_Conteudo__c, Politica_Fonte_Legal__c, Politica_Ultima_Revisao__c
 #
 # Idempotente: artigos com UrlName ja publicado (Online) em pt_BR sao pulados.

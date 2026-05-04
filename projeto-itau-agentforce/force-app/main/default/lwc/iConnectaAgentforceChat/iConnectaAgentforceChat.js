@@ -17,6 +17,8 @@ export default class IConnectaAgentforceChat extends LightningElement {
     embedErrorMessage;
     _embedResult;
     _started;
+    _diagnosticsAttached = false;
+    _diagnosticCleanups = [];
 
     connectedCallback() {
         this._start();
@@ -112,6 +114,7 @@ export default class IConnectaAgentforceChat extends LightningElement {
                 }
             });
             this.phase = 'ready';
+            this._attachRuntimeDiagnostics();
         } catch (e) {
             this.embedErrorMessage = this._messageFromError(e);
             this.phase = 'embed-error';
@@ -119,6 +122,15 @@ export default class IConnectaAgentforceChat extends LightningElement {
     }
 
     _teardown() {
+        for (const cleanup of this._diagnosticCleanups) {
+            try {
+                cleanup();
+            } catch {
+                // no-op
+            }
+        }
+        this._diagnosticCleanups = [];
+        this._diagnosticsAttached = false;
         const shell = this.template.querySelector('.iac-shell');
         if (shell) {
             while (shell.firstChild) {
@@ -150,5 +162,60 @@ export default class IConnectaAgentforceChat extends LightningElement {
             return e.message;
         }
         return 'Erro desconhecido.';
+    }
+
+    _attachRuntimeDiagnostics() {
+        if (this._diagnosticsAttached) {
+            return;
+        }
+        const loApp = this._embedResult?.loApp;
+        const chatClientComponent = this._embedResult?.chatClientComponent;
+        if (!loApp) {
+            return;
+        }
+        this._diagnosticsAttached = true;
+
+        const bind = (target, eventName) => {
+            const handler = (event) => {
+                const detail = event?.detail
+                    ? {
+                          message: event.detail.message,
+                          type: event.detail.type,
+                          originalError: event.detail.originalError?.message
+                      }
+                    : undefined;
+                if (eventName.includes('error')) {
+                    const runtimeMsg =
+                        detail?.message ||
+                        detail?.originalError ||
+                        'Falha do Lightning Out / Agentforce Conversation Client.';
+                    this.embedErrorMessage = runtimeMsg;
+                    this.phase = 'embed-error';
+                }
+            };
+            target.addEventListener(eventName, handler);
+            this._diagnosticCleanups.push(() => target.removeEventListener(eventName, handler));
+        };
+
+        bind(
+            loApp,
+            'lo.application.ready'
+        );
+        bind(
+            loApp,
+            'lo.application.error'
+        );
+        bind(
+            loApp,
+            'lo.iframe.error'
+        );
+        bind(
+            loApp,
+            'lo.component.error'
+        );
+
+        if (chatClientComponent) {
+            bind(chatClientComponent, 'accready');
+        }
     }
 }

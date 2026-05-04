@@ -14,6 +14,7 @@
     <navType>Standard</navType>
     <tabs>I_Connecta_Home</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>Knowledge__kav</tabs>
     <tabs>Saldo_Ferias__c</tabs>
     <tabs>Feriado__c</tabs>
     <uiType>Lightning</uiType>

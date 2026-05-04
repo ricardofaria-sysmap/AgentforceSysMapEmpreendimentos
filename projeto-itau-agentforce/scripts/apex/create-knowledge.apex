@@ -288,26 +288,8 @@ for (Artigo a : artigos) {
         System.debug('CRIADO: ' + a.urlName);
     }
 
-    // Garante data categories vinculadas a esta versao draft/nova
-    // (queries existentes ficam; se a versao nova ja herda, essa insercao pode falhar - tratamos)
-    List<Knowledge__DataCategorySelection> dcsExistentes = [
-        SELECT Id, DataCategoryName
-        FROM Knowledge__DataCategorySelection
-        WHERE ParentId = :kavId
-    ];
-    Set<String> catsJa = new Set<String>();
-    for (Knowledge__DataCategorySelection d : dcsExistentes) { catsJa.add(d.DataCategoryName); }
-
-    List<Knowledge__DataCategorySelection> dcsNovas = new List<Knowledge__DataCategorySelection>();
-    for (String cat : a.categorias) {
-        if (catsJa.contains(cat)) continue;
-        dcsNovas.add(new Knowledge__DataCategorySelection(
-            ParentId              = kavId,
-            DataCategoryGroupName = 'Topicos_RH',
-            DataCategoryName      = cat
-        ));
-    }
-    if (!dcsNovas.isEmpty()) insert dcsNovas;
+    // Nao vincular Topicos_RH aqui: list views LEX de Knowledge aplicam visibilidade por data category
+    // e colaboradores sem ALL no grupo veem lista vazia. O ConsultarPoliticasRH (SOSL) nao filtra por categoria.
 
     // Publica (flagAsNew=false para update manter historico; true para artigos novos)
     Boolean flagAsNew = !existentesOnline.containsKey(a.urlName);
