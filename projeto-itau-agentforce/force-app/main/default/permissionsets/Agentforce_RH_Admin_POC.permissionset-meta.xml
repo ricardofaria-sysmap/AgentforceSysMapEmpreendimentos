@@ -5,6 +5,10 @@
         <enabled>true</enabled>
     </agentAccesses>
     <agentAccesses>
+        <agentName>Agent_Itau_RH_Handoff_Calendario</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <agentAccesses>
         <agentName>Agent_Itau_RH_Handoff_POC</agentName>
         <enabled>true</enabled>
     </agentAccesses>
@@ -30,6 +34,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>FeriasEmailSender</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IniciarHandoffAgendamento</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -147,6 +155,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Agendamento_Ferias_Handoff_Screen</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Agendamento_Ferias_Screen</flow>
     </flowAccesses>
     <flowAccesses>
@@ -177,6 +189,16 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Handoff_Calendario_RH__e</object>
+        <viewAllFields>false</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -204,6 +226,10 @@
         <recordType>Knowledge__kav.Politica_RH</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>Agendar_Ferias_Handoff</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <tabSettings>
         <tab>Feriado__c</tab>
         <visibility>Visible</visibility>

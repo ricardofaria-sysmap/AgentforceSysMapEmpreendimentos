@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" description="Host Aura para rodar o Screen Flow Agendamento_Ferias_Handoff_Screen dentro de uma Lightning App Page (necessario para empApi/CometD funcionar via runtime LE).">
+    <aura:attribute name="varAgentId" type="String" default="0XxHp000000URtcKAG" access="global"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <lightning:flow aura:id="flowData"/>
+</aura:component>

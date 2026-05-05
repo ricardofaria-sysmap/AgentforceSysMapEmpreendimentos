@@ -1,0 +1,70 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "diasDireito" : {
+      "title" : "Dias Direito",
+      "description" : "Total de dias de direito no periodo aquisitivo atual.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "diasDisponiveis" : {
+      "title" : "Dias Disponiveis",
+      "description" : "Quantos dias o colaborador ainda pode usufruir.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "diasTirados" : {
+      "title" : "Dias Tirados",
+      "description" : "Dias ja usufruidos no periodo.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "message" : {
+      "title" : "Message",
+      "description" : "Mensagem amigavel pre-formatada em PT-BR para o agente transmitir literalmente ao colaborador.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "periodoConcessivoFim" : {
+      "title" : "Periodo Concessivo Fim",
+      "description" : "Data limite para iniciar as ferias (DD/MM/YYYY).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "regimeContratacao" : {
+      "title" : "Regime Contratacao",
+      "description" : "CLT ou PJ.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "success" : {
+      "title" : "Success",
+      "description" : "True se a consulta SOQL rodou sem erro tecnico.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "temSaldoSuficiente" : {
+      "title" : "Tem Saldo Suficiente",
+      "description" : "True se existe saldo Vigente com pelo menos 5 dias disponiveis.",
+      "lightning:type" : "lightning__booleanType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : false,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Pagina de aplicacao Lightning Experience que executa o Screen Flow Agendamento_Ferias_Handoff_Screen no runtime LE (necessario para Platform Event subscribe via empApi funcionar).</description>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:agendamentoFeriasHandoffFlowHost</componentName>
+                <identifier>agendamento_ferias_handoff_flow</identifier>
+                <componentInstanceProperties>
+                    <name>varAgentId</name>
+                    <value>0XxHp000000URtcKAG</value>
+                </componentInstanceProperties>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Agendar Ferias com Handoff</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>

@@ -40,6 +40,25 @@ function compareIso(a, b) {
     return a < b ? -1 : 1;
 }
 
+function salesforceWeekday(iso) {
+    const d = fromIsoLocal(iso);
+    if (!d) {
+        return null;
+    }
+    const js = d.getDay();
+    return js === 0 ? 1 : js + 1;
+}
+
+function isWeekendStart(iso) {
+    const wd = salesforceWeekday(iso);
+    return wd === 1 || wd === 6 || wd === 7;
+}
+
+function isWeekendEnd(iso) {
+    const wd = salesforceWeekday(iso);
+    return wd === 1 || wd === 7;
+}
+
 function normalizeFlowDate(v) {
     if (v == null || v === undefined) {
         return null;
@@ -248,7 +267,8 @@ export default class FeriasDateRangePicker extends LightningElement {
                     !maxS ||
                     compareIso(iso, minS) < 0 ||
                     compareIso(iso, maxS) > 0 ||
-                    this._blocked.has(iso);
+                    this._blocked.has(iso) ||
+                    isWeekendStart(iso);
                 selected = inicioIso === iso;
             } else {
                 disabled =
@@ -256,7 +276,8 @@ export default class FeriasDateRangePicker extends LightningElement {
                     !minE ||
                     !maxE ||
                     compareIso(iso, minE) < 0 ||
-                    compareIso(iso, maxE) > 0;
+                    compareIso(iso, maxE) > 0 ||
+                    isWeekendEnd(iso);
                 selected = retornoIso === iso;
             }
             const classes = `cell${disabled ? ' cell--disabled' : ''}${selected ? ' cell--selected' : ''}`;
@@ -318,6 +339,11 @@ export default class FeriasDateRangePicker extends LightningElement {
         this.retornoFerias = null;
         this._syncViewsToSelection();
         this.dispatchEvent(new FlowAttributeChangeEvent());
+        this.dispatchEvent(
+            new CustomEvent('rangechange', {
+                detail: { inicio: iso, retorno: null }
+            })
+        );
     }
 
     handlePickEnd(event) {
@@ -329,6 +355,11 @@ export default class FeriasDateRangePicker extends LightningElement {
         this.retornoFerias = iso;
         this._syncViewsToSelection();
         this.dispatchEvent(new FlowAttributeChangeEvent());
+        this.dispatchEvent(
+            new CustomEvent('rangechange', {
+                detail: { inicio: this.inicioFerias, retorno: iso }
+            })
+        );
     }
 
     @api
@@ -339,7 +370,20 @@ export default class FeriasDateRangePicker extends LightningElement {
         if (!this.inicioFerias || !this.retornoFerias) {
             return { isValid: false, errorMessage: 'Selecione a data de inicio e a data de retorno no calendario.' };
         }
+        const iniIso = flowDateToIso(this.inicioFerias);
         const retIso = flowDateToIso(this.retornoFerias);
+        if (iniIso && isWeekendStart(iniIso)) {
+            return {
+                isValid: false,
+                errorMessage: 'A data de inicio precisa ser de segunda a quinta-feira (CLT).'
+            };
+        }
+        if (retIso && isWeekendEnd(retIso)) {
+            return {
+                isValid: false,
+                errorMessage: 'A data de retorno nao pode ser sabado ou domingo. Escolha um dia util.'
+            };
+        }
         if (this._ctx && this.maxEndIso && retIso && compareIso(retIso, this.maxEndIso) > 0) {
             return { isValid: false, errorMessage: 'A data de retorno excede o saldo ou o periodo concessivo.' };
         }

@@ -1,0 +1,71 @@
+<template>
+    <section class="iach-root">
+        <div class="iach-brand-card">
+            <div class="iach-brand-strip"></div>
+            <div class="iach-brand-header">
+                <div class="iach-logo" aria-hidden="true">itaú</div>
+                <div>
+                    <p class="iach-eyebrow">I-Connecta RH</p>
+                    <h2 class="iach-heading">Assistente de Férias Itaú</h2>
+                    <p class="iach-helper">
+                        Tire dúvidas sobre férias, abono e regras CLT. Quando você confirmar que quer agendar, eu libero o calendário aqui mesmo.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <template lwc:if={showHandoffBanner}>
+            <div class="iach-handoff-banner" role="status">
+                <span class="iach-handoff-dot"></span>
+                <span class="iach-handoff-text">{handoffMensagem}</span>
+            </div>
+        </template>
+
+        <template lwc:if={showNoAgent}>
+            <div class="iach-panel iach-panel_warn iach-banner" role="status">
+                <p class="iach-title">Agentforce nao configurado neste Flow</p>
+                <p class="iach-body">
+                    Informe o <strong>Agent Id</strong> do agente Handoff ao abrir o Flow ou configure o valor no Flow Builder.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={showStub}>
+            <div class="iach-panel iach-panel_warn iach-banner" role="status">
+                <p class="iach-title">Static Resource ainda e o placeholder</p>
+                <p class="iach-body">
+                    Gere o bundle JavaScript e faca deploy antes de testar o chat embutido.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={showLoadError}>
+            <div class="iach-panel iach-panel_error iach-banner" role="alert">
+                <p class="iach-title">Nao foi possivel carregar o Agentforce</p>
+                <p class="iach-body">{loadErrorMessage}</p>
+            </div>
+        </template>
+
+        <template lwc:if={showEmbedError}>
+            <div class="iach-panel iach-panel_error iach-banner" role="alert">
+                <p class="iach-title">Falha ao iniciar o chat</p>
+                <p class="iach-body">{embedErrorMessage}</p>
+            </div>
+        </template>
+
+        <div class="iach-chat-card">
+            <div class={shellClass} lwc:dom="manual"></div>
+        </div>
+
+        <template lwc:if={showCalendarPicker}>
+            <div class="iach-calendar-wrapper">
+                <c-ferias-date-range-picker
+                    saldo-ferias-id={saldoFeriasId}
+                    inicio-ferias={inicioFerias}
+                    retorno-ferias={retornoFerias}
+                    onrangechange={handleRangeChange}>
+                </c-ferias-date-range-picker>
+            </div>
+        </template>
+    </section>
+</template>

@@ -1,0 +1,3 @@
+<design:component label="Agendar Ferias com Handoff (Flow Host)">
+    <design:attribute name="varAgentId" label="Agent Id" description="BotDefinition Id (0Xx...) do Agent_Itau_RH_Handoff_Calendario."/>
+</design:component>

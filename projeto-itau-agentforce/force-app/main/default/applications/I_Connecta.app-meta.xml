@@ -13,6 +13,7 @@
     <label>I-Connecta</label>
     <navType>Standard</navType>
     <tabs>I_Connecta_Home</tabs>
+    <tabs>Agendar_Ferias_Handoff</tabs>
     <tabs>standard-ProcessInstanceWorkitem</tabs>
     <tabs>standard-Case</tabs>
     <tabs>Knowledge__kav</tabs>

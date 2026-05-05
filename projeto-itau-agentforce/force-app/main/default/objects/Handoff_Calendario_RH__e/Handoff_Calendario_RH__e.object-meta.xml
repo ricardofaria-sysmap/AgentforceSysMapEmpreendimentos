@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Platform Event publicado pelo agente RH POC para sinalizar ao LWC iConnectaAgentforceChatHandoff que o colaborador confirmou intencao de agendar ferias e o calendario do Screen Flow deve ser exibido.</description>
+    <eventType>HighVolume</eventType>
+    <label>Handoff Calendario RH</label>
+    <pluralLabel>Handoff Calendario RH</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
+</CustomObject>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>AgentforceEmployeeAgent</agentType>
+    <botMlDomain>
+        <label>Agent Itau RH Handoff Calendario</label>
+        <name>Agent_Itau_RH_Handoff_Calendario</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <description>Employee Agent isolado para a POC v2: responde dúvidas de RH e, após confirmação explícita, dispara o handoff para liberar o calendário do Screen Flow via Platform Event Handoff_Calendario_RH__e. Não cria Case e não invoca Flow de agendamento.</description>
+    <label>Agent Itau RH Handoff Calendario</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>InternalCopilot</type>
+</Bot>
