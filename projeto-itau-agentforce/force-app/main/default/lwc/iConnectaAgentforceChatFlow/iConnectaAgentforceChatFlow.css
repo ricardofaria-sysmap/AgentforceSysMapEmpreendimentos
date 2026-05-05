@@ -1,0 +1,143 @@
+.iacf-root {
+    --itau-orange: #ec7000;
+    --itau-blue: #003399;
+    --itau-deep-blue: #001b5d;
+    --itau-cream: #fff7ef;
+    --itau-border: #f2d2b6;
+    width: 100%;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.iacf-brand-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--itau-border);
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(135deg, var(--itau-orange) 0%, #ff8f1f 52%, #ffb15a 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(236, 112, 0, 0.18);
+}
+
+.iacf-brand-strip {
+    height: 6px;
+    background: var(--itau-blue);
+}
+
+.iacf-brand-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 20px 20px;
+}
+
+.iacf-logo {
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 58px;
+    height: 58px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: var(--itau-blue);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+}
+
+.iacf-eyebrow {
+    margin: 0 0 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.iacf-heading {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.iacf-helper {
+    max-width: 680px;
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.94);
+}
+
+.iacf-chat-card {
+    overflow: hidden;
+    border-right: 1px solid var(--itau-border);
+    border-bottom: 1px solid var(--itau-border);
+    border-left: 1px solid var(--itau-border);
+    border-radius: 0 0 16px 16px;
+    background: linear-gradient(180deg, #fff 0%, var(--itau-cream) 100%);
+    box-shadow: 0 12px 28px rgba(24, 24, 24, 0.08);
+}
+
+.iacf-banner {
+    margin: 14px 16px;
+}
+
+.iacf-shell {
+    width: 100%;
+    min-height: 1px;
+}
+
+.iacf-shell_hidden {
+    display: none;
+    min-height: 0;
+}
+
+.iacf-panel {
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.iacf-panel_warn {
+    border: 1px dashed var(--itau-orange);
+    background: #fef7ec;
+    color: var(--itau-deep-blue);
+}
+
+.iacf-panel_error {
+    border: 1px solid #c23934;
+    background: #fef1f1;
+    color: #3e3e3c;
+}
+
+.iacf-title {
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.iacf-body {
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .iacf-brand-header {
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    .iacf-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        font-size: 16px;
+    }
+
+    .iacf-heading {
+        font-size: 19px;
+    }
+}

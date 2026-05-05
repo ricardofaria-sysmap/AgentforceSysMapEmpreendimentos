@@ -40,7 +40,7 @@
         <apexClass>SaldoFeriasController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description>Permite ao gestor aprovar pedidos de ferias da equipe e ver saldo dos liderados.</description>
+    <description>Permite ao administrador testar a POC de Screen Flow com Agentforce chat e calendario de ferias.</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Aprovacao_Gestor__c</field>
@@ -154,7 +154,7 @@
         <flow>Agendamento_Ferias_Screen_POC</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Agentforce RH - Gestor</label>
+    <label>Agentforce RH - Admin POC</label>
     <license>Salesforce</license>
     <objectPermissions>
         <allowCreate>true</allowCreate>

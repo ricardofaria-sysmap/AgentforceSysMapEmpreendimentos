@@ -57,6 +57,33 @@
                     </div>
                 </div>
             </template>
+
+            <template if:true={hasSolicitacoes}>
+                <div class="requests">
+                    <h3 class="requests-title">Solicitações recentes</h3>
+                    <template for:each={solicitacoes} for:item="solicitacao">
+                        <article key={solicitacao.Id} class="request-item">
+                            <div class="request-header">
+                                <span class="request-number">#{solicitacao.CaseNumber}</span>
+                                <span class={solicitacao.statusClass}>{solicitacao.statusLabel}</span>
+                            </div>
+                            <div class="request-dates">
+                                <template if:true={solicitacao.isAprovada}>Datas confirmadas:</template>
+                                <template if:false={solicitacao.isAprovada}>Datas solicitadas:</template>
+                                <lightning-formatted-date-time value={solicitacao.Data_Inicio_Ferias__c} year="numeric" month="2-digit" day="2-digit"></lightning-formatted-date-time>
+                                -
+                                <lightning-formatted-date-time value={solicitacao.Data_Retorno_Ferias__c} year="numeric" month="2-digit" day="2-digit"></lightning-formatted-date-time>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+            </template>
+
+            <template if:true={hasSaldoSemSolicitacoes}>
+                <div class="requests-empty">
+                    Nenhuma solicitação recente de férias.
+                </div>
+            </template>
         </div>
     </lightning-card>
 </template>

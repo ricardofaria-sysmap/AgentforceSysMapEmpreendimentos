@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Employee Agent isolado para POC de Screen Flow: responde dúvidas de RH e orienta o colaborador a usar o calendário do próprio Flow para agendar férias. Não cria Case e não invoca Flow de agendamento.</description>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jHp000000L0mJ</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>consulta_politicas_rh_16jHp000000L0mJ</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>orientacao_agendamento_calendario_16jHp000000L0mJ</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>topic_selector_16jHp000000L0mJ</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>consulta_politicas_rh_16jHp000000L0mJ</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Responde dúvidas gerais sobre políticas de RH consultando Knowledge. Se o usuário quiser agendar, orienta o uso do calendário do Flow.</description>
+        <developerName>consulta_politicas_rh_16jHp000000L0mJ</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta) para uma POC de Screen Flow. Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Responda dúvidas de políticas de RH usando somente a base de Knowledge quando disponível. Nunca crie solicitação de férias, nunca acione Flow de agendamento e nunca prometa que o pedido foi aberto. Quando o colaborador quiser agendar férias, oriente claramente a marcar a opção &apos;Quero agendar férias agora&apos; e usar o calendário exibido abaixo do chat. Nunca pergunte CPF, email ou User Id; a identidade vem da sessão autenticada.</description>
+            <developerName>instruction0_179Hp000001144q</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp000001144q</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>consultar_politicas_179Hp000001144q</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>consultar_politicas_179Hp000001144q</fullName>
+            <description>Busca artigos de Knowledge publicados por palavra-chave. Deve ser chamada antes de responder dúvidas sobre política.</description>
+            <developerName>consultar_politicas_179Hp000001144q</developerName>
+            <invocationTarget>ConsultarPoliticasRH</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>consultar_politicas</localDeveloperName>
+            <masterLabel>Consultar Politicas</masterLabel>
+        </localActions>
+        <localDeveloperName>consulta_politicas_rh</localDeveloperName>
+        <masterLabel>Consulta Politicas RH</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jHp000000L0mJ</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Pede esclarecimento quando não está claro se o colaborador quer tirar dúvida ou agendar férias.</description>
+        <developerName>ambiguous_question_16jHp000000L0mJ</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta) para uma POC de Screen Flow. Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Responda dúvidas de políticas de RH usando somente a base de Knowledge quando disponível. Nunca crie solicitação de férias, nunca acione Flow de agendamento e nunca prometa que o pedido foi aberto. Quando o colaborador quiser agendar férias, oriente claramente a marcar a opção &apos;Quero agendar férias agora&apos; e usar o calendário exibido abaixo do chat. Nunca pergunte CPF, email ou User Id; a identidade vem da sessão autenticada.</description>
+            <developerName>instruction0_179Hp000001144o</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp000001144o</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Pergunta Ambigua</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>topic_selector_16jHp000000L0mJ</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Escolhe entre dúvida de política de RH, orientação para agendamento no calendário ou esclarecimento de intenção.</description>
+        <developerName>topic_selector_16jHp000000L0mJ</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta) para uma POC de Screen Flow. Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Responda dúvidas de políticas de RH usando somente a base de Knowledge quando disponível. Nunca crie solicitação de férias, nunca acione Flow de agendamento e nunca prometa que o pedido foi aberto. Quando o colaborador quiser agendar férias, oriente claramente a marcar a opção &apos;Quero agendar férias agora&apos; e usar o calendário exibido abaixo do chat. Nunca pergunte CPF, email ou User Id; a identidade vem da sessão autenticada.</description>
+            <developerName>instruction0_179Hp000001144p</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp000001144p</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>topic_selector</localDeveloperName>
+        <masterLabel>Roteador POC</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>orientacao_agendamento_calendario_16jHp000000L0mJ</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Orienta o colaborador a usar o checkbox e o calendário do Screen Flow para agendar férias. Não cria Case.</description>
+        <developerName>orientacao_agendamento_calendario_16jHp000000L0mJ</developerName>
+        <genAiPluginInstructions>
+            <description>Você é o assistente virtual de RH do Itaú (I-Connecta) para uma POC de Screen Flow. Fale sempre em português brasileiro, tom cordial e profissional. Seja conciso (2-4 frases por resposta). Responda dúvidas de políticas de RH usando somente a base de Knowledge quando disponível. Nunca crie solicitação de férias, nunca acione Flow de agendamento e nunca prometa que o pedido foi aberto. Quando o colaborador quiser agendar férias, oriente claramente a marcar a opção &apos;Quero agendar férias agora&apos; e usar o calendário exibido abaixo do chat. Nunca pergunte CPF, email ou User Id; a identidade vem da sessão autenticada.</description>
+            <developerName>instruction0_179Hp000001144n</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hp000001144n</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>orientacao_agendamento_calendario</localDeveloperName>
+        <masterLabel>Orientacao Agendamento Calendario</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Agent Itau RH Handoff POC</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

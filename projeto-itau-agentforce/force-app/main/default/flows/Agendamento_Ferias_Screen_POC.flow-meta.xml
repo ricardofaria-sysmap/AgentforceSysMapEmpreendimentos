@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
-    <description>Screen Flow para agendamento de ferias do colaborador, invocado pelo Agentforce ou botao na home. Valida regras CLT, cria Case e submete aprovacao.</description>
+    <description>POC de Screen Flow com chat Agentforce e calendario na mesma tela. O agente responde duvidas e orienta o uso do calendario; somente o Flow cria Case e submete aprovacao.</description>
     <environments>Default</environments>
-    <interviewLabel>Agendamento Ferias {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Agendamento de Ferias (Screen)</label>
+    <interviewLabel>Agendamento Ferias POC {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Agendamento de Ferias com Assistente (POC)</label>
     <processType>Flow</processType>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <status>Active</status>
@@ -29,7 +29,7 @@
         <inputParameters>
             <name>comments</name>
             <value>
-                <stringValue>Submetido via Agentforce (Screen Flow Agendamento_Ferias_Screen).</stringValue>
+                <stringValue>Submetido via Screen Flow POC com calendario (Agendamento_Ferias_Screen_POC).</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -210,6 +210,32 @@
                 <targetReference>Get_Manager</targetReference>
             </connector>
             <label>Tem saldo</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Decision_Quer_Agendar</name>
+        <label>Colaborador quer agendar agora?</label>
+        <locationX>600</locationX>
+        <locationY>520</locationY>
+        <defaultConnector>
+            <targetReference>Tela_Encerramento_Consulta</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Somente consulta</defaultConnectorLabel>
+        <rules>
+            <name>Quer_Agendar_Agora</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>querAgendarAgora</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Feriado_Range</targetReference>
+            </connector>
+            <label>Quer agendar agora</label>
         </rules>
     </decisions>
 
@@ -594,7 +620,7 @@
         <inputAssignments>
             <field>Origin</field>
             <value>
-                <stringValue>Agentforce Chat</stringValue>
+                <stringValue>Agentforce Chat POC</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -663,7 +689,7 @@
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Feriado_Range</targetReference>
+            <targetReference>Decision_Quer_Agendar</targetReference>
         </connector>
         <fields>
             <name>Display_Cabecalho</name>
@@ -671,9 +697,58 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>agentforceChatPoc</name>
+            <extensionName>c:iConnectaAgentforceChatFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>agentId</name>
+                <value>
+                    <elementReference>varAgentId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>agentLabel</name>
+                <value>
+                    <stringValue>Assistente RH I-Connecta (POC)</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>panelHeight</name>
+                <value>
+                    <stringValue>420px</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>panelWidth</name>
+                <value>
+                    <stringValue>100%</stringValue>
+                </value>
+            </inputParameters>
+        </fields>
+        <fields>
+            <name>querAgendarAgora</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Quero agendar férias agora</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+        </fields>
+        <fields>
             <name>Display_Regras_Rodape</name>
             <fieldText>{!textRegrasEHint}</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>querAgendarAgora</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>feriasDatePicker</name>
@@ -693,13 +768,50 @@
                 <assignToReference>varDataRetorno</assignToReference>
                 <name>retornoFerias</name>
             </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>querAgendarAgora</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Display_Saldo_Compact</name>
             <fieldText>{!textSaldoCompact}</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>querAgendarAgora</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
-        <nextOrFinishButtonLabel>Validar e continuar</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Continuar</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Tela_Encerramento_Consulta</name>
+        <label>Atendimento encerrado</label>
+        <locationX>760</locationX>
+        <locationY>700</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Encerramento</name>
+            <fieldText>{!textEncerramentoConsulta}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -825,7 +937,7 @@
     <textTemplates>
         <name>textCabecalho</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;h2&gt;Olá, {!$User.FirstName}! Vamos agendar suas férias?&lt;/h2&gt;</text>
+        <text>&lt;h2&gt;Olá, {!$User.FirstName}! Precisa de ajuda com férias?&lt;/h2&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>textSaldo</name>
@@ -840,7 +952,12 @@
     <textTemplates>
         <name>textRegrasEHint</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;strong&gt;Regras CLT (resumo):&lt;/strong&gt; mínimo 5 dias corridos; início de segunda a quinta; aviso de 30 dias; evitar vésperas de feriado.&lt;/p&gt;&lt;p style="color:#0176d3"&gt;&lt;strong&gt;Importante:&lt;/strong&gt; o botão &lt;em&gt;Validar e continuar&lt;/em&gt; fica no &lt;strong&gt;rodapé desta janela&lt;/strong&gt;. Após preencher as datas, &lt;strong&gt;deslize até ao fim&lt;/strong&gt; da página (ou deste painel) para o ver.&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;strong&gt;Regras CLT (resumo):&lt;/strong&gt; mínimo 5 dias corridos; início de segunda a quinta; aviso de 30 dias; evitar vésperas de feriado.&lt;/p&gt;&lt;p style="color:#0176d3"&gt;&lt;strong&gt;Importante:&lt;/strong&gt; o agente não abre pedido de férias. Para solicitar, selecione as datas no calendário e clique em &lt;em&gt;Continuar&lt;/em&gt; no rodapé.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textEncerramentoConsulta</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;h2&gt;Atendimento concluído&lt;/h2&gt;&lt;p&gt;Você pode fechar este Flow. Se quiser solicitar férias, volte à tela anterior, marque &lt;strong&gt;Quero agendar férias agora&lt;/strong&gt; e preencha o calendário.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>textAbonoInfo</name>
@@ -863,6 +980,13 @@
         <text>&lt;div style="color:#c23934"&gt;&lt;p&gt;&lt;strong&gt;Não foi possível validar seu pedido.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!varMensagemErro}&lt;/p&gt;&lt;/div&gt;</text>
     </textTemplates>
 
+    <variables>
+        <name>varAgentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>varUserId</name>
         <dataType>String</dataType>

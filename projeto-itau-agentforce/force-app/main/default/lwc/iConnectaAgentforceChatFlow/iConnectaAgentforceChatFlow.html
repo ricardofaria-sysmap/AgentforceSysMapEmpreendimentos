@@ -1,0 +1,53 @@
+<template>
+    <section class="iacf-root">
+        <div class="iacf-brand-card">
+            <div class="iacf-brand-strip"></div>
+            <div class="iacf-brand-header">
+                <div class="iacf-logo" aria-hidden="true">itaú</div>
+                <div>
+                    <p class="iacf-eyebrow">I-Connecta RH</p>
+                    <h2 class="iacf-heading">Assistente de Férias Itaú</h2>
+                    <p class="iacf-helper">
+                        Tire suas dúvidas sobre férias, abono salarial ou outras políticas internas de RH.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <template lwc:if={showNoAgent}>
+            <div class="iacf-panel iacf-panel_warn iacf-banner" role="status">
+                <p class="iacf-title">Agentforce nao configurado neste Flow</p>
+                <p class="iacf-body">
+                    Informe o <strong>Agent Id</strong> do agente POC ao abrir o Flow ou configure o valor no Flow Builder.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={showStub}>
+            <div class="iacf-panel iacf-panel_warn iacf-banner" role="status">
+                <p class="iacf-title">Static Resource ainda e o placeholder</p>
+                <p class="iacf-body">
+                    Gere o bundle JavaScript e faca deploy antes de testar o chat embutido.
+                </p>
+            </div>
+        </template>
+
+        <template lwc:if={showLoadError}>
+            <div class="iacf-panel iacf-panel_error iacf-banner" role="alert">
+                <p class="iacf-title">Nao foi possivel carregar o Agentforce</p>
+                <p class="iacf-body">{loadErrorMessage}</p>
+            </div>
+        </template>
+
+        <template lwc:if={showEmbedError}>
+            <div class="iacf-panel iacf-panel_error iacf-banner" role="alert">
+                <p class="iacf-title">Falha ao iniciar o chat</p>
+                <p class="iacf-body">{embedErrorMessage}</p>
+            </div>
+        </template>
+
+        <div class="iacf-chat-card">
+            <div class={shellClass} lwc:dom="manual"></div>
+        </div>
+    </section>
+</template>

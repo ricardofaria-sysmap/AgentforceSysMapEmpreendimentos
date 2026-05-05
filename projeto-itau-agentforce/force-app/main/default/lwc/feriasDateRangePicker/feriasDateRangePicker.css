@@ -1,11 +1,21 @@
 .wrap {
-    max-width: 26rem;
+    --itau-orange: #ec7000;
+    --itau-blue: #003399;
+    --itau-cream: #fff7ef;
+    max-width: 30rem;
+    padding: 1rem;
+    border: 1px solid #f2d2b6;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fff 0%, var(--itau-cream) 100%);
+    box-shadow: 0 8px 20px rgba(24, 24, 24, 0.06);
 }
 
 .hint {
     font-size: 0.85rem;
-    color: var(--lwc-colorTextWeak, #706e6b);
+    color: #3b3b3b;
     margin-bottom: 0.75rem;
+    border-left: 4px solid var(--itau-orange);
+    padding-left: 0.75rem;
 }
 
 .sub {
@@ -13,6 +23,7 @@
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
     font-weight: 600;
+    color: var(--itau-blue);
 }
 
 .toolbar {
@@ -20,11 +31,14 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.35rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid #f2d2b6;
 }
 
 .title {
     text-transform: capitalize;
     font-weight: 600;
+    color: var(--itau-blue);
 }
 
 .grid {
@@ -37,7 +51,7 @@
     font-weight: 600;
     text-align: center;
     padding: 0.2rem;
-    color: var(--lwc-colorTextWeak, #706e6b);
+    color: #5f4b3b;
 }
 
 .grid td {
@@ -51,11 +65,22 @@
     height: 2.1rem;
     align-items: center;
     justify-content: center;
-    border-radius: 0.25rem;
+    border-radius: 999px;
     border: 1px solid transparent;
     background: var(--lwc-colorBackgroundAlt, #fff);
     cursor: pointer;
     font-size: 0.8rem;
+    transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease,
+        transform 120ms ease;
+}
+
+.cell:not(.cell--disabled):not(.cell--selected):hover {
+    border-color: var(--itau-orange);
+    color: var(--itau-blue);
+    transform: translateY(-1px);
 }
 
 .cell--empty {
@@ -63,16 +88,17 @@
 }
 
 .cell--disabled {
-    color: var(--lwc-colorTextWeak, #c9c7c5);
+    color: #b8aaa0;
     cursor: not-allowed;
-    background: var(--lwc-colorBackgroundRowHover, #f3f2f2);
+    background: #f4eee8;
 }
 
 .cell--selected {
-    background: var(--lwc-colorBrand, #0176d3);
+    background: var(--itau-orange);
     color: #fff;
     font-weight: 700;
-    border-color: var(--lwc-colorBrand, #0176d3);
+    border-color: var(--itau-orange);
+    box-shadow: 0 4px 10px rgba(236, 112, 0, 0.24);
 }
 
 .msg_err {

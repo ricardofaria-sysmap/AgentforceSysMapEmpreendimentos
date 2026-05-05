@@ -1,24 +1,31 @@
 import { LightningElement, wire } from 'lwc';
-import { getRecord } from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
 import { NavigationMixin } from 'lightning/navigation';
-import getSaldoVigente from '@salesforce/apex/SaldoFeriasController.getSaldoVigente';
+import getSaldoCardData from '@salesforce/apex/SaldoFeriasController.getSaldoCardData';
 
 export default class SaldoFeriasCard extends NavigationMixin(LightningElement) {
     userId = USER_ID;
     saldo;
+    solicitacoes = [];
     loading = true;
     error;
 
-    @wire(getSaldoVigente)
+    @wire(getSaldoCardData)
     wiredSaldo({ error, data }) {
         this.loading = false;
         if (data) {
-            this.saldo = data;
+            this.saldo = data.saldo;
+            this.solicitacoes = (data.solicitacoes || []).map((solicitacao) => ({
+                ...solicitacao,
+                statusLabel: this.getStatusLabel(solicitacao),
+                statusClass: this.getStatusClass(solicitacao),
+                isAprovada: solicitacao.Aprovacao_Gestor__c === 'Aprovado'
+            }));
             this.error = undefined;
         } else if (error) {
             this.error = error.body ? error.body.message : error.message;
             this.saldo = undefined;
+            this.solicitacoes = [];
         }
     }
 
@@ -32,6 +39,14 @@ export default class SaldoFeriasCard extends NavigationMixin(LightningElement) {
 
     get hasError() {
         return !!this.error;
+    }
+
+    get hasSolicitacoes() {
+        return this.solicitacoes.length > 0;
+    }
+
+    get hasSaldoSemSolicitacoes() {
+        return this.hasSaldo && !this.hasSolicitacoes;
     }
 
     get diasDireito() {
@@ -67,6 +82,31 @@ export default class SaldoFeriasCard extends NavigationMixin(LightningElement) {
         if (this.percent >= 80) return 'slds-theme_warning';
         if (this.percent >= 100) return 'slds-theme_error';
         return 'slds-theme_success';
+    }
+
+    getStatusLabel(solicitacao) {
+        const aprovacao = solicitacao.Aprovacao_Gestor__c;
+        if (aprovacao === 'Pendente') {
+            return 'Pendente de aprovação';
+        }
+        if (aprovacao === 'Aprovado') {
+            return 'Aprovada pelo gestor';
+        }
+        if (aprovacao === 'Reprovado') {
+            return 'Reprovada pelo gestor';
+        }
+        return solicitacao.Status || 'Sem status';
+    }
+
+    getStatusClass(solicitacao) {
+        const aprovacao = solicitacao.Aprovacao_Gestor__c;
+        if (aprovacao === 'Aprovado') {
+            return 'request-status request-status_approved';
+        }
+        if (aprovacao === 'Reprovado') {
+            return 'request-status request-status_rejected';
+        }
+        return 'request-status request-status_pending';
     }
 
     handleAgendar() {

@@ -17,7 +17,7 @@
         <actionName>FeriasApprovalSubmitter</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Case_Criado</targetReference>
+            <targetReference>Decision_Submissao_Aprovacao</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -147,6 +147,27 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Faltam informacoes obrigatorias. Confirme com o colaborador a data de inicio e a data de retorno antes de tentar novamente.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+
+    <assignments>
+        <name>Set_Erro_Submissao_Aprovacao</name>
+        <label>Erro - falha ao submeter aprovacao</label>
+        <locationX>760</locationX>
+        <locationY>980</locationY>
+        <assignmentItems>
+            <assignToReference>varSucesso</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varMensagemErro</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Nao foi possivel submeter seu pedido para aprovacao do gestor. Tente novamente em alguns minutos ou contate o RH informando o numero do pedido.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -825,6 +846,32 @@
                 <targetReference>Set_Erro_Vespera_Feriado</targetReference>
             </connector>
             <label>Vespera de feriado</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Decision_Submissao_Aprovacao</name>
+        <label>Submissao de aprovacao bem-sucedida?</label>
+        <locationX>600</locationX>
+        <locationY>980</locationY>
+        <defaultConnector>
+            <targetReference>Set_Erro_Submissao_Aprovacao</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Falhou</defaultConnectorLabel>
+        <rules>
+            <name>Submissao_OK</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Submit_Aprovacao.success</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Case_Criado</targetReference>
+            </connector>
+            <label>Sucesso</label>
         </rules>
     </decisions>
 

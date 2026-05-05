@@ -13,6 +13,7 @@
     <label>I-Connecta</label>
     <navType>Standard</navType>
     <tabs>I_Connecta_Home</tabs>
+    <tabs>standard-ProcessInstanceWorkitem</tabs>
     <tabs>standard-Case</tabs>
     <tabs>Knowledge__kav</tabs>
     <tabs>Saldo_Ferias__c</tabs>

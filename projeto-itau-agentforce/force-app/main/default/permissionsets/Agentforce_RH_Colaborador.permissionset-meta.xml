@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentAccesses>
+        <agentName>Agent_Itau_RH_Employee</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <agentAccesses>
+        <agentName>Agent_Itau_RH_Handoff_POC</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
     <applicationVisibilities>
         <application>I_Connecta</application>
         <visible>true</visible>
@@ -141,10 +149,10 @@
         <enabled>true</enabled>
         <flow>Agendamento_Ferias_Screen</flow>
     </flowAccesses>
-    <agentAccesses>
-        <agentName>Agent_Itau_RH_Employee</agentName>
+    <flowAccesses>
         <enabled>true</enabled>
-    </agentAccesses>
+        <flow>Agendamento_Ferias_Screen_POC</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Agentforce RH - Colaborador</label>
     <license>Salesforce</license>
@@ -211,6 +219,10 @@
     <tabSettings>
         <tab>Saldo_Ferias__c</tab>
         <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-ProcessInstanceWorkitem</tab>
+        <visibility>Available</visibility>
     </tabSettings>
     <tabSettings>
         <tab>standard-Case</tab>

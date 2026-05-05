@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>AgentforceEmployeeAgent</agentType>
+    <botMlDomain>
+        <label>Agent Itau RH Handoff POC</label>
+        <name>Agent_Itau_RH_Handoff_POC</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <description>Employee Agent isolado para POC de Screen Flow: responde dúvidas de RH e orienta o colaborador a usar o calendário do próprio Flow para agendar férias. Não cria Case e não invoca Flow de agendamento.</description>
+    <label>Agent Itau RH Handoff POC</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>InternalCopilot</type>
+</Bot>
